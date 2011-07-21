@@ -1,0 +1,53 @@
+.home
+	.index
+		.sidebar
+			- if current_user != nil
+				= render :partial => 'signed_in'
+			- else
+				= render :partial => 'get_started'
+		.worldwide
+			.top
+				.heading
+					%h2 Worldwide Prayer Requests
+				.count
+					%p 000,000,000 Prayer Requests made to date
+			.clear
+			.requests
+				.divider18
+					%hr{:style => "margin-top: 0;"}
+				.clear
+				.request
+					.profilepic
+						= image_tag "http://graph.facebook.com/robert.klubenspies/picture"
+					.details
+						.text
+							[redsoda] Aliquam erat volutpat. Mauris vel neque sit amet nunc gravida congue sed sit amet purus. Quisque lacus quam, egestas ac tincidunt a, lacinia vel.
+						.timestamp
+							7 minutes ago from web
+				.clear
+				.divider18
+					%hr
+				.clear
+				.request
+					.profilepic
+						= image_tag "http://graph.facebook.com/robert.klubenspies/picture"
+					.details
+						.text
+							[laugesen] Vivamus id mollis quam. Morbi ac commodo nulla. In.
+						.timestamp
+							15 minutes ago from web
+				.clear
+				.divider18
+					%hr
+				.clear
+				.request
+					.profilepic
+						= image_tag "http://graph.facebook.com/robert.klubenspies/picture"
+					.details
+						.text
+							[tveskov] In condimentum orci id nisl volutpat bibendum. Quisque commodo hendrerit lorem quis egestas. Maecenas quis tortor arcu. Vivamus rutrum nunc non neque.
+						.timestamp
+							19 minutes ago from web
+				.clear
+				.divider18
+					%hr

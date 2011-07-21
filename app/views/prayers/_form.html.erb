@@ -1,0 +1,37 @@
+<%= form_for(@prayer) do |f| %>
+  <% if @prayer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@prayer.errors.count, "error") %> prohibited this prayer from being saved:</h2>
+
+      <ul>
+      <% @prayer.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :user_id %><br />
+    <%= f.number_field :user_id %>
+  </div>
+  <div class="field">
+    <%= f.label :group_id %><br />
+    <%= f.number_field :group_id %>
+  </div>
+  <div class="field">
+    <%= f.label :prayer %><br />
+    <%= f.text_area :prayer %>
+  </div>
+  <div class="field">
+    <%= f.label :facebook_share %><br />
+    <%= f.check_box :facebook_share %>
+  </div>
+  <div class="field">
+    <%= f.label :source %><br />
+    <%= f.text_field :source %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

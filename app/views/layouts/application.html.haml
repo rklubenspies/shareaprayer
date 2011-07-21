@@ -1,0 +1,26 @@
+!!! 5
+%html
+	%head
+		%title
+			Share a Prayer
+		= stylesheet_link_tag "application"
+		= javascript_include_tag "application"
+		= csrf_meta_tags
+	
+	%body
+		.header
+			- if current_user
+				= render :partial => "layouts/header"
+			- else
+				= render :partial => "layouts/header_nologin"
+		
+		.clear
+		
+		%p{ :class => "notice" } #{ notice }
+		
+		= yield
+		
+		.clear
+		
+		.footer
+			= render :partial => "layouts/footer"

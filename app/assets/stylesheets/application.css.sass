@@ -1,0 +1,153 @@
+//= require_self
+//= require_tree . 
+
+@import compass
+@import _blueprint
+body
+	+blueprint-typography(true)
+	+container
+	
+	.header
+		.nologin
+			+column(24, true)
+			text-align: center !important
+			h1
+				font-size: 36px
+				margin-bottom: 5px
+			p
+				font-size: 14px
+		hr
+			+colruler
+	
+	.home
+		.index
+			.sidebar
+				+column(5)
+				+colborder
+				h6
+					font-size: 14px
+					margin: 0 0 10px 0
+				.step
+					.number
+						+column(1)
+						font-size: 20px
+						font-weight: 500
+					.description
+						+column(4, true)
+						padding-bottom: 5px
+			.worldwide
+				+column(18, true)
+				.top
+					.heading
+						width: span(10)
+						height: 50px
+						float: left
+						h2
+							margin: 0
+							padding: 0
+					.count
+						width: span(8)
+						height: 40px
+						float: right
+						text-align: right
+						padding-top: 10px
+						p
+							font-size: 14px
+							font-weight: 400
+				.requests
+					.request
+						height: 50px
+						display: block
+						.profilepic
+							+column(2)
+						.details
+							+column(16)
+							+last
+							.text
+							.timestamp
+								font-size: 12px
+								color: #dddddd
+								abbr
+									border-style: none
+	
+	.users
+		.show
+			.timeline
+				+column(17, true)
+				.request
+					height: 50px
+					display: block
+					.profilepic
+						+column(2)
+					.details
+						+column(15)
+						+last
+						.text
+						.timestamp
+							font-size: 12px
+							color: #dddddd
+							abbr
+								border-style: none
+	
+	.prayers
+		.show
+			.request
+				+column(17, true)
+				.details
+					.text
+						font-size: 24px
+					.timestamp
+						font-size: 12px
+						color: #dddddd
+						abbr
+							border-style: none
+			.disqus
+				+column(17, true)
+	
+	.universal_sidebar
+		+column(6)
+		+colborder
+		.name
+			+column(6)
+			+last
+			h2
+				margin: 0 0 5px 0
+		.basic
+			+column(6)
+			+last
+			.profile_pic
+				width: 50px
+				float: left
+				margin-right: 5px
+			.info
+				width: 175px
+				float: right
+		.bio
+			+column(6)
+			+last
+		.friendonfb
+			+column(6)
+			+last
+			text-align: left
+			font-size: 16px
+			margin-top: 10px
+	
+	.divider17
+		+column(17, true)
+		hr
+			+colruler(#f6f6f6)
+			margin-top: 10px
+	
+	.divider18
+		+column(18, true)
+		hr
+			+colruler(#f6f6f6)
+			margin-top: 10px
+			
+	.footer
+		+column(24)
+		+last
+		margin-top: 20px
+		font-size: 10px
+		text-align: center
+		color: #e5e5e5

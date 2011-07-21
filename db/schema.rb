@@ -10,7 +10,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110720212023) do
+ActiveRecord::Schema.define(:version => 20110720221012) do
+
+  create_table "prayers", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "group_id"
+    t.text     "prayer"
+    t.boolean  "facebook_share"
+    t.string   "source"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "provider"
@@ -24,9 +34,9 @@ ActiveRecord::Schema.define(:version => 20110720212023) do
     t.string   "political"
     t.string   "image"
     t.string   "provider_profile"
+    t.string   "role"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "role"
   end
 
 end

@@ -1,0 +1,31 @@
+<h1>Listing prayers</h1>
+
+<table>
+  <tr>
+    <th>User</th>
+    <th>Group</th>
+    <th>Prayer</th>
+    <th>Facebook share</th>
+    <th>Source</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @prayers.each do |prayer| %>
+  <tr>
+    <td><%= prayer.user_id %></td>
+    <td><%= prayer.group_id %></td>
+    <td><%= prayer.prayer %></td>
+    <td><%= prayer.facebook_share %></td>
+    <td><%= prayer.source %></td>
+    <td><%= link_to 'Show', prayer %></td>
+    <td><%= link_to 'Edit', edit_prayer_path(prayer) %></td>
+    <td><%= link_to 'Destroy', prayer, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Prayer', new_prayer_path %>

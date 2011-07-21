@@ -14,6 +14,7 @@ gem 'omniauth'
 gem 'fbgraph'
 gem 'compass', git: 'https://github.com/chriseppstein/compass.git', branch: 'rails31'
 gem 'haml'
+gem 'cancan'
 
 # Local Environment
 group :test do

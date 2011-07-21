@@ -12,6 +12,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :political
       t.string :image
       t.string :provider_profile
+      t.string :role
 
       t.timestamps
     end
