@@ -17,5 +17,8 @@
 				-# 					%hr{:style => "margin-top: 0;"}
 				-# 				.clear
 				- unless @prayers.blank?
-					%ul{:class => 'list', :last => "#{@prayers.to_a.last.created_at}"}
+					.requests
 						= render :partial => "prayer", :collection => @prayers
+			.clear
+			.paginator
+				= paginate @prayers, :window => 1, :remote => true

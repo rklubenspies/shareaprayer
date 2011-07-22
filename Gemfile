@@ -15,6 +15,7 @@ gem 'fbgraph'
 gem 'compass', git: 'https://github.com/chriseppstein/compass.git', branch: 'rails31'
 gem 'haml'
 gem 'cancan'
+gem 'kaminari'
 
 # Local Environment
 group :test do

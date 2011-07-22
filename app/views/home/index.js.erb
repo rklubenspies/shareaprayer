@@ -1,0 +1,2 @@
+$('.requests').html("<%=escape_javascript(render :partial => 'prayer', :collection => @prayers)%>");
+$('.paginator').html('<%= escape_javascript(paginate(@prayers, :remote => true).to_s) %>');

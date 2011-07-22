@@ -1,7 +1,12 @@
-%li
-	.left
-		.avatar
-			= image_tag prayer.user.image
-	.item
-		%p
+.request
+	.profilepic
+		= image_tag prayer.user.image
+	.details
+		.text
 			= prayer.prayer
+		.timestamp
+			= timeago(prayer.created_at)
+.clear
+.divider18
+	%hr
+.clear
