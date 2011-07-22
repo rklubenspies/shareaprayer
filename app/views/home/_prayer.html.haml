@@ -3,6 +3,8 @@
 		= image_tag prayer.user.image
 	.details
 		.text
+			= link_to prayer.user.screenname, user_path(prayer.user.screenname)
+			&nbsp;
 			= prayer.prayer
 		.timestamp
 			= timeago(prayer.created_at)

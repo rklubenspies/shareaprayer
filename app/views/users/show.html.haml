@@ -1,0 +1,30 @@
+.users
+	.show
+		.universal_sidebar
+			.name
+				%h2
+					= @user.name
+			.basic
+				.profile_pic
+					= image_tag @user.image
+				.info
+					%ul
+						%li #{@user.prayer.count} Prayer Requests
+						%li Member of GROUP HERE
+			.bio
+				%b Bio:
+				%br
+				= @user.bio
+			.friendonfb
+				= link_to "Friend on Facebook", @user.provider_profile
+		.timeline
+			%h3 Timeline
+			.divider17
+				%hr{:style => "margin-top: 0;"}
+			.clear
+			- unless @prayers.blank?
+				.requests
+					= render :partial => "prayer", :collection => @prayers
+		.clear
+		.paginator
+			= paginate @prayers, :window => 1, :remote => true

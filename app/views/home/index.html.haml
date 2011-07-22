@@ -13,9 +13,9 @@
 					%p 000,000,000 Prayer Requests made to date
 			.clear
 			.requests
-				-# .divider18
-				-# 					%hr{:style => "margin-top: 0;"}
-				-# 				.clear
+				.divider18
+					%hr{:style => "margin-top: 0;"}
+					.clear
 				- unless @prayers.blank?
 					.requests
 						= render :partial => "prayer", :collection => @prayers

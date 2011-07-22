@@ -95,6 +95,10 @@ body
 		.show
 			.timeline
 				+column(17, true)
+				h3
+					margin: 0 0 10px 0
+					padding: 0
+					font-size: 22px
 				.request
 					height: 50px
 					display: block
@@ -109,6 +113,9 @@ body
 							color: #dddddd
 							abbr
 								border-style: none
+			.paginator
+				+column(17)
+				+last
 	
 	.prayers
 		.show
@@ -117,9 +124,11 @@ body
 				.details
 					.text
 						font-size: 24px
+						line-height: 1.5em
 					.timestamp
 						font-size: 12px
 						color: #dddddd
+						padding-top: 5px
 						abbr
 							border-style: none
 			.disqus
@@ -132,7 +141,8 @@ body
 			+column(6)
 			+last
 			h2
-				margin: 0 0 5px 0
+				margin: 0 0 10px 0
+				font-size: 22px
 		.basic
 			+column(6)
 			+last

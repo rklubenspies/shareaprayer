@@ -14,11 +14,14 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    #@user = User.find(params[:id])
-    
+    # @prayers = @user.prayer.all.order("created_at DESC").page(params[:page]).per(5)
+    # @prayers = Prayer.order("created_at DESC").find(:all, :conditions => ["user_id = ?", @user.id]).page(params[:page]).per(5)
+    @prayers = @user.prayer.order("created_at DESC").page(params[:page]).per(5)
+        
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }
+      format.js
     end
   end
 
