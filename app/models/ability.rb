@@ -12,7 +12,7 @@ class Ability
       cannot [:create, :destroy], User
       
       # User can only create and destroy their own prayer requests
-      # can [:create, :destroy], Prayer, :user_id => user.id
+      can [:create, :destroy], Prayer, :user_id => user.id
     else
       can :read, :all
     end

@@ -1,6 +1,10 @@
 class User < ActiveRecord::Base
   has_many :prayer
   
+  def to_param
+    screenname
+  end
+  
   def self.create_with_omniauth(auth)  
     create! do |user|  
       user.provider = auth["provider"]

@@ -6,6 +6,7 @@
 body
 	+blueprint-typography(true)
 	+container
+	overflow: auto !important
 	
 	.header
 		.nologin
@@ -55,6 +56,25 @@ body
 							font-size: 14px
 							font-weight: 400
 				.requests
+					ul
+						.list
+							margin: 0
+							padding: 0
+							list-style-type: none
+							li
+								list-style: none
+								clear: left
+								padding-bottom: 5px
+								.left
+									float: left
+									.avatar
+										width: 50px
+										height: 50px
+								.item
+									float: right
+									width: auto
+									margin-left: 80px
+					
 					.request
 						height: 50px
 						display: block

@@ -8,7 +8,7 @@ Shareaprayer::Application.routes.draw do
   match "/signout" => "sessions#destroy", :as => :signout
   
   # Resources
-  resources :users, :path => "/profile", :except => [:index] do
+  resources :users, :path => "/profile", :except => [:index], :constraints => { :id => /[^\/]+/ } do
     resources :prayers, :except => [:index]
   end
 end

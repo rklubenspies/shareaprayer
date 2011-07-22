@@ -7,3 +7,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+jQuery(document).ready(function() {
+	jQuery("abbr.timeago").timeago();
+	jQuery.timeago.settings.allowFuture = true;
+});
