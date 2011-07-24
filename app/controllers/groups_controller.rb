@@ -1,85 +1,96 @@
 class GroupsController < ApplicationController
+  load_and_authorize_resource
+  skip_load_resource :only => [:join, :leave]
+  
   # GET /groups
-  # GET /groups.json
   def index
-    @groups = Group.all
-
+    @groups = @groups.order("created_at DESC").page(params[:page]).per(25)
+    
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @groups }
+      format.js
     end
   end
 
-  # GET /groups/1
-  # GET /groups/1.json
+  # GET /groups/friendly-id
   def show
-    @group = Group.find(params[:id])
     @prayers = @group.prayer.order("created_at DESC").page(params[:page]).per(5)
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @group }
+      format.html
       format.js
     end
   end
 
   # GET /groups/new
-  # GET /groups/new.json
   def new
-    @group = Group.new
-
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @group }
     end
   end
 
-  # GET /groups/1/edit
+  # GET /groups/friendly-id/edit
   def edit
-    @group = Group.find(params[:id])
   end
 
   # POST /groups
-  # POST /groups.json
   def create
-    @group = Group.new(params[:group])
-
     respond_to do |format|
       if @group.save
         format.html { redirect_to @group, notice: 'Group was successfully created.' }
-        format.json { render json: @group, status: :created, location: @group }
       else
         format.html { render action: "new" }
-        format.json { render json: @group.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # PUT /groups/1
-  # PUT /groups/1.json
+  # PUT /groups/friendly-id
   def update
-    @group = Group.find(params[:id])
-
     respond_to do |format|
       if @group.update_attributes(params[:group])
         format.html { redirect_to @group, notice: 'Group was successfully updated.' }
-        format.json { head :ok }
       else
         format.html { render action: "edit" }
-        format.json { render json: @group.errors, status: :unprocessable_entity }
       end
     end
   end
 
-  # DELETE /groups/1
-  # DELETE /groups/1.json
+  # DELETE /groups/friendly-id
   def destroy
-    @group = Group.find(params[:id])
     @group.destroy
 
     respond_to do |format|
       format.html { redirect_to groups_url }
-      format.json { head :ok }
+    end
+  end
+  
+  # POST /groups/friendly-id/join
+  def join
+    @group = Group.find(params[:id])
+    @user = current_user
+    @user.group_id = @group.id
+    
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to @group, notice: 'You have successfully joined this group.' }
+      else
+        format.html { redirect_to @group, notice: 'We encountered an error when trying to add you to this group. Please try again later.' }
+      end
+    end
+  end
+  
+  # POST /groups/friendly-id/leave
+  def leave
+    @group = Group.find(params[:id])
+    @user = current_user
+    @user.group_id = nil
+    
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to @group, notice: 'You have successfully left this group.' }
+      else
+        format.html { redirect_to @group, notice: 'We encountered an error when trying to remove you from this group. Please try again later.' }
+      end
     end
   end
 end

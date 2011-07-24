@@ -19,7 +19,15 @@
 				- @group.user.each do |u|
 					= link_to image_tag(u.image), user_path(u.screenname)
 			.joingroup
-				= link_to "Join Group", "#"
+				- if current_user
+					- if current_user.group == nil
+						= link_to 'Join Group', join_group_path(@group), :confirm => 'Are you sure that you want to join this group?', :method => :post
+					- elsif current_user.group.id == @group.id
+						= link_to 'Leave Group', leave_group_path(@group), :confirm => 'Are you sure that you want to leave this group?', :method => :post
+					- elsif current_user.group.id != @group.id && current_user.group != nil
+						= link_to 'Leave my current group and join this one', join_group_path(@group), :confirm => 'Are you sure that you want to leave your current group and join this one?', :method => :post
+				- else
+					Login/sign up to join a group
 		.timeline
 			.divider17
 				%hr{:style => "margin-top: 0;"}
@@ -27,6 +35,8 @@
 			- unless @prayers.blank?
 				.requests
 					= render :partial => "prayer", :collection => @prayers
+			- if @prayers.blank?
+				#{@group.name} has no prayer requests!
 		.clear
 		.paginator
-			= paginate @prayers, :window => 1, :remote => true
+			= paginate @prayers, :remote => true, :theme => 'github'

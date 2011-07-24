@@ -20,5 +20,5 @@
 					.requests
 						= render :partial => "prayer", :collection => @prayers
 			.clear
-			.paginator
-				= paginate @prayers, :window => 1, :remote => true
+		.paginator
+			= paginate @prayers, :remote => true, :theme => 'github'

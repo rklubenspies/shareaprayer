@@ -15,6 +15,7 @@ class Ability
       can [:create, :destroy], Prayer, :user_id => user.id
       
       # User cannot edit, update, or destroy Groups
+      can [:join, :leave], Group
       cannot [:create, :update, :destroy], Group
     else
       can :read, :all

@@ -17,6 +17,19 @@ body
 				margin-bottom: 5px
 			p
 				font-size: 14px
+		.login
+			h1
+				font-size: 22px
+			p
+				font-size: 14px
+				padding-top: 17px
+			.logo
+				+column(5)
+			.subtitle
+				+column(7)
+			.nav
+				+column(12, true)
+				text-align: right !important
 		hr
 			+colruler
 	
@@ -56,41 +69,26 @@ body
 							font-size: 14px
 							font-weight: 400
 				.requests
-					ul
-						.list
-							margin: 0
-							padding: 0
-							list-style-type: none
-							li
-								list-style: none
-								clear: left
-								padding-bottom: 5px
-								.left
-									float: left
-									.avatar
-										width: 50px
-										height: 50px
-								.item
-									float: right
-									width: auto
-									margin-left: 80px
 					.request
 						height: 50px
 						display: block
 						.profilepic
-							+column(2)
+							+span(2)
+							float: left
 						.details
-							+column(16)
-							+last
+							+span(16)
+							float: right
 							.text
+								margin-top: -5px
 							.timestamp
 								font-size: 12px
 								color: #dddddd
 								abbr
 									border-style: none
-				.paginator
-					+column(18)
-					+last
+			.paginator
+				+column(18, true)
+				+prepend(6)
+	
 	.users, .groups
 		.show
 			.timeline
@@ -103,11 +101,13 @@ body
 					height: 50px
 					display: block
 					.profilepic
-						+column(2)
+						+span(2)
+						float: left
 					.details
-						+column(15)
-						+last
+						+span(15)
+						float: right
 						.text
+							margin-top: -5px
 						.timestamp
 							font-size: 12px
 							color: #dddddd
@@ -133,6 +133,47 @@ body
 							border-style: none
 			.disqus
 				+column(17, true)
+				
+	.dashboard
+		.index
+			.sidebar
+				+column(6)
+				+colborder
+				h6
+					font-size: 14px
+					margin: 0 0 10px 0
+			.timeline
+				+column(17, true)
+				.top
+					.share
+						.box
+							width: span(14)
+							height: 50px
+							float: left
+						.button
+							width: span(3)
+							height: 50px
+							float: right
+				.requests
+					.request
+						height: 50px
+						display: block
+						.profilepic
+							+span(2)
+							float: left
+						.details
+							+span(15)
+							float: right
+							.text
+								margin-top: -5px
+							.timestamp
+								font-size: 12px
+								color: #dddddd
+								abbr
+									border-style: none
+			.paginator
+				+column(17, true)
+				+prepend(7)
 	
 	.universal_sidebar
 		+column(6)

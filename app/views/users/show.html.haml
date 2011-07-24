@@ -26,6 +26,8 @@
 			- unless @prayers.blank?
 				.requests
 					= render :partial => "prayer", :collection => @prayers
+			- if @prayers.blank?
+				#{@user.name} has no prayer requests!
 		.clear
 		.paginator
-			= paginate @prayers, :window => 1, :remote => true
+			= paginate @prayers, :remote => true, :theme => 'github'
