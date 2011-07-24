@@ -13,6 +13,11 @@
 				%b Description:
 				%br
 				= @group.description
+			.members
+				%b Members:
+				%br
+				- @group.user.each do |u|
+					= link_to image_tag(u.image), user_path(u.screenname)
 			.joingroup
 				= link_to "Join Group", "#"
 		.timeline

@@ -10,13 +10,14 @@
 				.info
 					%ul
 						%li #{@user.prayer.count} Prayer Requests
-						%li Member of GROUP HERE
+						- if @user.group != nil
+							%li Member of #{link_to @user.group.name, @user.group}
 			.bio
 				%b Bio:
 				%br
 				= @user.bio
 			.friendonfb
-				= link_to "Friend on Facebook", @user.provider_profile
+				= link_to "View Facebook Profile", @user.provider_profile
 		.timeline
 			%h3 Timeline
 			.divider17

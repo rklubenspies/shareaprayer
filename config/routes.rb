@@ -1,8 +1,4 @@
 Shareaprayer::Application.routes.draw do
-  resources :groups
-
-  resources :prayers
-
   root :to => "home#index"
 
   # OmniAuth
@@ -12,5 +8,12 @@ Shareaprayer::Application.routes.draw do
   # Resources
   resources :users, :path => "/profile", :except => [:index], :constraints => { :id => /[^\/]+/ } do
     resources :prayers, :except => [:index]
+  end
+  
+  resources :groups do
+    # collection do
+    #   get 'join'
+    #   get 'leave'
+    # end
   end
 end

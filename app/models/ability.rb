@@ -13,6 +13,9 @@ class Ability
       
       # User can only create and destroy their own prayer requests
       can [:create, :destroy], Prayer, :user_id => user.id
+      
+      # User cannot edit, update, or destroy Groups
+      cannot [:create, :update, :destroy], Group
     else
       can :read, :all
     end
