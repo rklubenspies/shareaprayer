@@ -1,4 +1,6 @@
 Shareaprayer::Application.routes.draw do
+  resources :groups
+
   resources :prayers
 
   root :to => "home#index"

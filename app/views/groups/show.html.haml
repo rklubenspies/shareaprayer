@@ -1,0 +1,27 @@
+.groups
+	.show
+		.universal_sidebar
+			.name
+				%h2
+					= @group.name
+			.basic
+				.info_full
+					%ul
+						%li #{@group.user.count} Members
+						%li #{@group.prayer.count} Prayer Requests
+			.bio
+				%b Description:
+				%br
+				= @group.description
+			.joingroup
+				= link_to "Join Group", "#"
+		.timeline
+			.divider17
+				%hr{:style => "margin-top: 0;"}
+			.clear
+			- unless @prayers.blank?
+				.requests
+					= render :partial => "prayer", :collection => @prayers
+		.clear
+		.paginator
+			= paginate @prayers, :window => 1, :remote => true

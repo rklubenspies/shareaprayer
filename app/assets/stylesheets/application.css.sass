@@ -91,7 +91,7 @@ body
 				.paginator
 					+column(18)
 					+last
-	.users
+	.users, .groups
 		.show
 			.timeline
 				+column(17, true)
@@ -114,8 +114,8 @@ body
 							abbr
 								border-style: none
 			.paginator
-				+column(17)
-				+last
+				+column(17, true)
+				+prepend(7)
 	
 	.prayers
 		.show
@@ -138,14 +138,10 @@ body
 		+column(6)
 		+colborder
 		.name
-			+column(6)
-			+last
 			h2
 				margin: 0 0 10px 0
 				font-size: 22px
 		.basic
-			+column(6)
-			+last
 			.profile_pic
 				width: 50px
 				float: left
@@ -153,12 +149,12 @@ body
 			.info
 				width: 175px
 				float: right
+			.info_full
+				width: 100%
 		.bio
 			+column(6)
-			+last
-		.friendonfb
+		.friendonfb, .joingroup
 			+column(6)
-			+last
 			text-align: left
 			font-size: 16px
 			margin-top: 10px

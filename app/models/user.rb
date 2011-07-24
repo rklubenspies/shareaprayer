@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :prayer
+  belongs_to :group
   
   def to_param
     screenname

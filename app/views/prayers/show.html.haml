@@ -30,10 +30,12 @@
 		.disqus
 			#disqus_thread
 			:javascript
-				var disqus_developer = true;
+				/* * * VARIABLES * * */
+				var disqus_developer = 1;
 				var disqus_shortname = 'example';
-				// var disqus_identifier = 'unique_dynamic_id_1234';
-				// var disqus_url = 'http://example.com/permalink-to-page.html';
+				var disqus_identifier = '#{@prayer.id}';
+				var disqus_url = 'http://shareaprayer.org#{url_for user_prayer_path(@prayer.user.screenname, @prayer)}';
+				var disqus_title = '#{@prayer.user.name} shared a prayer: #{@prayer.prayer[0..40]}...';
 				/* * * DON'T EDIT BELOW THIS LINE * * */
 				(function() {
 				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

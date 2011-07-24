@@ -14,8 +14,6 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
-    # @prayers = @user.prayer.all.order("created_at DESC").page(params[:page]).per(5)
-    # @prayers = Prayer.order("created_at DESC").find(:all, :conditions => ["user_id = ?", @user.id]).page(params[:page]).per(5)
     @prayers = @user.prayer.order("created_at DESC").page(params[:page]).per(5)
         
     respond_to do |format|

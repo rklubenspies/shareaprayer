@@ -16,6 +16,7 @@ gem 'compass', git: 'https://github.com/chriseppstein/compass.git', branch: 'rai
 gem 'haml'
 gem 'cancan'
 gem 'kaminari'
+gem 'friendly_id', '~> 3.3.0', git: 'https://github.com/norman/friendly_id.git'
 
 # Local Environment
 group :test do
