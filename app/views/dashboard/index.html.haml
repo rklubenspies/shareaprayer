@@ -1,0 +1,24 @@
+.dashboard
+	.index
+		.sidebar
+			%h6 Worldwide Requests
+		.timeline
+			.top
+				.share
+					.box
+						Text Entry
+					.button
+						Button
+			.clear
+			%h3 Requests from #{link_to @user.group.name, @user.group}
+			.divider17
+				%hr{:style => "margin-top: 0;"}
+			.clear
+			- unless @prayers.blank?
+				.requests
+					= render :partial => "prayer", :collection => @prayers
+			- if @prayers.blank?
+				There are no prayer requests at this time.
+		.clear
+		.paginator
+			= paginate @prayers, :remote => true, :theme => 'github'

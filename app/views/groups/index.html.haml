@@ -1,0 +1,16 @@
+%h1 Listing groups
+
+%table
+	%thead
+		%tr
+			%th Name
+			%th Description
+
+	%tbody
+		- unless @groups.blank?
+			= render :partial => "group_table_item", :collection => @groups
+
+%br
+
+.paginator
+	= paginate @groups, :remote => true

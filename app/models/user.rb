@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   has_many :prayer
   belongs_to :group
   
+  validates_presence_of :provider, :uid, :token, :name, :screenname, :image, :provider_profile, :role
+  
   def to_param
     screenname
   end
