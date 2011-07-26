@@ -1,31 +1,31 @@
 class User < ActiveRecord::Base
-  has_many :prayer
-  belongs_to :group
+  has_many :authentications
   
-  validates_presence_of :provider, :uid, :token, :name, :screenname, :image, :provider_profile, :role
+  # Include default devise modules. Others available are:
+  # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
+
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :email, :password, :password_confirmation, :remember_me
   
-  def to_param
-    screenname
-  end
-  
-  def self.create_with_omniauth(auth)  
-    create! do |user|  
-      user.provider = auth["provider"]
-      user.uid = auth["uid"]
-      user.token = auth["credentials"]["token"]
-      user.name = auth["user_info"]["name"]
-      user.email = auth["user_info"]["email"]
-      user.screenname = auth["user_info"]["nickname"]
-      user.bio = auth["extra"]["user_hash"]["bio"]
-      user.religion = auth["extra"]["user_hash"]["religion"]
-      user.political = auth["extra"]["user_hash"]["politicial"]
-      user.image = auth["user_info"]["image"]
-      user.provider_profile = auth["extra"]["user_hash"]["link"]
-      user.role = "user"
+  def apply_omniauth(omniauth)
+    case omniauth['provider']
+    when 'facebook'
+      self.apply_facebook(omniauth)
     end
+    authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'], :token =>(omniauth['credentials']['token'] rescue nil))
   end
-  
+
   def facebook
-    @fb_user ||= FbGraph::User.me(self.token)
+    @fb_user ||= FbGraph::User.me(self.authentications.find_by_provider('facebook').token)
+  end
+
+
+  protected
+  def apply_facebook(omniauth)
+    if (extra = omniauth['extra']['user_hash'] rescue false)
+      self.email = (extra['email'] rescue '')
+    end
   end
 end

@@ -5,8 +5,9 @@ Shareaprayer::Application.routes.draw do
   match "/dashboard" => "dashboard#index", :as => :dashboard
 
   # OmniAuth
-  match "/auth/:provider/callback" => "sessions#create"
-  match "/signout" => "sessions#destroy", :as => :signout
+  match "/auth/:provider/callback" => "authentications#create"
+  devise_for :users, :controllers => { :registrations => 'registrations' }
+  resources :authentications
   
   # Resources
   resources :users, :path => "/profile", :except => [:index, :new, :create], :constraints => { :id => /[^\/]+/ } do

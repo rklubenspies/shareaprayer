@@ -60,6 +60,10 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.1.1)
+    devise (1.4.2)
+      bcrypt-ruby (~> 2.1.2)
+      orm_adapter (~> 0.0.3)
+      warden (~> 1.0.3)
     erubis (2.7.0)
     execjs (1.2.0)
       multi_json (~> 1.0)
@@ -141,6 +145,7 @@ GEM
       oa-more (= 0.2.6)
       oa-oauth (= 0.2.6)
       oa-openid (= 0.2.6)
+    orm_adapter (0.0.5)
     pg (0.11.0)
     polyglot (0.3.1)
     pyu-ruby-sasl (0.0.3.3)
@@ -205,6 +210,8 @@ GEM
     uglifier (1.0.0)
       execjs (>= 0.3.0)
       multi_json (>= 1.0.2)
+    warden (1.0.4)
+      rack (>= 1.0)
 
 PLATFORMS
   ruby
@@ -213,6 +220,7 @@ DEPENDENCIES
   cancan
   coffee-script
   compass!
+  devise
   execjs
   fbgraph
   friendly_id (~> 3.3.0)!

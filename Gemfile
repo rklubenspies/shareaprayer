@@ -9,6 +9,7 @@ gem 'coffee-script'
 gem 'uglifier'
 
 # Misc
+gem 'devise'
 gem 'jquery-rails'
 gem 'omniauth'
 gem 'fbgraph'
