@@ -3,26 +3,24 @@
 		.universal_sidebar
 			.name
 				%h2
-					= @prayer.user.name
+					= @prayer.user.profile.name
 			.basic
 				.profile_pic
-					= image_tag @prayer.user.image
+					= image_tag @prayer.user.profile.image
 				.info
 					%ul
-						%li #{@prayer.user.prayer.count} Prayer Requests
+						%li #{@prayer.user.prayers.count} Prayer Requests
 						%li Member of 
 			.bio
 				%b Bio:
 				%br
-				= @prayer.user.bio
-			.friendonfb
-				= link_to "Friend on Facebook", @prayer.user.provider_profile
+				= @prayer.user.profile.bio
 		.request
 			.details
 				.text
 					&quot;#{ @prayer.prayer }&quot;
 				.timestamp
-					Posted by #{link_to(@prayer.user.name, user_path(@prayer.user.screenname))}
+					Posted by #{link_to(@prayer.user.profile.name, user_path(@prayer.user.screenname))}
 					= timeago(@prayer.created_at)
 		.clear
 		.divider17
@@ -35,7 +33,7 @@
 				var disqus_shortname = 'example';
 				var disqus_identifier = '#{@prayer.id}';
 				var disqus_url = 'http://shareaprayer.org#{url_for user_prayer_path(@prayer.user.screenname, @prayer)}';
-				var disqus_title = '#{@prayer.user.name} shared a prayer: #{@prayer.prayer[0..40]}...';
+				var disqus_title = '#{@prayer.user.profile.name} shared a prayer: #{@prayer.prayer[0..40]}...';
 				/* * * DON'T EDIT BELOW THIS LINE * * */
 				(function() {
 				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

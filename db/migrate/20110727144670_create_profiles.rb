@@ -3,7 +3,6 @@ class CreateProfiles < ActiveRecord::Migration
     create_table :profiles do |t|
       t.string :name
       t.text :bio
-      t.string :screenname
       t.string :image
       t.integer :user_id
 

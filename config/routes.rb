@@ -10,7 +10,7 @@ Shareaprayer::Application.routes.draw do
   resources :authentications
   
   # Resources
-  resources :users, :path => "/profile", :except => [:index, :new, :create], :constraints => { :id => /[^\/]+/ } do
+  resources :users, :path => "/profile", :except => [:index, :new, :create] do
     resources :prayers, :except => [:index, :new, :create, :edit, :update]
   end
   

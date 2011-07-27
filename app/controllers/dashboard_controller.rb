@@ -5,7 +5,11 @@ class DashboardController < ApplicationController
   
   def index
     @user = current_user
-    @prayers = @user.group.prayer.order("created_at DESC").page(params[:page]).per(5)
+    if @user.group == nil
+      @prayers = nil
+    else
+      @prayers = @user.group.prayer.order("created_at DESC").page(params[:page]).per(5)
+    end
   end
   
   private
@@ -17,7 +21,7 @@ class DashboardController < ApplicationController
   end
   
   def check_screenname
-    if current_user.profile.screenname == nil
+    if current_user.screenname == nil
       # redirect_to settings_path
     end
   end

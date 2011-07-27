@@ -1,0 +1,31 @@
+.users
+	.show
+		.universal_sidebar
+			.name
+				%h2
+					= @user.profile.name
+			.basic
+				.profile_pic
+					= image_tag @user.profile.image
+				.info
+					%ul
+						%li #{@user.prayers.count} Prayer Requests
+						- if @user.group != nil
+							%li Member of #{link_to @user.group.name, @user.group}
+			.bio
+				%b Bio:
+				%br
+				= @user.profile.bio
+		.timeline
+			%h3 Timeline
+			.divider17
+				%hr{:style => "margin-top: 0;"}
+			.clear
+			- unless @prayers.blank?
+				.requests
+					= render :partial => "prayer", :collection => @prayers
+			- if @prayers.blank?
+				#{@user.profile.name} has no prayer requests!
+		.clear
+		.paginator
+			= paginate @prayers, :remote => true, :theme => 'github'

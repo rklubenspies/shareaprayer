@@ -4,13 +4,17 @@ class User < ActiveRecord::Base
   has_many :prayers
   belongs_to :group
   
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
-
-  # Setup accessible (or protected) attributes for your model
+  before_create :force_user_role
+  
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
   attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_protected :role
+  
+  validates_presence_of :role
+
+  def to_param
+    screenname
+  end
   
   def apply_omniauth(omniauth)
     case omniauth['provider']
@@ -36,10 +40,15 @@ class User < ActiveRecord::Base
     @fb_user ||= FbGraph::User.me(self.authentications.find_by_provider('facebook').token)
   end
 
-
   protected
   def apply_facebook(omniauth)
     self.email = (omniauth['extra']['user_hash']['email'] rescue '')
     self.build_profile(:name => omniauth['user_info']['name'], :bio => omniauth['extra']['user_hash']['bio'], :image => omniauth['user_info']['image'])
+  end
+  
+  def force_user_role
+    if role.nil?
+      self.role = "user" unless email.blank?
+    end
   end
 end
