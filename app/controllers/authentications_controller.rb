@@ -1,12 +1,10 @@
-class AuthenticationsController < ApplicationController
-  skip_authorization_check
-  
+class AuthenticationsController < ApplicationController  
   def index
     @authentications = current_user.authentications if current_user  
   end  
 
   def create
-    omniauth = request.env["omniauth.auth"]  
+    omniauth = request.env["omniauth.auth"]
     authentication = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])  
     if authentication  
       flash[:notice] = "Signed in successfully."  
@@ -33,5 +31,14 @@ class AuthenticationsController < ApplicationController
     @authentication.destroy  
     flash[:notice] = "Successfully destroyed authentication."  
     redirect_to authentications_url
+  end
+  
+  protected
+
+  # This is necessary since Rails 3.0.4
+  # See https://github.com/intridea/omniauth/issues/185
+  # and http://www.arailsdemo.com/posts/44
+  def handle_unverified_request
+    true
   end
 end

@@ -6,10 +6,10 @@
 	.nav
 		%p
 			#{link_to "Dashboard", dashboard_path}&nbsp;|
-			#{link_to "Profile", user_path(current_user.screenname)}&nbsp;|
+			#{link_to "Profile", "#"}&nbsp;|
 			- if current_user.group != nil
-				#{link_to "Group", group_path(current_user.group)}&nbsp;|
+				#{link_to "Group", "#"}&nbsp;|
 			- else
 				#{link_to "Browse Groups", groups_path}&nbsp;|
-			#{link_to "Logout", signout_path}
+			#{link_to "Logout", destroy_user_session_path, :method => :delete}
 	%hr

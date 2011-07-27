@@ -1,17 +1,17 @@
 .request
 	.profilepic
-		= image_tag prayer.user.image
+		= image_tag prayer.user.profile.image
 	.details
 		.text
-			= link_to prayer.user.screenname, user_path(prayer.user.screenname)
+			= link_to prayer.user.profile.screenname, user_path(prayer.user.profile.screenname)
 			&nbsp;
 			= prayer.prayer
 		.timestamp
 			Posted #{timeago(prayer.created_at)}&nbsp;
-			= link_to "Leave a Comment", user_prayer_path(prayer.user.screenname, prayer.id)
+			= link_to "Leave a Comment", user_prayer_path(prayer.user.profile.screenname, prayer.id)
 			- if can? :destroy, Prayer
 				&nbsp;&nbsp;
-				= link_to 'Destroy', user_prayer_path(prayer.user.screenname, prayer.id), :confirm => 'Are you sure?', :method => :delete
+				= link_to 'Destroy', user_prayer_path(prayer.user.profile.screenname, prayer.id), :confirm => 'Are you sure?', :method => :delete
 .clear
 .divider17
 	%hr

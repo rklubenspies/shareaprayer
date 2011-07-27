@@ -1,6 +1,6 @@
 class DashboardController < ApplicationController
-  skip_authorization_check
   before_filter :redirect_to_home
+  before_filter :check_screenname
   respond_to :html, :js
   
   def index
@@ -14,5 +14,11 @@ class DashboardController < ApplicationController
       redirect_to root_path
     end
     false
+  end
+  
+  def check_screenname
+    if current_user.profile.screenname == nil
+      # redirect_to settings_path
+    end
   end
 end

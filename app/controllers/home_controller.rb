@@ -1,5 +1,4 @@
 class HomeController < ApplicationController
-  skip_authorization_check
   before_filter :redirect_to_dashboard
   
   def index
