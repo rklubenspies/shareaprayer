@@ -6,7 +6,7 @@ class DashboardController < ApplicationController
   def index
     @user = current_user
     if @user.group == nil
-      @prayers = nil
+      @prayers = @user.prayers.order("created_at DESC").page(params[:page]).per(5)
     else
       @prayers = @user.group.prayer.order("created_at DESC").page(params[:page]).per(5)
     end

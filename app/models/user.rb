@@ -1,16 +1,18 @@
 class User < ActiveRecord::Base
-  has_many :authentications
-  has_one :profile
-  has_many :prayers
+  has_many :authentications, :dependent => :delete_all
+  has_one :profile, :dependent => :delete
+  has_many :prayers, :dependent => :delete_all
   belongs_to :group
   
   before_create :force_user_role
   
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
-  attr_accessible :email, :password, :password_confirmation, :remember_me
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :profile_attributes
   attr_protected :role
   
-  validates_presence_of :role
+  accepts_nested_attributes_for :profile
+  
+  validates_presence_of :role, :screenname
 
   def to_param
     screenname
@@ -42,8 +44,10 @@ class User < ActiveRecord::Base
 
   protected
   def apply_facebook(omniauth)
-    self.email = (omniauth['extra']['user_hash']['email'] rescue '')
-    self.build_profile(:name => omniauth['user_info']['name'], :bio => omniauth['extra']['user_hash']['bio'], :image => omniauth['user_info']['image'])
+    if self.profile != nil
+      self.email = (omniauth['extra']['user_hash']['email'] rescue '')
+      self.build_profile(:name => omniauth['user_info']['name'], :bio => omniauth['extra']['user_hash']['bio'], :image => omniauth['user_info']['image'])
+    end
   end
   
   def force_user_role

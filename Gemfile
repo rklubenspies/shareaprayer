@@ -18,6 +18,7 @@ gem 'haml'
 gem 'cancan'
 gem 'kaminari'
 gem 'friendly_id', '~> 3.3.0', git: 'https://github.com/norman/friendly_id.git'
+gem 'recaptcha', :require => 'recaptcha/rails'
 
 # Local Environment
 group :test do

@@ -1,0 +1,4 @@
+$(".notice").html("")
+- msg = @prayer.errors.map {|k,v| "#{k.to_s.titleize} #{v}"}
+- msg.each do |e|
+	$(".notice").append("#{e}<br>")

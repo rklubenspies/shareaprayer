@@ -11,7 +11,7 @@ Shareaprayer::Application.routes.draw do
   
   # Resources
   resources :users, :path => "/profile", :except => [:index, :new, :create] do
-    resources :prayers, :except => [:index, :new, :create, :edit, :update]
+    resources :prayers, :except => [:index, :new, :edit, :update]
   end
   
   resources :groups do

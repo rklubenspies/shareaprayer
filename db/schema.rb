@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110727152408) do
+ActiveRecord::Schema.define(:version => 20110728204337) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(:version => 20110727152408) do
     t.string   "cached_slug"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "prayers_count"
   end
 
   create_table "prayers", :force => true do |t|
@@ -76,6 +77,7 @@ ActiveRecord::Schema.define(:version => 20110727152408) do
     t.integer  "group_id"
     t.string   "screenname"
     t.string   "role"
+    t.integer  "prayers_count"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

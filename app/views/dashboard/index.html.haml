@@ -5,12 +5,16 @@
 		.timeline
 			.top
 				.share
-					.box
-						Text Entry
-					.button
-						Button
+					= form_tag user_prayers_path(@user.screenname), :method => :post, :remote => true do
+						.box
+							= text_area_tag :prayer
+						.button
+							= submit_tag
 			.clear
-			%h3 Requests from #{link_to @user.group.name, @user.group}
+			- if @user.group == nil
+				%h3 Prayer Requests you've shared
+			- else
+				%h3 Prayer Requests from #{link_to @user.group.name, @user.group}
 			.divider17
 				%hr{:style => "margin-top: 0;"}
 			.clear
@@ -20,5 +24,6 @@
 			- if @prayers.blank?
 				There are no prayer requests at this time.
 		.clear
-		.paginator
-			= paginate @prayers, :remote => true, :theme => 'github'
+		- unless @prayers.blank?
+			.paginator
+				= paginate @prayers, :remote => true, :theme => 'github'

@@ -1,4 +1,4 @@
-.request
+.request{ :id => "prayer_#{prayer.id}" }
 	.profilepic
 		= image_tag @user.profile.image
 	.details
@@ -9,8 +9,8 @@
 			= link_to "Leave a Comment", user_prayer_path(@user.screenname, prayer.id)
 			- if can? :destroy, Prayer
 				&nbsp;&nbsp;
-				= link_to 'Destroy', user_prayer_path(@user.screenname, prayer.id), :confirm => 'Are you sure?', :method => :delete
-.clear
-.divider17
+				= link_to 'Destroy', user_prayer_path(prayer.user.screenname, prayer.id), :remote => true, :confirm => 'Are you sure?', :method => :delete
+.clear{ :id => "prayer_#{prayer.id}" }
+.divider17{ :id => "prayer_#{prayer.id}" }
 	%hr
 .clear

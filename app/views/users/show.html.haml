@@ -9,7 +9,7 @@
 					= image_tag @user.profile.image
 				.info
 					%ul
-						%li #{@user.prayers.count} Prayer Requests
+						%li #{@user.prayers.size} Prayer Requests
 						- if @user.group != nil
 							%li Member of #{link_to @user.group.name, @user.group}
 			.bio
