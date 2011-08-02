@@ -24,4 +24,7 @@ Shareaprayer::Application.configure do
 
   # Do not compress assets
   config.assets.compress = false
+  
+  # ActionMailer uses AWS SES
+  config.action_mailer.delivery_method = :ses
 end
