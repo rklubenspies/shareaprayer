@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
   
   before_create :force_user_role
   
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable
   attr_accessible :email, :password, :password_confirmation, :remember_me, :profile_attributes
   attr_protected :role
   

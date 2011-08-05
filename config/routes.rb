@@ -5,8 +5,10 @@ Shareaprayer::Application.routes.draw do
   match "/dashboard" => "dashboard#index", :as => :dashboard
 
   # OmniAuth
+  match '/auth/facebook/logout' => 'application#facebook_logout', :as => :facebook_logout
   match "/auth/:provider/callback" => "authentications#create"
-  devise_for :users, :controllers => { :registrations => 'registrations' }
+  match '/auth/failure' => 'users/authentications#failure'
+  devise_for :users, :controllers => { :registrations => 'registrations', :sessions => 'sessions' }
   resources :authentications
   
   # Resources

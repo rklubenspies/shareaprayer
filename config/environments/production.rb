@@ -54,4 +54,9 @@ Shareaprayer::Application.configure do
   
   # ActionMailer uses AWS SES
   config.action_mailer.delivery_method = :ses
+  
+  # ActionMailer Host
+  config.action_mailer.default_url_options = {
+    :host => 'shareaprayer.org',
+  }
 end

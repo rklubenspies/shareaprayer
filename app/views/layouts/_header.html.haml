@@ -11,5 +11,8 @@
 				#{link_to "Group", group_path(current_user.group)}&nbsp;|
 			- else
 				#{link_to "Browse Groups", groups_path}&nbsp;|
-			#{link_to "Logout", destroy_user_session_path, :method => :delete}
+			- if session[:fb_token].nil?
+				#{link_to "Logout", destroy_user_session_path, :method => :delete}
+			-else
+				#{link_to "Logout", facebook_logout_path}
 	%hr

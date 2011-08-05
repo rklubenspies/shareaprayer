@@ -27,4 +27,10 @@ Shareaprayer::Application.configure do
   
   # ActionMailer uses AWS SES
   config.action_mailer.delivery_method = :ses
+  
+  # ActionMailer Host
+  config.action_mailer.default_url_options = {
+    :host => '127.0.0.1',
+    :port => '3000'
+  }
 end
