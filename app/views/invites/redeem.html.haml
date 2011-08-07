@@ -1,0 +1,6 @@
+%h2 Welcome to Share a Prayer
+%p
+	Your invite code is:
+	%b #{params[:invite_code]}
+%p
+	Click #{link_to 'here', new_user_registration_path + "?invite_code=" + params[:invite_code]} to register!

@@ -17,8 +17,13 @@ class Ability
       # User cannot edit, update, or destroy Groups
       can [:join, :leave], Group
       cannot [:create, :update, :destroy], Group
+      
+      # User cannot create or destory, but can update Invites
+      cannot [:read, :manage], Invite
     else
       can :read, :all
+      can [:create, :update], Invite
+      cannot :destroy, Invite
     end
     
     # The first argument to `can` is the action you are giving the user permission to do.

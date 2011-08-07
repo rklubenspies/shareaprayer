@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110728204337) do
+ActiveRecord::Schema.define(:version => 20110807200711) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -28,6 +28,16 @@ ActiveRecord::Schema.define(:version => 20110728204337) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "prayers_count"
+  end
+
+  create_table "invites", :force => true do |t|
+    t.string   "email"
+    t.string   "invite_code", :limit => 16
+    t.datetime "invited_at"
+    t.datetime "redeemed_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "identifier"
   end
 
   create_table "prayers", :force => true do |t|

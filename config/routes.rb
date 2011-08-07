@@ -8,6 +8,8 @@ Shareaprayer::Application.routes.draw do
   match '/auth/facebook/logout' => 'application#facebook_logout', :as => :facebook_logout
   match "/auth/:provider/callback" => "authentications#create"
   match '/auth/failure' => 'users/authentications#failure'
+  
+  # Authentication
   devise_for :users, :controllers => { :registrations => 'registrations', :sessions => 'sessions' }
   resources :authentications
   
@@ -22,6 +24,11 @@ Shareaprayer::Application.routes.draw do
       post 'leave'
     end
   end
+  
+  # Invites
+  resources :invites, :except => [:edit, :update, :show]
+  match '/send_invitation/:id' => 'invites#send_invitation', :as => 'send_invitation'
+  match '/redeem/:invite_code' => 'invites#redeem', :as => 'redeem_invitation'
   
   # API Namespace
   # This namespace allows us to call the API controllers with the api/ prefix on the URL

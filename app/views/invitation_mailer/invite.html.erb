@@ -1,0 +1,5 @@
+<p>Welcome <%= @invite.email %>!</p>
+
+<p>The wait for your Share a Prayer invite is over! Click the link below to redeem your invite:</p>
+
+<p><%= link_to 'Redeem my invite', redeem_invitation_url(@invite.invite_code) %></p>
