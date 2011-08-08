@@ -1,12 +1,10 @@
 Shareaprayer::Application.routes.draw do
-  root :to => "home#index"
-  
   # Dashboard
-  match "/dashboard" => "dashboard#index", :as => :dashboard
+  match '/dashboard' => 'dashboard#index', :as => :dashboard
 
   # OmniAuth
   match '/auth/facebook/logout' => 'application#facebook_logout', :as => :facebook_logout
-  match "/auth/:provider/callback" => "authentications#create"
+  match '/auth/:provider/callback' => 'authentications#create'
   match '/auth/failure' => 'users/authentications#failure'
   
   # Authentication
@@ -26,9 +24,8 @@ Shareaprayer::Application.routes.draw do
   end
   
   # Invites
-  resources :invites, :except => [:edit, :update, :show]
-  match '/send_invitation/:id' => 'invites#send_invitation', :as => 'send_invitation'
-  match '/redeem/:invite_code' => 'invites#redeem', :as => 'redeem_invitation'
+  resources :waitlists, :path => '/invites/waitlist'
+  
   
   # API Namespace
   # This namespace allows us to call the API controllers with the api/ prefix on the URL
@@ -38,4 +35,7 @@ Shareaprayer::Application.routes.draw do
   #     resources :groups, :except => [:create, :new], :defaults => { :format => 'json' }
   #     match '/' => "api#index"
   #   end
+  
+  # Root Route
+  root :to => 'home#index'
 end

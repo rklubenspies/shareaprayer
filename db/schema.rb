@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110807200711) do
+ActiveRecord::Schema.define(:version => 20110808014712) do
 
   create_table "authentications", :force => true do |t|
     t.integer  "user_id"
@@ -31,13 +31,10 @@ ActiveRecord::Schema.define(:version => 20110807200711) do
   end
 
   create_table "invites", :force => true do |t|
-    t.string   "email"
-    t.string   "invite_code", :limit => 16
-    t.datetime "invited_at"
-    t.datetime "redeemed_at"
+    t.string   "code"
+    t.string   "prefix"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "identifier"
   end
 
   create_table "prayers", :force => true do |t|
@@ -100,5 +97,11 @@ ActiveRecord::Schema.define(:version => 20110807200711) do
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
   add_index "users", ["unlock_token"], :name => "index_users_on_unlock_token", :unique => true
+
+  create_table "waitlists", :force => true do |t|
+    t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
