@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   belongs_to :group
   
   before_create :force_user_role
+  before_create :build_default_profile
   
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable
   attr_accessible :email, :password, :password_confirmation, :remember_me, :profile_attributes
@@ -41,7 +42,7 @@ class User < ActiveRecord::Base
   def facebook
     @fb_user ||= FbGraph::User.me(self.authentications.find_by_provider('facebook').token)
   end
-
+  
   protected
   def apply_facebook(omniauth)
     if self.profile != nil
@@ -50,9 +51,16 @@ class User < ActiveRecord::Base
     end
   end
   
+  private
   def force_user_role
     if role.nil?
       self.role = "user" unless email.blank?
     end
+  end
+  
+  private
+  def build_default_profile
+    build_profile
+    true
   end
 end

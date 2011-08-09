@@ -1,28 +1,28 @@
 class RegistrationsController < Devise::RegistrationsController
   def create
-    invite_code = params[:invite_code]
-    @invite = Invite.find_redeemable(invite_code)
+    invite_code = params[:code]
+    @invite = Invite.find_by_code(invite_code)
     
-    if invite_code && @invite 
+    if (invite_code && @invite) or current_user != nil
       if session[:omniauth] == nil #OmniAuth
         if verify_recaptcha
           super
           flash[:alert] = nil
           session[:omniauth] = nil unless @user.new_record? #OmniAuth
           if resource.save
-            @invite.redeemed!
+            @invite.destroy
           end
         else
           build_resource
           clean_up_passwords(resource)
           flash[:alert] = "There was an error with the recaptcha code below. Please re-enter the code and click submit."
-          params[:invite_code] = invite_code
+          params[:code] = invite_code
           render_with_scope :new
         end
       else
         super
         if resource.save
-          @invite.redeemed!
+          @invite.destroy
         end
         resource.build_profile
         profile.valid?

@@ -11,7 +11,11 @@ class PrayersController < ApplicationController
   
   # POST /prayers
   def create
-    @prayer = current_user.prayers.build(:prayer => params[:prayer], :source => "web")
+    if current_user.group != nil
+      @prayer = current_user.prayers.build(:prayer => params[:prayer], :group_id => current_user.group.id, :source => "web")
+    else
+      @prayer = current_user.prayers.build(:prayer => params[:prayer], :source => "web")
+    end
     
     respond_to do |format|
       if @prayer.save

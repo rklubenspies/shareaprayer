@@ -25,7 +25,7 @@ Shareaprayer::Application.routes.draw do
   
   # Invites
   resources :waitlists, :path => '/invites/waitlist'
-  
+  match '/invites/redeem/:code' => 'invites#redeem', :as => :redeem_invite  
   
   # API Namespace
   # This namespace allows us to call the API controllers with the api/ prefix on the URL

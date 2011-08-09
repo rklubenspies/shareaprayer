@@ -1,6 +1,6 @@
 class DashboardController < ApplicationController
   before_filter :redirect_to_home
-  before_filter :check_screenname
+  before_filter :check_profile
   respond_to :html, :js
   
   def index
@@ -20,9 +20,11 @@ class DashboardController < ApplicationController
     false
   end
   
-  def check_screenname
-    if current_user.screenname == nil
-      # redirect_to settings_path
+  private
+  def check_profile
+    profile = current_user.profile
+    if profile.name.nil?
+      redirect_to settings_path, :alert => "Please ensure that all required profile fields are filled in before using Share a Prayer."
     end
   end
 end
