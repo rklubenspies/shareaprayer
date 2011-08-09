@@ -8,6 +8,9 @@
 					= form_tag user_prayers_path(@user.screenname), :method => :post, :remote => true do
 						.box
 							= text_area_tag :prayer
+							%br
+							= check_box_tag :facebook
+							Please post as my Facebook status
 						.button
 							= submit_tag
 			.clear

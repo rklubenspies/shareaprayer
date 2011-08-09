@@ -1,10 +1,10 @@
 class Profile < ActiveRecord::Base
   has_one :user
+  after_find :update_info
   
-  def after_find
+  def update_info
     if self.image.nil?
-      self.image = "..."
-      # self.image = "http://rjkgameserver.dyndns.org/assets/generic_profile_image.png"
+      self.image = "/assets/generic_profile_image.png"
     end
     if self.bio.nil?
       self.bio = ""

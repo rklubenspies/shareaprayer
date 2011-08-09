@@ -8,8 +8,7 @@ class Ability
       can :read, :all
       
       # User can only update their account. User cannot create or destroy account.
-      can :update, User, :id => user.id
-      cannot [:create, :destroy], User
+      can :manage, User, :id => user.id
       
       # User can only create and destroy their own prayer requests
       can [:create, :destroy], Prayer, :user_id => user.id
@@ -17,13 +16,8 @@ class Ability
       # User cannot edit, update, or destroy Groups
       can [:join, :leave], Group
       cannot [:create, :update, :destroy], Group
-      
-      # User cannot create or destory, but can update Invites
-      cannot [:read, :manage], Invite
     else
       can :read, :all
-      can [:create, :update], Invite
-      cannot :destroy, Invite
     end
     
     # The first argument to `can` is the action you are giving the user permission to do.

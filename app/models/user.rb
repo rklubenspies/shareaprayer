@@ -1,3 +1,5 @@
+require 'fb_graph'
+
 class User < ActiveRecord::Base
   has_many :authentications, :dependent => :delete_all
   has_one :profile, :dependent => :delete
@@ -24,7 +26,7 @@ class User < ActiveRecord::Base
     when 'facebook'
       self.apply_facebook(omniauth)
     end
-    authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'], :token =>(omniauth['credentials']['token'] rescue nil))
+    authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'], :token => omniauth['credentials']['token'])
   end
   
   def password_required?  

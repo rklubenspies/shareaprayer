@@ -12,14 +12,14 @@ gem 'uglifier'
 gem 'devise'
 gem 'jquery-rails'
 gem 'omniauth'
-gem 'fbgraph'
+gem 'fb_graph'
 gem 'compass', git: 'https://github.com/chriseppstein/compass.git', branch: 'rails31'
 gem 'haml'
 gem 'cancan'
 gem 'kaminari'
 gem 'friendly_id', '~> 3.3.0', git: 'https://github.com/norman/friendly_id.git'
 gem 'recaptcha', :require => 'recaptcha/rails'
-gem "aws-ses", "~> 0.4.3", :require => 'aws/ses'
+gem 'aws-ses', '~> 0.4.3', :require => 'aws/ses'
 
 # Local Environment
 group :test do
