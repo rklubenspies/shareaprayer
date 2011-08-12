@@ -16,9 +16,19 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :profile
   
   validates_presence_of :role, :screenname
+  
+  delegate :image, :to => :profile, :prefix => true, :allow_nil => true
 
   def to_param
     screenname
+  end
+  
+  def picture_url
+    if profile_image.present?
+      profile_image
+    else
+      "/assets/generic_profile_image.png"   
+    end
   end
   
   def apply_omniauth(omniauth)

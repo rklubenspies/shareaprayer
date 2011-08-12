@@ -1,0 +1,35 @@
+<h2>Edit Profile</h2>
+
+<%= form_for(@profile, :url => update_settings_path) do |f| %>
+  <% if @profile.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@profile.errors.count, "error") %> prohibited this test from being saved:</h2>
+
+      <ul>
+      <% @profile.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :bio %><br />
+    <%= f.text_area :bio %>
+  </div>
+  <div class="field">
+    <%= f.label :image %><br />
+    <%= image_tag current_user.picture_url %><br />
+		(Your image will only be displayed if you connect your Facebook account to Share a Prayer)
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+	<br /><br />
+	<p>You can manage your account <%= link_to "here", edit_user_registration_path %>.<br />
+	You can manage your connections to Facebook and other web services <%= link_to "here", authentications_path %>.</p>
+<% end %>

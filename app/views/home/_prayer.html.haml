@@ -1,6 +1,6 @@
 .request{ :id => "prayer_#{prayer.id}" }
 	.profilepic
-		= image_tag prayer.user.profile.image
+		= image_tag prayer.user.picture_url
 	.details
 		.text
 			= link_to prayer.user.screenname, user_path(prayer.user.screenname)

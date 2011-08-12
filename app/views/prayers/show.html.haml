@@ -6,7 +6,7 @@
 					= @prayer.user.profile.name
 			.basic
 				.profile_pic
-					= image_tag @prayer.user.profile.image
+					= image_tag @prayer.user.picture_url
 				.info
 					%ul
 						%li #{@prayer.user.prayers.count} Prayer Requests

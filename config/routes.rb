@@ -25,7 +25,11 @@ Shareaprayer::Application.routes.draw do
   
   # Invites
   resources :waitlists, :path => '/invites/waitlist'
-  match '/invites/redeem/:code' => 'invites#redeem', :as => :redeem_invite  
+  match '/invites/redeem/:code' => 'invites#redeem', :as => :redeem_invite
+  
+  # Settings
+  match '/settings' => 'settings#index', :as => :settings, :via => :get
+  match '/settings' => 'settings#update', :as => :update_settings, :via => :put
   
   # API Namespace
   # This namespace allows us to call the API controllers with the api/ prefix on the URL
