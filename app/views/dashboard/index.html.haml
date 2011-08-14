@@ -1,18 +1,20 @@
 .dashboard
 	.index
 		.sidebar
-			%h6 Worldwide Requests
+			%h6 More coming here soon!
 		.timeline
+			.success
+				%p Your prayer request has been posted successfully!
 			.top
 				.share
-					= form_tag user_prayers_path(@user.screenname), :method => :post, :remote => true do
+					= form_tag user_prayers_path(@user.screenname), :method => :post, :remote => true, :id => "prayers" do
 						.box
 							= text_area_tag :prayer
 							%br
 							= check_box_tag :facebook
 							Please post as my Facebook status
 						.button
-							= submit_tag
+							= submit_tag "Share"
 			.clear
 			- if @user.group == nil
 				%h3 Prayer Requests you've shared

@@ -9,6 +9,7 @@ class DashboardController < ApplicationController
       @prayers = @user.prayers.order("created_at DESC").page(params[:page]).per(5)
     else
       @prayers = @user.group.prayer.order("created_at DESC").page(params[:page]).per(5)
+      # raise @prayers.to_yaml
     end
   end
   

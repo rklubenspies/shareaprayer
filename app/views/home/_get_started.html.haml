@@ -3,15 +3,30 @@
 	.number
 		1.
 	.description
-		Sign in below with your Facebook Account
-		= link_to (image_tag ("facebook_login.png")), "auth/facebook"
+		Request an invite #{link_to "here", new_waitlist_path}.
 .step
 	.number
 		2.
 	.description
-		Setup your profile page and join a prayer group
+		After receiving an invite code, go #{link_to "here", new_user_registration_path} to create an account.
 .step
 	.number
 		3.
 	.description
-		Start sharing prayers with family and friends!
+		Finally #{link_to "login", new_user_session_path} to start sharing prayers with family and friends!
+-# .step
+-# 	.number
+-# 		1.
+-# 	.description
+-# 		Sign in below with your Facebook Account
+-# 		= link_to (image_tag ("facebook_login.png")), "auth/facebook"
+-# .step
+-# 	.number
+-# 		2.
+-# 	.description
+-# 		Setup your profile page and join a prayer group
+-# .step
+-# 	.number
+-# 		3.
+-# 	.description
+-# 		Start sharing prayers with family and friends!

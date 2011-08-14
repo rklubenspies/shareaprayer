@@ -7,6 +7,7 @@ body
 	+blueprint-typography(true)
 	+container
 	overflow: auto !important
+	background: #FFF url(/assets/bg.png) repeat
 	
 	.header
 		.nologin
@@ -144,16 +145,29 @@ body
 					margin: 0 0 10px 0
 			.timeline
 				+column(17, true)
+				.success
+					display: none
 				.top
 					.share
+						height: 80px
 						.box
 							width: span(14)
-							height: 70px
 							float: left
+							textarea
+								width: 100%
+								height: 50px
 						.button
 							width: span(3)
-							height: 70px
 							float: right
+							input[type=submit]
+								color: #FFF
+								font-size: 16px
+								width: 135px
+								height: 55px
+								border: none
+								background: #98d1e9
+								&:hover
+									background: #52b2da
 				.requests
 					.request
 						height: 50px
