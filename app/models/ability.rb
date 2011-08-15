@@ -20,7 +20,7 @@ class Ability
 
   def initialize(user)
     user ||= User.new # guest user (not logged in)
-    if user.role == "user"
+    if user.role == "user" || user.role == "admin"
       # User can read everything on the site
       can :read, :all
       

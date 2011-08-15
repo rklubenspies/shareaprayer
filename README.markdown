@@ -53,7 +53,7 @@ Restful resource for groups.
 Displays the homepage for users who are not logged in.
 
 #### Invites
-Handles redemption of invites.
+Handles redemption of invites and powers invites dashboard for use by users with the "admin" role.
 
 #### Legal
 Contains static pages with legal copy such as the Terms of Service and Privacy Policy.

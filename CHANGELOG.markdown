@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.1.2 (August 15, 2011)
+*This is an emergency release. It fixes a bug that gave users with the "admin" role no permissions on the site.*
+#### Authors
+Robert Klubenspies
+
+#### Bug fixes
+*	**EMERGENCY:** No "admin" role in Ability class causes users with the "admin" role to have no permissions on the site.
+
+#### Features
+* Updated README to reflect invites dashboard (Added in 0.1.1).
+
 ## 0.1.1 (August 15, 2011)
 #### Authors
 Robert Klubenspies
