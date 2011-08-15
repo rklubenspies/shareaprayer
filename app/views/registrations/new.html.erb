@@ -28,7 +28,9 @@
 		<%= profile_form.text_area :bio %></p>
   <% end %>
 	
-	<%= recaptcha_tags %>
+	<%= recaptcha_tags %><br />
+	
+	<p>By registering for an account you are agreeing to our <%= link_to "Terms of Service", terms_path %> and <%= link_to "Privacy Policy", privacy_policy_path %>.<p>
 	
   <p><%= f.submit "Sign up" %></p>  
 <% end %>  
