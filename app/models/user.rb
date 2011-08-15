@@ -33,6 +33,7 @@ class User < ActiveRecord::Base
   accepts_nested_attributes_for :profile
   
   validates_presence_of :role, :screenname
+  validates_format_of :screenname, :with => /\A[a-zA-Z0-9_]{2,30}\Z/, :message => "may only contain letters, numbers, and underscores, and may only be between 2 and 30 characters."
   
   delegate :image, :to => :profile, :prefix => true, :allow_nil => true
 

@@ -27,19 +27,33 @@
 			%hr
 		.disqus
 			#disqus_thread
-			:javascript
-				/* * * VARIABLES * * */
-				var disqus_developer = 1;
-				var disqus_shortname = 'example';
-				var disqus_identifier = '#{@prayer.id}';
-				var disqus_url = 'http://shareaprayer.org#{url_for user_prayer_path(@prayer.user.screenname, @prayer)}';
-				var disqus_title = '#{@prayer.user.profile.name} shared a prayer: #{@prayer.prayer[0..40]}...';
-				/* * * DON'T EDIT BELOW THIS LINE * * */
-				(function() {
-				var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-				dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-				(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-				})();
+			- if Rails.env == "production"
+				:javascript
+					/* * * VARIABLES * * */
+					var disqus_shortname = 'shareaprayer';
+					var disqus_identifier = '#{@prayer.id}';
+					var disqus_url = 'http://shareaprayer.org#{url_for user_prayer_path(@prayer.user.screenname, @prayer)}';
+					var disqus_title = '#{@prayer.user.profile.name} shared a prayer: #{@prayer.prayer[0..40]}...';
+					/* * * DON'T EDIT BELOW THIS LINE * * */
+					(function() {
+					var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+					dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+					(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+					})();
+			- else
+				:javascript
+					/* * * VARIABLES * * */
+					var disqus_developer = 1;
+					var disqus_shortname = 'example';
+					var disqus_identifier = '#{@prayer.id}';
+					var disqus_url = 'http://shareaprayer.org#{url_for user_prayer_path(@prayer.user.screenname, @prayer)}';
+					var disqus_title = '#{@prayer.user.profile.name} shared a prayer: #{@prayer.prayer[0..40]}...';
+					/* * * DON'T EDIT BELOW THIS LINE * * */
+					(function() {
+					var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+					dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+					(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+					})();
 			%noscript
 				Please enable JavaScript to view the
 				%a{ :href => "http://disqus.com/?ref_noscript" }

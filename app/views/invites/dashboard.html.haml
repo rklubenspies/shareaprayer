@@ -1,0 +1,17 @@
+%h1 Invites Dashboard
+%h2 Waitlist
+%table
+	%tr
+		%td E-mail
+		%td Requested At
+		%td Invite
+	- unless @waitlists.blank?
+		= render :partial => "waitlist", :collection => @waitlists
+= paginate @waitlists
+
+%h2 Direct Invite
+= form_tag invites_dashboard_invite_email_path, :method => :post do
+	= label_tag :email
+	= text_field_tag :email
+	%br
+	= submit_tag "Send Invite"

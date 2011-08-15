@@ -16,10 +16,11 @@
 # along with Share a Prayer.  If not, see <http://www.gnu.org/licenses/>.
 
 class InvitationMailer < ActionMailer::Base
-  def invite(invitation)
-    @invite = invitation
+  def invite(waitlist, invite)
+    @waitlist = waitlist
+    @invite = invite
     mail :from => '"Share a Prayer" <noreply@shareaprayer.org>',
-         :to => invitation.email,
+         :to => waitlist.email,
          :subject => "Welcome to Share a Prayer"
   end
 end

@@ -1,3 +1,3 @@
 if !Rails.env.production?
-  APP_CONFIG = YAML.load_file("#{Rails.root}/config/keys.yml")[Rails.env]
+  ENV = YAML.load_file("#{Rails.root}/config/keys.yml")[Rails.env]
 end

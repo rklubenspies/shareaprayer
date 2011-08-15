@@ -1,0 +1,4 @@
+%tr
+	%td=waitlist.email
+	%td=waitlist.created_at
+	%td=link_to "Invite", invites_dashboard_invite_path(waitlist.id)

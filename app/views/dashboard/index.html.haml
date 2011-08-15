@@ -11,8 +11,9 @@
 						.box
 							= text_area_tag :prayer
 							%br
-							= check_box_tag :facebook
-							Please post as my Facebook status
+							- if @user.authentications.find_by_provider("facebook")
+								= check_box_tag :facebook
+								Please post as my Facebook status
 						.button
 							= submit_tag "Share"
 			.clear

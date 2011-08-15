@@ -9,7 +9,7 @@
 			= link_to "Leave a Comment", user_prayer_path(@user.screenname, prayer.id)
 			- if can? :destroy, Prayer
 				&nbsp;&nbsp;
-				= link_to 'Destroy', user_prayer_path(prayer.user.screenname, prayer.id), :remote => true, :confirm => 'Are you sure?', :method => :delete
+				= link_to 'Delete', user_prayer_path(prayer.user.screenname, prayer.id), :remote => true, :confirm => 'Are you sure?', :method => :delete
 .clear{ :id => "prayer_#{prayer.id}" }
 .divider17{ :id => "prayer_#{prayer.id}" }
 	%hr

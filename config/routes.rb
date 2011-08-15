@@ -16,10 +16,6 @@
 # along with Share a Prayer.  If not, see <http://www.gnu.org/licenses/>.
 
 Shareaprayer::Application.routes.draw do
-  get "legal/terms"
-
-  get "legal/privacy"
-
   # Dashboard
   match '/dashboard' => 'dashboard#index', :as => :dashboard
 
@@ -47,6 +43,9 @@ Shareaprayer::Application.routes.draw do
   # Invites
   resources :waitlists, :path => '/invites/waitlist'
   match '/invites/redeem/:code' => 'invites#redeem', :as => :redeem_invite
+  match '/invites/dashboard' => 'invites#dashboard', :as => :invites_dashboard
+  match '/invites/dashboard/invite/:id' => 'invites#invite', :as => :invites_dashboard_invite
+  match '/invites/dashboard/invite_email' => 'invites#invite_email', :as => :invites_dashboard_invite_email, :via => :post
   
   # Settings
   match '/settings' => 'settings#index', :as => :settings, :via => :get
