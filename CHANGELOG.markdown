@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.3 (August 15, 2011)
+*This is an emergency release. It adds Google Analytics tracking code which was needed immediately for statistical reasons.*
+#### Authors
+Robert Klubenspies
+
+#### Features
+* **EMERGENCY:** Added Google Analytics tracking code to application layout.
+
 ## 0.1.2 (August 15, 2011)
 *This is an emergency release. It fixes a bug that gave users with the "admin" role no permissions on the site.*
 #### Authors
