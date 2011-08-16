@@ -17,7 +17,7 @@
 				%b Members:
 				%br
 				- @group.user.each do |u|
-					= link_to image_tag(u.profile.image), user_path(u.screenname)
+					= link_to image_tag(u.picture_url), user_path(u.screenname)
 			.joingroup
 				- if current_user
 					- if current_user.group == nil

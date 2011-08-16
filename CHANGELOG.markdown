@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.4 (August 16, 2011)
+#### Authors
+Robert Klubenspies
+
+#### Bug fixes
+*	Profile pictures on Group pages do not render.
+
+#### Features
+*	Added "Settings" link to top right of logged in header. 
+
 ## 0.1.3 (August 15, 2011)
 *This is an emergency release. It adds Google Analytics tracking code which was needed immediately for statistical reasons.*
 #### Authors
