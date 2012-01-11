@@ -14,6 +14,11 @@ Shareaprayer::Application.routes.draw do
     end
   end
   
+  resources :prayers, :only => [:index, :create, :show] do
+    get 'report', :on => :member
+    get 'prayed_for', :on => :member
+  end
+  
   resources :prayers, :only => [:index, :create, :show], :path => '' do
     get 'report', :on => :member
     get 'prayed_for', :on => :member
