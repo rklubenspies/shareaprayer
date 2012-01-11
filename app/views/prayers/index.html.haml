@@ -1,0 +1,172 @@
+%section#home-index.animated.fadeInDown
+	.row
+		.span8
+			%ul.tabs{:data => {:tabs => "tabs"}}
+				%li.active
+					%a{:href => "#prayers"} Prayer Requests
+				%li
+					%a{:href => "#new-prayer"} Submit a Prayer Request
+				%li
+					%a{:href => "#about"} About Share a Prayer
+
+			.tab-content
+				.tab-pane.active#prayers
+					.prayers{:"data-last" => "#{@prayers.last.created_at.utc}"}
+						-unless @prayers.blank?
+							=render @prayers
+					
+					#no-more-prayers.alert-message.warning.hide
+						%p
+							%strong Uh-oh!
+							We don't have any more prayer requests to show you right now.
+					
+				.tab-pane#new-prayer
+					#new-prayer-result
+						#posted.alert-message.success.hide{:data => {:alert => "alert"}}
+							%a.close{:href => "#"} &times;
+							%p
+								%strong Request Posted!
+								We'll be sure to email you a link to it so that you can share it on and comment on it with your friends!
+
+					#new-prayer-assembly
+						%p Want to share a prayer request with the world? Fill out the following form and we'll be sure to put your request online right away.
+						%br
+						=form_for :prayer, :url => { :controller => "prayers", :action => "create" }, :html => { :id => "prayer-form" }, :remote => true do |f|
+							.clearfix
+								=f.label :name, "Your Name"
+								.input
+									=f.text_field :name, :class => "span5", :placeholder => "John Smith", :id => "prayer_name", :required => "required"
+									%span.help-block We'll display your name below your prayer request.
+
+							.clearfix
+								=f.label :email, "Your Email"
+								.input
+									=f.email_field :email, :class => "span5", :placeholder => "john@example.com", :id => "prayer_email", :required => "required"
+									%span.help-block We'll never show others your email address.
+
+							.clearfix
+								=f.label :request, "Prayer Request"
+								.input
+									=f.text_area :request, :class => "span5", :placeholder => "Mauris iaculis porttitor posuere. Praesent id metus massa.", :id => "prayer_request", :rows => "5", :required => "required", :maxlength => "160"
+									%span.help-block Please keep it within 160 characters
+
+							.clearfix
+								.input
+									%ul.inputs-list
+										%li
+											%label
+												=f.check_box :email_me, {:checked => true}
+												%span Yes, please email me a link to my prayer request's page
+
+							.actions
+								%input.btn.primary{:name => "commit", :type => "submit", :value => "Post Request"}
+								%input.btn{:name => "reset", :type => "reset", :value => "Cancel"}
+				
+				.tab-pane#about
+					%h3 The Story
+					%p Share a Prayer is a simple, minimalistic way to share prayer requests and pray for others. The brainchild of #{link_to "Shane Maloy","http://shanemaloy.com/"} and #{link_to "Robert Klubenspies","http://robertklubenspies.com/"}, Share a Prayer started back in the Summer of 2010. A recent influx in interest in the project has sparked active development. The new, redesigned version of Share a Prayer features a bleeding-edge design, an account-less prayer sharing system, and a continuous feed of prayer requests from around the world. The most recent version has been open-sourced under the MIT license so that others may learn from Share a Prayer, or help support continuing development. We hope you that enjoy Share a Prayer and may God be with you in your journey.
+					
+					%br
+						
+					%h3 The Mission
+					%p It is our goal at Share a Prayer to become the premier prayer sharing website. We offer something unique; our minimalistic experience allows users to get straight to what matters most: prayer.
+					%p.mission Our mission is to glorify God through providing a universal, minimalistic prayer sharing experience for everyone.
+					
+					%br
+					
+					%h3 The Team
+					%p Share a Prayer is actively maintained and run by two Florida geeks, #{link_to "Robert Klubenspies","http://robertklubenspies.com/"} and #{link_to "Shane Maloy","http://shanemaloy.com/"}. Community support is encouraged and Share a Prayer is an open source web app on #{link_to "Github","http://github.com/shareaprayer/shareaprayer/"}.
+					
+					%br
+
+					.row
+						.span2
+							=image_tag "rklubenspies.png"
+						.span6
+							%h4
+								Robert Klubenspies
+								%small Web Application Developer
+							%p
+								I'm a geek, no doubt. Among other things I'm a rubyist, theorist, idealist, and metaphysicist. I believe that every website or web app that you use should be beautiful, minimalist, and help you accomplish your goals in a fraction of amount of time they would normally consume. Utilizing Ruby, HTML 4/5, CSS 3, and NoSQL data stores, I strive to build beautiful interfaces and web apps for myself and clients.
+								%small #{link_to "robertklubenspies.com","http://robertklubenspies.com/"}
+					%br
+					.row
+						.span2
+							=image_tag "smaloy.png"
+						.span6
+							%h4
+								Shane Maloy
+								%small Marketer
+							%p
+								I am a 17 year old website designer from Orlando, FL with a passion to glorify God in all that I do. Besides occasional work and dual enrollment at Seminole State College, I enjoy bike rides, working on my car, Starbucks, Chipotle, music, leading worship at my church and photography. I play a 1970’s Gibson SG, a 1983 Fender Stratocaster and a Ibanez Acoustic guitar. I love playing guitar, bass, drums, synth, and even a little keyboard. Overall, I’m just a geek.
+								%small #{link_to "shanemaloy.com","http://shanemaloy.com/"}
+			
+			=render 'shared/footer'
+
+-# Gritter notificaitons, new prayer form validations, and continuous scrolling
+:javascript
+	$(document).ready(function(){
+		#{add_gritter("Share a Prayer is a new, minimalistic way to share prayer requests online. Check out the \"About Share a Prayer\" tab for more on our mission.", :title => "Welcome to Share a Prayer!", :sticky => true, :class_name => "gritter-light")}
+		#{extend_gritter :fade_in_speed => 2000}
+	});
+	
+	// New prayer form validation
+	// SEE: https://github.com/twitter/bootstrap/issues/202
+	// SEE: Edit starting on line 648 of assets/javascripts/jquery.validate.js to make help-block show up.
+	$('#prayer-form').validate({
+	    errorClass:'error',
+	    validClass:'success',
+	    errorElement:'span',
+	    highlight: function (element, errorClass, validClass) { 
+	        $(element).parents("div[class='clearfix']").addClass(errorClass).removeClass(validClass); 
+	    }, 
+	    unhighlight: function (element, errorClass, validClass) { 
+	        $(element).parents(".error").removeClass(errorClass).addClass(validClass); 
+	    }
+	});	
+	
+	// Infinite scrolling
+	(function() {
+	  loading = false,
+	  finish = false;
+
+	  function nearBottomOfPage() {
+	    return $(window).scrollTop() > $(document).height() - $(window).height() - 200;
+	  }
+	
+	  function onPrayersTab() {
+	    if ($("#prayers").hasClass("active")) {
+				return true;
+			}
+			else {
+				return false
+			}
+	  }
+
+	  function finish() {
+	    finish = true;
+	  }
+
+	  $(window).scroll(function(){
+	    if (loading) {
+	      return;
+	    }
+
+	    if(nearBottomOfPage() && onPrayersTab() && !finish) {
+	      loading=true;
+				
+				#{add_gritter("Loading more prayer requests", :title => "Loading...", :time => 2000)}
+				
+				$.ajax({
+					url: '/',
+					data: {
+						last: $('.prayers').data('last')
+					},
+					dataType: 'script',
+				  success: function() {
+	          loading=false;
+	        }
+				});
+	    }
+	  });
+	}());

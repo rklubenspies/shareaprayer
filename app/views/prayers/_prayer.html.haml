@@ -1,0 +1,11 @@
+.row
+	.span8
+		%a.prayer-link{:href => prayer_path(prayer)}
+			%h3 #{prayer.request[0..36]}...
+			%p ...#{prayer.request[37..160]}
+			%p{:style => "margin-top: -5px; text-align: right;"}
+				%small -#{prayer.name}
+
+-# %li
+-# 	%strong Prayer Request
+-# 	%p Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget.

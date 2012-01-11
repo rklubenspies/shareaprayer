@@ -1,0 +1,9 @@
+// Display a message after the message was sent
+$("#new-prayer-assembly").fadeOut("slow")
+$("#posted").slideDown("slow");
+$(".prayers").prepend("<div class='page'><%= escape_javascript(render(@prayer)) %></div>");
+
+// Clear each of the form fields
+$("#prayer_name").val('')
+$("#prayer_email").val('')
+$("#prayer_request").val('')

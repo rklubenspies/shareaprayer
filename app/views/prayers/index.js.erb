@@ -1,0 +1,8 @@
+<% unless @prayers.blank? %>
+	$(".prayers").append("<div class='page'><%= escape_javascript(render(@prayers)) %></div>");
+	$(".prayers").data('last', '<%=@prayers.last.created_at%>')
+<% else %>
+	// Show the no more prayers notice
+	$("#no-more-prayers").show();
+	finish();
+<% end %>

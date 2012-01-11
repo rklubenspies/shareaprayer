@@ -1,0 +1,2 @@
+$("#home-show-prayed-for").html("Prayer recorded").removeClass("success").addClass("disabled");
+$(".prayed_for").html("<%= escape_javascript("#{pluralize @prayer.times_prayed_for, "person"} prayed for this.") %>");

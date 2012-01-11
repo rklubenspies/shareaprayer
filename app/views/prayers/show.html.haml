@@ -1,0 +1,65 @@
+%section#home-show.animated.fadeInLeft
+	.row
+		.span8
+			%h2 #{@prayer.request[0..36]}...
+			%p ...#{@prayer.request[37..160]}
+			%p.prayed_for #{pluralize @prayer.times_prayed_for, "person"} prayed for this. 
+			%p
+				%small Posted by #{@prayer.name} #{timeago(@prayer.created_at)}
+			%p
+				=link_to "Back", prayers_path, :class => "btn"
+				
+				-if @already_prayed_for
+					=link_to "You already prayed for this", "#", :class => "btn success disabled", :id => "home-show-prayed-for"
+				-else
+					=link_to "I prayed for this", prayed_for_prayer_path(@prayer), :remote => true, :class => "btn success", :id => "home-show-prayed-for"
+				
+				-if @already_reported
+					=link_to "You already reported this content", "#", :class => "btn danger disabled", :id => "home-show-report"
+				-else
+					=link_to "Report Content", report_prayer_path(@prayer), :remote => true, :class => "btn danger", :id => "home-show-report"
+	
+	.row
+		.span8
+			.disqus
+				#disqus_thread
+				- if Rails.env == "production"
+					:javascript
+						/* * * VARIABLES * * */
+						var disqus_shortname = 'shareaprayer';
+						var disqus_identifier = '#{@prayer.id}';
+						var disqus_url = 'http://shareaprayer.org/#{@prayer.id}';
+						var disqus_title = 'Prayer Request: #{@prayer.request[0..40]}...';
+						/* * * DON'T EDIT BELOW THIS LINE * * */
+						(function() {
+						var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+						dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+						(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+						})();
+				- else
+					:javascript
+						/* * * VARIABLES * * */
+						var disqus_developer = 1;
+						var disqus_shortname = 'example';
+						var disqus_identifier = '#{@prayer.id}';
+						var disqus_url = 'http://shareaprayer.org/#{@prayer.id}';
+						var disqus_title = 'Prayer Request: #{@prayer.request[0..40]}...';
+						/* * * DON'T EDIT BELOW THIS LINE * * */
+						(function() {
+						var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+						dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+						(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+						})();
+				%noscript
+					Please enable JavaScript to view the
+					%a{ :href => "http://disqus.com/?ref_noscript" }
+						comments powered by Disqus.
+
+	.row
+		.span8
+			=render 'shared/footer'
+
+:javascript
+	$(document).ready(function(){
+		jQuery("time#timeago").timeago();
+	});
