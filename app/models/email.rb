@@ -5,8 +5,8 @@ class Email
   include Mongoid::Timestamps::Created
   include Gravtastic
   
-  gravtastic :filetype => :png,
-             :size => 50
+  is_gravtastic! :filetype => :png,
+                 :size => 50
   
   field :email, type: String
   

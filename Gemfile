@@ -1,16 +1,25 @@
 source 'http://rubygems.org'
 
+# Rails
 gem 'rails', '3.1.3'
 gem 'sass-rails',   '~> 3.1.5'
+
+# Gravatar
+gem 'gravtastic'
+
+# MongoDB
+gem 'bson_ext'
+gem 'mongoid', '>= 2.0.0.beta.19'
+
+# AWS
 gem 'aws-sdk'
+
+# Layout & UI
 gem 'haml', '>= 3.0.0'
 gem 'haml-rails'
 gem 'jquery-rails'
 gem 'bootstrap-sass'
-gem 'bson_ext'
-gem 'mongoid', '>= 2.0.0.beta.19'
 gem 'gritter', '1.0.0'
-gem 'gravtastic'
 
 # Gems used only for assets and not required
 # in production environments by default.
