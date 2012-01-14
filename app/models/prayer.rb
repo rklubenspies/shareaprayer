@@ -7,6 +7,7 @@ class Prayer
   field :ip_address, type: String
   field :times_prayed_for, type: Integer, default: 0
   field :reported, type: Integer, default: 0
+  field :gravatar_id, type: String
   
   attr_protected :id, :times_prayed_for
   

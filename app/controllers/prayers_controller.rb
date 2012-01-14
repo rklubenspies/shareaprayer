@@ -18,6 +18,7 @@ class PrayersController < ApplicationController
     params[:prayer].delete :email_me
     
     params[:prayer][:ip_address] = request.env['REMOTE_ADDR']
+    params[:prayer][:gravatar_id] = Digest::MD5.hexdigest(@email.email.downcase)
     
     @prayer = @email.prayers.build(params[:prayer])
     

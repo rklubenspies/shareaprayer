@@ -2,6 +2,7 @@
 	.span8
 		%a.prayer-link{:href => prayer_path(prayer)}
 			.profile-pic
+				=image_tag "http://www.gravatar.com/avatar/#{prayer.gravatar_id}?size=50"
 				-# =image_tag prayer.gravatar_url
 			.request
 				%h3 #{prayer.request[0..36]}...
