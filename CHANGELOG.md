@@ -2,7 +2,7 @@
 
 ## 0.1.1
 
-* **[Feature]** Gravatar support added
+* **[Feature]** Gravatar support added. See issue #1 and issue #4.
 * **[Polish]** Improved feedback on submit page
 * **[Bug Fix]** Fixed a bug where controller ignored user's choice to receive permalink email. See issue #3.
 
