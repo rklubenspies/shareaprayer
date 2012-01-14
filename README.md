@@ -101,7 +101,7 @@ Used to email user the permalink of a new prayer request that they posted.
 
 ## Feature Requests
 
-Please make all feature requests as detailed as possible and add them to the [issue tracker][issues]. Please add "[FEATURE]" to the beginning of the issue's title so that we know that you are submitting a feature request and not a bug or fix.
+Please make all feature requests as detailed as possible and add them to the [issue tracker][issues]. Please add "[FEATURE]" to the beginning of the issue's title so that we know that you are submitting a feature request and not a bug.
 
 ## Bugs & Fixes
 
@@ -109,7 +109,7 @@ Please make all feature requests as detailed as possible and add them to the [is
 If you find a bug please report it to the [issue tracker][issues].
 
 ### Fixes
-If you've fixed a bug, please submit a pull request to this repository with a detailed explanation of what you fixed. Also be sure to add your name and email address to the CONTRIBUTORS file in the format of `Foo Bar <foo.bar@example.com>` if you would like recognition as a contributor.
+If you've fixed a bug, please submit a pull request to this repository with a detailed explanation of what you fixed. When the pull request is accepted, Github will automatically add your username to the [contributors list][contributors].
 
 ## Changelog
 
@@ -119,13 +119,9 @@ Please see the CHANGELOG.md file.
 
 Please see the LICENSE file.
 
-## Authors
-
-Please see the AUTHORS file.
-
 ## Contributors
 
-Please see the CONTRIBUTORS files.
+Please see [Github's contributors list][contributors].
 
 ## Copyright
 
@@ -139,3 +135,4 @@ Share a Prayer is Copyright (C) 2012 Robert Klubenspies. All rights reserved.
 [mongodb]: http://www.mongodb.org/
 [brew]: http://mxcl.github.com/homebrew/
 [issues]: https://github.com/shareaprayer/shareaprayer/issues
+[contributors]: https://github.com/shareaprayer/shareaprayer/contributors
