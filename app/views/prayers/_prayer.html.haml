@@ -1,10 +1,13 @@
 .row
 	.span8
 		%a.prayer-link{:href => prayer_path(prayer)}
-			%h3 #{prayer.request[0..36]}...
-			%p ...#{prayer.request[37..160]}
-			%p{:style => "margin-top: -5px; text-align: right;"}
-				%small -#{prayer.name}
+			.profile-pic
+				=image_tag gravatar_url(prayer.email)
+			.request
+				%h3 #{prayer.request[0..36]}...
+				%p ...#{prayer.request[37..160]}
+				%p{:style => "margin-top: -5px; text-align: right;"}
+					%small -#{prayer.name}
 
 -# %li
 -# 	%strong Prayer Request
