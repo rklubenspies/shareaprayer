@@ -2,7 +2,7 @@
 	.span8
 		%a.prayer-link{:href => prayer_path(prayer)}
 			.profile-pic
-				=image_tag prayer.email.gravatar_url
+				-# =image_tag prayer.gravatar_url
 			.request
 				%h3 #{prayer.request[0..36]}...
 				%p ...#{prayer.request[37..160]}

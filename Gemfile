@@ -4,9 +4,6 @@ source 'http://rubygems.org'
 gem 'rails', '3.1.3'
 gem 'sass-rails',   '~> 3.1.5'
 
-# Gravatar
-gem 'gravtastic'
-
 # MongoDB
 gem 'bson_ext'
 gem 'mongoid', '>= 2.0.0.beta.19'
