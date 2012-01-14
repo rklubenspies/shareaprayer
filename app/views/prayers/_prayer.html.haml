@@ -5,8 +5,16 @@
 				=image_tag "http://www.gravatar.com/avatar/#{prayer.gravatar_id}?size=50"
 				-# =image_tag prayer.gravatar_url
 			.request
-				%h3 #{prayer.request[0..36]}...
-				%p ...#{prayer.request[37..160]}
+				-if prayer.request.length <= 36
+					%h3=prayer.request
+				-else
+					%h3
+						=prayer.request[0..36]
+						%span.continued ...
+					%p
+						%span.continued ...
+						=prayer.request[37..160]
+				
 				%p{:style => "margin-top: -5px; text-align: right;"}
 					%small -#{prayer.name}
 

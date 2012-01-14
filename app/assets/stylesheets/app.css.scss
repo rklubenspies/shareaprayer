@@ -21,7 +21,10 @@ section {
 		
 #posted {
 	display: none; }
-	
+
+.continued {
+	color: #d9d9d9; }
+
 .prayer-link {
 	.profile-pic {
 		width: 50px;
@@ -130,5 +133,5 @@ a.prayer-link {
 		text-decoration: none;
 		h3 {
 			color: $gray; }
-	&:visited {
-		color: $black; } } }
+		&:visited {
+			color: $black; } } }

@@ -1,8 +1,16 @@
 %section#home-show.animated.fadeInLeft
 	.row
 		.span8
-			%h2 #{@prayer.request[0..36]}...
-			%p ...#{@prayer.request[37..160]}
+			-if @prayer.request.length <= 36
+				%h2=@prayer.request
+			-else
+				%h2
+					=@prayer.request[0..36]
+					%span.continued ...
+				%p
+					%span.continued ...
+					=@prayer.request[37..160]
+			
 			%p.prayed_for #{pluralize @prayer.times_prayed_for, "person"} prayed for this. 
 			%p
 				%small Posted by #{@prayer.name} #{timeago(@prayer.created_at)}
