@@ -22,11 +22,23 @@
 					
 				.tab-pane#new-prayer
 					#new-prayer-result
-						#posted.alert-message.success.hide{:data => {:alert => "alert"}}
+						#posted-email.alert-message.success.hide{:data => {:alert => "alert"}}
 							%a.close{:href => "#"} &times;
 							%p
 								%strong Request Posted!
-								We'll be sure to email you a link to it so that you can share it on and comment on it with your friends!
+								We'll be sure to email you a link to it so that you can share it and comment on it with your friends!
+								
+						#posted-no-email.alert-message.success.hide{:data => {:alert => "alert"}}
+							%a.close{:href => "#"} &times;
+							%p
+								%strong Request Posted!
+								Per your request, we have not emailed you a link to your prayer request.
+						
+						#post-error.alert-message.error.hide{:data => {:alert => "alert"}}
+							%a.close{:href => "#"} &times;
+							%p
+								%strong We encountered an error!
+								Please try submitting your prayer request again later. If the problem persists, please email dev@shareaprayer.org.
 
 					#new-prayer-assembly
 						%p Want to share a prayer request with the world? Fill out the following form and we'll be sure to put your request online right away.
@@ -99,7 +111,7 @@
 						.span6
 							%h4
 								Shane Maloy
-								%small Marketer
+								%small Promoter
 							%p
 								I am a 17 year old website designer from Orlando, FL with a passion to glorify God in all that I do. Besides occasional work and dual enrollment at Seminole State College, I enjoy bike rides, working on my car, Starbucks, Chipotle, music, leading worship at my church and photography. I play a 1970’s Gibson SG, a 1983 Fender Stratocaster and a Ibanez Acoustic guitar. I love playing guitar, bass, drums, synth, and even a little keyboard. Overall, I’m just a geek.
 								%small #{link_to "shanemaloy.com","http://shanemaloy.com/"}
@@ -113,6 +125,20 @@
 		#{extend_gritter :fade_in_speed => 2000}
 	});
 	
+	// Disable submit button on submit
+	$('#prayer-form').submit(function(){
+		$('input[type=submit]', this).attr('disabled', 'disabled');
+		$('input[type=reset]', this).attr('disabled', 'disabled');
+		$("#post-error").fadeOut("slow");
+	});
+	
+	// Bind to ajax:error event to display feeback
+	$("#prayer-form").bind("ajax:error", function() {
+		$("#post-error").slideDown("slow");
+		$('input[type="submit"]').removeAttr('disabled');
+		$('input[type="reset"]').removeAttr('disabled');
+	});
+	
 	// New prayer form validation
 	// SEE: https://github.com/twitter/bootstrap/issues/202
 	// SEE: Edit starting on line 648 of assets/javascripts/jquery.validate.js to make help-block show up.
@@ -121,11 +147,15 @@
 	    validClass:'success',
 	    errorElement:'span',
 	    highlight: function (element, errorClass, validClass) { 
-	        $(element).parents("div[class='clearfix']").addClass(errorClass).removeClass(validClass); 
+				$(element).parents("div[class='clearfix']").addClass(errorClass).removeClass(validClass); 
 	    }, 
 	    unhighlight: function (element, errorClass, validClass) { 
-	        $(element).parents(".error").removeClass(errorClass).addClass(validClass); 
-	    }
+				$(element).parents(".error").removeClass(errorClass).addClass(validClass); 
+	    },
+			invalidHandler: function(form, validator) {
+				$('input[type="submit"]').removeAttr('disabled');
+				$('input[type="reset"]').removeAttr('disabled');
+			}
 	});	
 	
 	// Infinite scrolling

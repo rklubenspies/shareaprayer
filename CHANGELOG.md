@@ -2,7 +2,9 @@
 
 ## 0.1.1
 
-* **[Feature]** Gravatar support added by commit 4d3a117c000aaf7767202f686da4ee9118eb1743
+* **[Feature]** Gravatar support added
+* **[Polish]** Improved feedback on submit page
+* **[Bug Fix]** Fixed a bug where controller ignored user's choice to receive permalink email. See issue #3.
 
 ## 0.1.0
 

@@ -1,6 +1,15 @@
-// Display a message after the message was sent
-$("#new-prayer-assembly").fadeOut("slow")
-$("#posted").slideDown("slow");
+// Display a message after the message was sent, fade out error (if any)
+$("#new-prayer-assembly").fadeOut("slow");
+$("#post-error").fadeOut("slow");
+
+// Determine which success message to display
+<% if @email_me == "1" %>
+	$("#posted-email").slideDown("slow");
+<% else %>
+	$("#posted-no-email").slideDown("slow");
+<% end %>
+
+// Add request to list on homepage
 $(".prayers").prepend("<div class='page'><%= escape_javascript(render(@prayer)) %></div>");
 
 // Clear each of the form fields

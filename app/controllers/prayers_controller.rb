@@ -14,7 +14,7 @@ class PrayersController < ApplicationController
     
     params[:prayer].delete :email
     
-    email_me = params[:prayer][:email_me]
+    @email_me = params[:prayer][:email_me]
     params[:prayer].delete :email_me
     
     params[:prayer][:ip_address] = request.env['REMOTE_ADDR']
@@ -22,8 +22,10 @@ class PrayersController < ApplicationController
     @prayer = @email.prayers.build(params[:prayer])
     
     if @prayer.save
-      if email_me
+      if @email_me == "1"
         PrayerMailer.permalink_email(@prayer).deliver
+      else
+        puts "User chose not to have permalink emailed." # Log that user did not want email
       end
     end
   end

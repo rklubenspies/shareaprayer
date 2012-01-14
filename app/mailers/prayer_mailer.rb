@@ -1,5 +1,4 @@
 class PrayerMailer < ActionMailer::Base
-  # include ActionController::UrlWriter
   default_url_options[:host] = 'shareaprayer.org'
   default from: "noreply@shareaprayer.org"
   
