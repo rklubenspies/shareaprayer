@@ -10,6 +10,7 @@ gem 'bootstrap-sass'
 gem 'bson_ext'
 gem 'mongoid', '>= 2.0.0.beta.19'
 gem 'gritter', '1.0.0'
+gem 'gravtastic'
 
 # Gems used only for assets and not required
 # in production environments by default.
