@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.1.2
+* **[Polish]** Updated Terms of Service to reduce wording in beginning and add link to privacy policy.
+
 ## 0.1.1
 
 * **[Feature]** Gravatar support added. See issue #1 and issue #4.
