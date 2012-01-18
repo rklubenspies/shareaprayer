@@ -2,6 +2,7 @@
 
 ## 0.1.2
 * **[Polish]** Updated Terms of Service to reduce wording in beginning and add link to privacy policy.
+* **[Polish]** Clarified stance on spam and email privacy.
 
 ## 0.1.1
 
