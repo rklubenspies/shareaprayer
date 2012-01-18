@@ -2,6 +2,7 @@
 
 ## 0.1.2
 * **[Feature]** Added logic to new prayer request to allow "Anonymous" postings.
+* **[Feature]** Gravatar is shown on new prayer request form.
 * **[Polish]** Updated Terms of Service to reduce wording in beginning and add link to privacy policy.
 * **[Polish]** Clarified stance on spam and email privacy.
 

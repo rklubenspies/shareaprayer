@@ -66,6 +66,17 @@
 								.input
 									=f.email_field :email, :class => "span5", :placeholder => "john@example.com", :id => "prayer_email", :required => "required"
 									%span.help-block We will never share your email address or spam you.
+									
+							.clearfix.hide#form_profile_icon
+								%label Profile Icon
+								.input
+									.alert-message{:data => {:alert => "alert"}}
+										%a.close{:href => "#"} &times;
+										%p
+											%strong This is your profile icon
+											that will display next to your prayer request. We use Gravatar to display this image. Gravatar is an online service that provides you with a profile image that you can use all over the internet. If you have a Gravatar you should see it below, otherwise you should see the default big "G" on a blue background. You can get a Gravatar at #{link_to "gravatar.com", "http://gravatar.com/"}.
+									%span#prayer_gravatar
+										=image_tag "http://www.gravatar.com/avatar/?size=100"
 
 							.clearfix
 								=f.label :request, "Prayer Request"
@@ -131,6 +142,12 @@
 	$(document).ready(function(){
 		#{add_gritter("Share a Prayer is a new, minimalistic way to share prayer requests online. Check out the \"About Share a Prayer\" tab for more on our mission.", :title => "Welcome to Share a Prayer!", :sticky => true, :class_name => "gritter-light")}
 		#{extend_gritter :fade_in_speed => 2000}
+	});
+	
+	// Blur action for email address field triggers Gravatar load/reload
+	$('#prayer_email').blur(function() {
+		$('#prayer_gravatar').html($.gravatar($(this).val(), {size: '100'}));
+		$('#form_profile_icon').slideDown();
 	});
 	
 	// Click action for anonymous button
