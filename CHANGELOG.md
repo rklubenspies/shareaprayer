@@ -1,6 +1,7 @@
 # Changelog
 
 ## 0.1.2
+* **[Feature]** Added logic to new prayer request to allow "Anonymous" postings.
 * **[Polish]** Updated Terms of Service to reduce wording in beginning and add link to privacy policy.
 * **[Polish]** Clarified stance on spam and email privacy.
 

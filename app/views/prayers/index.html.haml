@@ -55,10 +55,11 @@
 						%br
 						=form_for :prayer, :url => { :controller => "prayers", :action => "create" }, :html => { :id => "prayer-form" }, :remote => true do |f|
 							.clearfix
-								=f.label :name, "Your Name"
+								=f.label :name, "First Name"
 								.input
-									=f.text_field :name, :class => "span5", :placeholder => "John Smith", :id => "prayer_name", :required => "required"
-									%span.help-block We'll display your name below your prayer request.
+									=f.text_field :name, :class => "span2", :placeholder => "Joe", :id => "prayer_name", :required => "required"
+									%input.btn#anonymous_name{:type => "button", :value => "I'd prefer to be anonymous"}
+									%span.help-block We'll display your first name below your prayer request.
 
 							.clearfix
 								=f.label :email, "Your Email"
@@ -130,6 +131,13 @@
 	$(document).ready(function(){
 		#{add_gritter("Share a Prayer is a new, minimalistic way to share prayer requests online. Check out the \"About Share a Prayer\" tab for more on our mission.", :title => "Welcome to Share a Prayer!", :sticky => true, :class_name => "gritter-light")}
 		#{extend_gritter :fade_in_speed => 2000}
+	});
+	
+	// Click action for anonymous button
+	$('#anonymous_name').click(function() {
+		$('#prayer_name').val("Anonymous").addClass('uneditable-input').attr('readonly', true);
+		$('#anonymous_name').val("We will respect your privacy").attr('disabled', 'disabled');
+		$('#prayer_name').nextAll(".help-block").text("Your request will be posted anonymously");
 	});
 	
 	// Disable submit button on submit
