@@ -11,7 +11,9 @@
 			%section
 				.row
 					.span8#logo
-						=link_to image_tag("logo.png"), prayers_path
+						-# SOPA LOGO
+						=link_to image_tag("logo_sopa.png"), "http://americancensorship.org/", :target => "_blank"
+						-# =link_to image_tag("logo.png"), prayers_path
 			=yield
 		
 		#fb-root
