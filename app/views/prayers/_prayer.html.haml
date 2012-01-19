@@ -4,19 +4,7 @@
 			.profile-pic
 				=image_tag "http://www.gravatar.com/avatar/#{prayer.gravatar_id}?size=50"
 			.request
-				-if prayer.request.length <= 36
-					%h3=prayer.request
-				-else
-					%h3
-						=prayer.request[0..36]
-						%span.continued ...
-					%p
-						%span.continued ...
-						=prayer.request[37..160]
+				%span.text "#{prayer.request}"
 				
 				%p{:style => "margin-top: -5px; text-align: right;"}
 					%small -#{prayer.name.split(" ")[0]}
-
--# %li
--# 	%strong Prayer Request
--# 	%p Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget.

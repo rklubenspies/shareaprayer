@@ -29,11 +29,15 @@ section {
 	.profile-pic {
 		width: 50px;
 		margin-right: 10px;
-		margin-top: 12px;
+		margin-top: 5px;
 		float: left; }
 	.request {
 		width: 560px;
-		float: right; } }
+		float: right; } 
+		.text {
+			font-size: 16px;
+			line-height: 20px;
+			font-weight: 400; } }
 	
 #about {
 	h4 {

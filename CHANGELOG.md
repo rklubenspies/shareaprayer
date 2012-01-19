@@ -8,6 +8,7 @@
 * **[Polish]** Display only first names of prayer request authors
 * **[Polish]** No longer splits up prayer requests on permalinked pages
 * **[Polish]** Displays Gravatar on permalinked pages and changed positioning of buttons and such to fit.
+* **[Polish]** Prayer requests are no longer split on homepage and h3 elements are no longer used.
 
 ## 0.1.1
 
