@@ -44,14 +44,11 @@
 						#spam-for-jerks.alert-message.info{:data => {:alert => "alert"}}
 							%a.close{:href => "#"} &times;
 							%p
-								%strong Spam is for jerks!
+								%strong Spam is for loosers!
 								At Share a Prayer we're all about creating a community and bringing people together. We believe that spam destroy community and trust. We will never share your email address or spam you. See our #{link_to "privacy policy", privacy_path} for more details.
 						
 						%p Want to share a prayer request with the world? Fill out the following form and we'll be sure to put your request online right away.
 						
-						%p
-							%strong Side note:
-							We use Gravatar to display a profile image next to your prayer request. Gravatar is an online service that provides you with a globally recognized avatar for your online presence. If you don't have a Gravatar, you can get one at #{link_to "gravatar.com", "http://gravatar.com/"}. If you do not have a Gravatar, we'll just display the silhouette of a person in it's place next to your prayer request.
 						%br
 						=form_for :prayer, :url => { :controller => "prayers", :action => "create" }, :html => { :id => "prayer-form" }, :remote => true do |f|
 							.clearfix

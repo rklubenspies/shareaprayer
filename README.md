@@ -67,7 +67,7 @@ Below is a rough breakdown of how the application is organized:
 ### Models
 
 #### Email
-Stores email addresses of people who post prayer requests. Gravtastic (for Gravatar support) can be found here. Each email address has many Prayers.
+Stores email addresses of people who post prayer requests. Each email address has many Prayers.
 
 #### Prayer
 Stores prayer requests. Each prayer request belongs to an Email.
