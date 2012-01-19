@@ -3,7 +3,6 @@
 		%a.prayer-link{:href => prayer_path(prayer)}
 			.profile-pic
 				=image_tag "http://www.gravatar.com/avatar/#{prayer.gravatar_id}?size=50"
-				-# =image_tag prayer.gravatar_url
 			.request
 				-if prayer.request.length <= 36
 					%h3=prayer.request
@@ -16,7 +15,7 @@
 						=prayer.request[37..160]
 				
 				%p{:style => "margin-top: -5px; text-align: right;"}
-					%small -#{prayer.name}
+					%small -#{prayer.name.split(" ")[0]}
 
 -# %li
 -# 	%strong Prayer Request
