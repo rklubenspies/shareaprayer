@@ -1,0 +1,64 @@
+%div#prayers{:"data-role" => "page"}
+	%div{:"data-role" => "header"}
+		%h1=link_to image_tag("logo_mobile.png")
+
+	%div{:"data-role" => "content"}
+		%ul.ui-listview{:"data-role" => "listview"}
+			-unless @prayers.blank?
+				=render @prayers
+
+	%div{:"data-role" => "footer", :"data-position" => "fixed"}
+		%div{:"data-role" => "navbar"}
+			%ul
+				%li
+					%a{:href => "#prayers"} All Requests
+				%li
+					%a{:href => "#new-prayer"} Add Request
+				%li
+					%a{:href => "#about"} About
+					
+%div#new-prayer{:"data-role" => "page"}
+	%div{:"data-role" => "header"}
+		%h1=link_to image_tag("logo_mobile.png")
+
+	%div{:"data-role" => "content"}
+		%p New request
+
+	%div{:"data-role" => "footer", :"data-position" => "fixed"}
+		%div{:"data-role" => "navbar"}
+			%ul
+				%li
+					%a{:href => "#prayers"} All Requests
+				%li
+					%a{:href => "#new-prayer"} Add Request
+				%li
+					%a{:href => "#about"} About
+					
+%div#about{:"data-role" => "page"}
+	%div{:"data-role" => "header"}
+		%h1=link_to image_tag("logo_mobile.png")
+
+	-# TODO: Improve these looks
+	%div{:"data-role" => "content"}
+		%div{:"data-role" => "collapsible-set", :"data-theme" => "c", :"data-content-theme" => "c"}
+			%div{:"data-role" => "collapsible", :"data-collapsed" => "false"}
+				%h3 The Story
+				=render 'shared/about_story'
+	
+			%div{:"data-role" => "collapsible"}
+				%h3 The Mission
+				=render 'shared/about_mission'
+	
+			%div{:"data-role" => "collapsible"}
+				%h3 The Team
+				= render 'shared/about_team'
+
+	%div{:"data-role" => "footer", :"data-position" => "fixed"}
+		%div{:"data-role" => "navbar"}
+			%ul
+				%li
+					%a{:href => "#prayers"} All Requests
+				%li
+					%a{:href => "#new-prayer"} Add Request
+				%li
+					%a{:href => "#about"} About

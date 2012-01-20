@@ -1,4 +1,6 @@
 class PrayersController < ApplicationController
+  respond_to_mobile_requests :skip_xhr_requests => false
+  
   def index
     last = params[:last].blank? ? Time.now.utc + 1.second : Time.parse(params[:last])
     @prayers = Prayer.feed(last)
