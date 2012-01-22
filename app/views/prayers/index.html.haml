@@ -137,7 +137,7 @@
 -# Gritter notificaitons, new prayer form validations, and continuous scrolling
 :javascript
 	$(document).ready(function(){
-		#{add_gritter("Share a Prayer is a new, minimalistic way to share prayer requests online. Check out the \"About Share a Prayer\" tab for more on our mission.", :title => "Welcome to Share a Prayer!", :sticky => true, :class_name => "gritter-light")}
+		#{add_gritter("Share a Prayer is a new, minimalistic way to share prayer requests online. Check out the \"About Share a Prayer\" tab for more on our mission.", :title => "Welcome to Share a Prayer!", :time => 10000, :class_name => "gritter-light")}
 		#{extend_gritter :fade_in_speed => 2000}
 	});
 	
