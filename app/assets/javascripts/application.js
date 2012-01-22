@@ -8,4 +8,4 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require gritter
-//= require_directory .
+//= require_tree .

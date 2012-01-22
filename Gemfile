@@ -18,10 +18,6 @@ gem 'jquery-rails'
 gem 'bootstrap-sass'
 gem 'gritter', '1.0.0'
 
-# Mobile Web App
-gem 'jquery_mobile_rails'
-gem 'mobylette'
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
