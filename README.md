@@ -32,23 +32,21 @@ SAP requires that certain environmental variables be in place for development, t
 #### Setup for Development and Testing Environments
 We've included a nifty initializer `_load_config.rb` that will automagically load all of your environmental variable from a YAML file for development and testing. In order to use it, simply add a YAML file called `keys.yml` to your `config` directory. Don't worry this file is excluded from version control by default. The file should look something like this:
 
-	# Default API keys and MongoDB URL
-	defaults:
+	# For running production test server locally
+	production:
 	  AWS_KEY: 'AAAABBBBCCCCDDDDEEEE'
 	  AWS_SECRET: '1111222233334444555566667777888899990000'
 	  MONGODB_URL: 'mongodb://user:password@server_url:port/database'
 	
-	# For running production test server locally
-	production:
-	  <<: *defaults
-	
 	# For running local development server
 	development:
-	  <<: *defaults
+	  AWS_KEY: 'AAAABBBBCCCCDDDDEEEE'
+	  AWS_SECRET: '1111222233334444555566667777888899990000'
 	
 	# For running local testing server
 	testing:
-	  <<: *defaults
+	  AWS_KEY: 'AAAABBBBCCCCDDDDEEEE'
+	  AWS_SECRET: '1111222233334444555566667777888899990000'
 
 Whenever your run Rails locally this will automatically configure your environmental variables, even if you're testing your app in production on a local staging server!
 
