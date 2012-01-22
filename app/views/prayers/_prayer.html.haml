@@ -5,6 +5,9 @@
 				=image_tag "http://www.gravatar.com/avatar/#{prayer.gravatar_id}?size=50"
 			.request
 				%span.text "#{prayer.request}"
-				
-				%p{:style => "margin-top: -5px; text-align: right;"}
-					%small -#{prayer.name.split(" ")[0]}
+				%small -#{prayer.name.split(" ")[0]}
+			.prayed-for
+				-if already_prayed_for? prayer.id
+					=link_to image_tag("prayed_for_icon.png"), "#", :class => "btn disabled", :"data-prayed-for-id" => prayer.id, :rel => "twipsy", :title => prayed_for_number(true, prayer.times_prayed_for)
+				-else
+					=link_to image_tag("prayed_for_icon.png"), prayed_for_prayer_path(prayer), :remote => true, :class => "btn", :"data-prayed-for-id" => prayer.id, :rel => "twipsy", :title => prayed_for_number(false, prayer.times_prayed_for) + " Click here to pray for this."

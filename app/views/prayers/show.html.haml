@@ -9,7 +9,7 @@
 	
 	.row
 		.span8
-			%p.prayed_for #{pluralize @prayer.times_prayed_for, "person"} prayed for this. 
+			%p.prayed_for=prayed_for_number(@already_prayed_for, @prayer.times_prayed_for)
 			%p
 				=link_to "Back", prayers_path, :class => "btn"
 				

@@ -1,2 +1,10 @@
-$("#home-show-prayed-for").html("Prayer recorded").removeClass("success").addClass("disabled");
-$(".prayed_for").html("<%= escape_javascript("#{pluralize @prayer.times_prayed_for, "person"} prayed for this.") %>");
+if($("#home-show-prayed-for").length > 0) {
+	$("#home-show-prayed-for").html("Prayer recorded").removeClass("success").addClass("disabled");
+	$(".prayed_for").html("<%= escape_javascript(prayed_for_number(true, @prayer.times_prayed_for)) %>");
+} else if($("a[data-prayed-for-id=<%= @prayer.id %>]").length > 0) {
+	console.log("Yay index page!");
+	$("a[data-prayed-for-id=<%= @prayer.id %>]").html("<%= escape_javascript(image_tag("prayed_for_icon.png")) %>").removeClass("success").addClass("disabled");
+	$("a[data-prayed-for-id=<%= @prayer.id %>]").attr("title", "<%= escape_javascript(prayed_for_number(true, @prayer.times_prayed_for)) %>").twipsy('hide').twipsy('show');
+} else {
+	console.log("Error with UJS response.");
+}

@@ -1,7 +1,10 @@
 class PrayersController < ApplicationController
+  # helper_method :already_prayed_for
+
   def index
     last = params[:last].blank? ? Time.now.utc + 1.second : Time.parse(params[:last])
     @prayers = Prayer.feed(last)
+    @session = session[:prayed_for]
 
     respond_to do |format|
       format.js
@@ -37,6 +40,20 @@ class PrayersController < ApplicationController
     @already_reported = (session[:reported] ||= []).include? params[:id]
   end
 
+  def prayed_for
+    @prayer = Prayer.find(params[:id])
+    
+    @prayer.inc(:times_prayed_for, 1)
+    
+    if @prayer.save
+      (session[:prayed_for] ||= []) << params[:id]
+    end
+    
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def report
     @prayer = Prayer.find(params[:id])
     
@@ -54,17 +71,10 @@ class PrayersController < ApplicationController
     end
   end
   
-  def prayed_for
-    @prayer = Prayer.find(params[:id])
-    
-    @prayer.inc(:times_prayed_for, 1)
-    
-    if @prayer.save
-      (session[:prayed_for] ||= []) << params[:id]
-    end
-    
-    respond_to do |format|
-      format.js
-    end
-  end
+  # private
+  # def already_prayed_for(id)
+  #   @already_prayed_for = (session[:prayed_for] ||= []).include? id
+  #   puts @already_prayed_for
+  #   return @already_prayed_for
+  # end
 end
