@@ -22,9 +22,6 @@ section, header {
 #posted {
 	display: none; }
 
-.continued {
-	color: #d9d9d9; }
-
 .prayer-link {
 	.profile-pic {
 		width: 50px;
@@ -37,7 +34,7 @@ section, header {
 		float: left;
 		padding-right: 10px; }
 		small {
-			color: #d9d9d9;
+			color: #8d8d8d;
 			font-size: 11px; } 
 		.text {
 			font-size: 16px;
@@ -61,6 +58,9 @@ section, header {
 		font-size: 20px;
 		line-height: 24px;
 		font-weight: 500; }
+	small {
+		color: #8d8d8d;
+		font-size: 11px; }
 	img {
 		margin-top: 5px; }
 	.prayed_for {
