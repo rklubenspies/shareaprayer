@@ -3,7 +3,7 @@
 Share a Prayer is a simple, minimalistic way to share prayer requests and pray for others. The brainchild of [Shane Maloy][smaloy] and [Robert Klubenspies][rklubenspies], Share a Prayer started back in the Summer of 2010. A recent influx in interest in the project has sparked active development. The new, redesigned version of Share a Prayer features a bleeding-edge design, an account-less prayer sharing system, and a continuous feed of prayer requests from around the world. We have open-sourced Share a Prayer under the MIT license so that others may learn from it, or help support continuing development.
 
 ## Documentation
-Share a Prayer uses [YARD][yard] for code documentation. The docs can be found online at [http://rubydoc.info/github/shareaprayer/shareaprayer/][rubydoc].
+Share a Prayer uses [YARD][yard] for code documentation. The docs can be found online at [RubyDocs][rubydoc].
 
 ## Requirements and Setup
 
@@ -131,7 +131,7 @@ Share a Prayer is Copyright (C) 2012 Robert Klubenspies. All rights reserved.
 [smaloy]: http://shanemaloy.com/
 [rklubenspies]: http://robertklubenspies.com/
 [yard]: http://yardoc.org/
-[rubydoc]: http://rubydoc.info/github/shareaprayer/shareaprayer/
+[rubydoc]: http://rubydoc.info/github/shareaprayer/shareaprayer/master/frames
 [rails]: http://rubyonrails.org/
 [ruby]: http://www.ruby-lang.org/
 [rvm]: http://beginrescueend.com/
