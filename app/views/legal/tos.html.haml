@@ -1,4 +1,6 @@
+-# HTML5 section for terms of service
 %section#legal-tos.animated.fadeInDown
+	-# Create CSS grid row for terms of service
 	.row
 		.span8
 			%h2 Terms of Use
@@ -48,6 +50,7 @@
 			
 			%p=link_to "Home", prayers_path, :class => "btn"
 	
+	-# Display footer partial in new row
 	.row
 		.span8
 			=render 'shared/footer'

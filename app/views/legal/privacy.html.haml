@@ -1,4 +1,6 @@
+-# HTML5 section for privacy policy
 %section#legal-privacy.animated.fadeInDown
+	-# Create CSS grid row for privacy policy
 	.row
 		.span8
 			%h2 Privacy Policy
@@ -35,6 +37,7 @@
 			
 			%p=link_to "Home", prayers_path, :class => "btn"
 	
+	-# Display footer partial in new row
 	.row
 		.span8
 			=render 'shared/footer'

@@ -1,3 +1,4 @@
+// If there are any prayer requests in the array append them and set the data-last attribute, otherwise show the no more prayers notice
 <% unless @prayers.blank? %>
 	$(".prayers").append("<%= escape_javascript(render(@prayers)) %>");
 	$(".prayers").data('last', '<%=@prayers.last.created_at%>')

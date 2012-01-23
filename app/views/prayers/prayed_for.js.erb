@@ -1,10 +1,14 @@
+// If we're on the permalink page change the button text, disable the button, and change the prayed for number
 if($("#home-show-prayed-for").length > 0) {
 	$("#home-show-prayed-for").html("Prayer recorded").removeClass("success").addClass("disabled");
 	$(".prayed_for").html("<%= escape_javascript(prayed_for_number(true, @prayer.times_prayed_for)) %>");
+
+// If we're on the homepage disable the button, update the prayed for number in the tooltip, and then refresh the tooltip (by hiding it and showing it again)
 } else if($("a[data-prayed-for-id=<%= @prayer.id %>]").length > 0) {
-	console.log("Yay index page!");
 	$("a[data-prayed-for-id=<%= @prayer.id %>]").html("<%= escape_javascript(image_tag("prayed_for_icon.png")) %>").removeClass("success").addClass("disabled");
 	$("a[data-prayed-for-id=<%= @prayer.id %>]").attr("title", "<%= escape_javascript(prayed_for_number(true, @prayer.times_prayed_for)) %>").twipsy('hide').twipsy('show');
+
+// If we're not on the permalink page or the homepage than there was an error and we should log it
 } else {
 	console.log("Error with UJS response.");
 }

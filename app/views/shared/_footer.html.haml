@@ -1,4 +1,7 @@
-.fb-like{:data => {:href => "http://shareaprayer.org/", :send => "false", :width => "620", :"show-faces" => "false", :action => "recommend"}}
+-# If in production mode, show Facebook reccomend button
+- if Rails.env == "production"
+	.fb-like{:data => {:href => "http://shareaprayer.org/", :send => "false", :width => "620", :"show-faces" => "false", :action => "recommend"}}
 
+-# Copyright/trademark statement w/ links to policies
 %p
 	%small &copy; 2012 Robert Klubenspies. #{link_to "Terms of Use", tos_path} and #{link_to "Privacy", privacy_path}.<br>The Share a Prayer name, logo, and all related marketing materials are the trademark of Robert Klubenspies.

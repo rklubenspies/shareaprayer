@@ -1,31 +1,40 @@
+-# HTML5 Doctype
 !!! 5
 %html
 	%head
 		%title Share a Prayer
+		-# Include stylesheet and javascript manifests
 		=stylesheet_link_tag    "application"
 		=javascript_include_tag "application"
+		
+		-# Meta tags to protect from cross site request forgery
 		=csrf_meta_tags
-
+	
 	%body
+		-# Center everything on the page in the container
 		.container
-			%section
+			-# HTML5 header for the logo
+			%header
 				.row
 					.span8#logo
-						-# SOPA LOGO
-						-# =link_to image_tag("logo_sopa.png"), "http://americancensorship.org/", :target => "_blank"
 						=link_to image_tag("logo.png"), prayers_path
+			
+			-# Yield all other content from views here
 			=yield
 		
-		#fb-root
-		:javascript
-			(function(d, s, id) {
-			  var js, fjs = d.getElementsByTagName(s)[0];
-			  if (d.getElementById(id)) return;
-			  js = d.createElement(s); js.id = id;
-			  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=245221078839860";
-			  fjs.parentNode.insertBefore(js, fjs);
-			}(document, 'script', 'facebook-jssdk'));
-			
+		-# If in production mode, setup Facebook reccomend button
+		- if Rails.env == "production"
+			#fb-root
+			:javascript
+				(function(d, s, id) {
+				  var js, fjs = d.getElementsByTagName(s)[0];
+				  if (d.getElementById(id)) return;
+				  js = d.createElement(s); js.id = id;
+				  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=245221078839860";
+				  fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));
+		
+		-# If in production mode, track Google Analytics
 		- if Rails.env == "production"
 			:javascript
 				var _gaq = _gaq || [];
