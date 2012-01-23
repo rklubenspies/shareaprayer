@@ -11,6 +11,7 @@
 * **[Polish]** Displays Gravatar on permalinked pages and changed positioning of buttons and such to fit.
 * **[Polish]** Prayer requests are no longer split on homepage and h3 elements are no longer used.
 * **[Polish]** Made Gritter welcome message automatically disappear after 10 seconds
+* **[Note]** Added code documentation and cleaned up backend code
 
 ## 0.1.1
 

@@ -2,6 +2,9 @@
 
 Share a Prayer is a simple, minimalistic way to share prayer requests and pray for others. The brainchild of [Shane Maloy][smaloy] and [Robert Klubenspies][rklubenspies], Share a Prayer started back in the Summer of 2010. A recent influx in interest in the project has sparked active development. The new, redesigned version of Share a Prayer features a bleeding-edge design, an account-less prayer sharing system, and a continuous feed of prayer requests from around the world. We have open-sourced Share a Prayer under the MIT license so that others may learn from it, or help support continuing development.
 
+## Documentation
+Share a Prayer uses [YARD][yard] for code documentation. The docs can be found online at [http://rubydoc.info/github/shareaprayer/shareaprayer/][rubydoc].
+
 ## Requirements and Setup
 
 Share a Prayer (SAP) is built on [Rails 3.1][rails] and uses Mongoid for data persistence instead of ActiveRecord. Because of this you will have to have MongoDB running on your development machine before running the SAP Rails app (See Install and Running MongoDB below). You will also need to set certain environmental variables for the application to run correctly (see Environmental Variables below) The requirements to run SAP are:
@@ -60,7 +63,7 @@ Either way, you'll need to have the three environmental variables available in t
 
 ## Architecture
 
-Below is a rough breakdown of how the application is organized:
+Below is a quick and dirty breakdown of how the application is organized, always refer to the [documentation][rubydoc] when in doubt.
 
 ### Models
 
@@ -127,6 +130,8 @@ Share a Prayer is Copyright (C) 2012 Robert Klubenspies. All rights reserved.
 
 [smaloy]: http://shanemaloy.com/
 [rklubenspies]: http://robertklubenspies.com/
+[yard]: http://yardoc.org/
+[rubydoc]: http://rubydoc.info/github/shareaprayer/shareaprayer/
 [rails]: http://rubyonrails.org/
 [ruby]: http://www.ruby-lang.org/
 [rvm]: http://beginrescueend.com/

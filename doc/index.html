@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.7.4
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  relpath = '';
+  if (relpath != '') relpath += '/';
+</script>
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <script type="text/javascript" charset="utf-8">
+      if (window.top.frames.main) document.body.className = 'frames';
+    </script>
+    
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html" title="Index">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+  
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a id="class_list_link" href="#">Class List</a>
+  
+    <a id="method_list_link" href="#">Method List</a>
+  
+    <a id="file_list_link" href="#">File List</a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+    
+    <iframe id="search_frame"></iframe>
+    
+    <div id="content"><div id='filecontents'><h1>Welcome to the Share a Prayer open-source project</h1>
+
+<p>Share a Prayer is a simple, minimalistic way to share prayer requests and pray for others. The brainchild of <a href="http://shanemaloy.com/">Shane Maloy</a> and <a href="http://robertklubenspies.com/">Robert Klubenspies</a>, Share a Prayer started back in the Summer of 2010. A recent influx in interest in the project has sparked active development. The new, redesigned version of Share a Prayer features a bleeding-edge design, an account-less prayer sharing system, and a continuous feed of prayer requests from around the world. We have open-sourced Share a Prayer under the MIT license so that others may learn from it, or help support continuing development.</p>
+
+<h2>Requirements and Setup</h2>
+
+<p>Share a Prayer (SAP) is built on <a href="http://rubyonrails.org/">Rails 3.1</a> and uses Mongoid for data persistence instead of ActiveRecord. Because of this you will have to have MongoDB running on your development machine before running the SAP Rails app (See Install and Running MongoDB below). You will also need to set certain environmental variables for the application to run correctly (see Environmental Variables below) The requirements to run SAP are:</p>
+
+<ul>
+<li><a href="http://www.ruby-lang.org/">Ruby</a> 1.9.2 or higher (we run 1.9.2 for development)</li>
+<li><a href="http://beginrescueend.com/">RVM</a> (we run 1.2.2 for development) <em>RVM in required because the source includes a .rvmrc file to give SAP it&#39;s own gemset entitled &quot;shareaprayer&quot;</em></li>
+<li><a href="http://www.mongodb.org/">MongoDB</a> 2.x or higher (we run 2.0.1 for development)</li>
+</ul>
+
+<h3>Installing and Running MongoDB</h3>
+
+<p>If you use the <a href="http://mxcl.github.com/homebrew/">brew package management system</a>, the quickest way to install MongoDB would be to run: </p>
+
+<pre class="code"><span class='id identifier rubyid_brew'>brew</span> <span class='id identifier rubyid_update'>update</span>
+<span class='id identifier rubyid_brew'>brew</span> <span class='id identifier rubyid_install'>install</span> <span class='id identifier rubyid_mongodb'>mongodb</span>
+</pre>
+
+<p>This will update your homebrew formulas and install MongoDB. We opt to place a file called mongod.sh in our home directory so that we could run mongodb quickly and on demand. The contents of that file are replicated below:</p>
+
+<pre class="code">mongod run --config /usr/local/Cellar/mongodb/2.0.1-x86_64/mongod.conf
+</pre>
+
+<p>That&#39;s it! Please note that depending on your OS, the location of the config file may change. This shell was written to run under Mac OS X 10.6.x (Snow Leopard), and providing it&#39;s in your home directory, it can be invoked by typing <code>bash mongod.sh</code> at console while in your home directory. No matter how you invoke MongoDB, it will have to be running on your system before you can cd into SAP&#39;s directory and run <code>rails server</code>.</p>
+
+<h3>Environmental Variables</h3>
+
+<p>SAP requires that certain environmental variables be in place for development, testing, and production environments. These environmental variables are:</p>
+
+<ul>
+<li><code>AWS_KEY</code> your Amazon Web Services API Public Key</li>
+<li><code>AWS_SECRET</code> your Amazon Web Services API Secret Key</li>
+<li><code>MONGODB_URL</code> the URL of your production MongoDB. We used MongoHQ for our hosting.</li>
+</ul>
+
+<h4>Setup for Development and Testing Environments</h4>
+
+<p>We&#39;ve included a nifty initializer <code>_load_config.rb</code> that will automagically load all of your environmental variable from a YAML file for development and testing. In order to use it, simply add a YAML file called <code>keys.yml</code> to your <code>config</code> directory. Don&#39;t worry this file is excluded from version control by default. The file should look something like this:</p>
+
+<pre class="code"># For running production test server locally
+production:
+  AWS_KEY: 'AAAABBBBCCCCDDDDEEEE'
+  AWS_SECRET: '1111222233334444555566667777888899990000'
+  MONGODB_URL: 'mongodb://user:password@server_url:port/database'
+
+# For running local development server
+development:
+  AWS_KEY: 'AAAABBBBCCCCDDDDEEEE'
+  AWS_SECRET: '1111222233334444555566667777888899990000'
+
+# For running local testing server
+testing:
+  AWS_KEY: 'AAAABBBBCCCCDDDDEEEE'
+  AWS_SECRET: '1111222233334444555566667777888899990000'
+</pre>
+
+<p>Whenever your run Rails locally this will automatically configure your environmental variables, even if you&#39;re testing your app in production on a local staging server!</p>
+
+<h4>Setup for Production Environments</h4>
+
+<p>For real, production server environments you&#39;ll need to make the environmental variables <code>AWS_KEY</code>, <code>AWS_SECRET</code>, and <code>MONGODB_URL</code> available through other means. Many people simply export those variables in their bash profile. Alternatively if you deploy to production in Heroku, you can take advantage of their config vars. This would allow you to configure your environmental variables via the Heroku CLI like this:</p>
+
+<pre class="code">heroku config:add AWS_KEY=AAAABBBBCCCCDDDDEEEE AWS_SECRET=1111222233334444555566667777888899990000 MONGODB_URL=mongodb://user:password@server_url:port/database
+</pre>
+
+<p>Either way, you&#39;ll need to have the three environmental variables available in the production environment. If other people will not see the source of your clone of SAP, you could use the <code>keys.yml</code> file on a real, production server. Just be sure to remove it from <code>.gitignore</code> and add the file to version control. <strong>Committing the <code>keys.yml</code> file to git is not recommended as it will place your API keys and MongoDB URL under version control.</strong></p>
+
+<h2>Architecture</h2>
+
+<p>Below is a rough breakdown of how the application is organized:</p>
+
+<h3>Models</h3>
+
+<h4>Email</h4>
+
+<p>Stores email addresses of people who post prayer requests. Each email address has many Prayers.</p>
+
+<h4>Prayer</h4>
+
+<p>Stores prayer requests. Each prayer request belongs to an Email.</p>
+
+<h3>Controllers</h3>
+
+<h4>Application</h4>
+
+<p>Holds core application logic, as usual.</p>
+
+<h4>Prayers</h4>
+
+<p>Restful resource for prayers. A path hack on the resource route allows everything to branch off of the root path. Thus making the <code>prayers_path</code> equivalent to <code>/</code> and the <code>prayer_path</code> equivalent to <code>/:id</code>. The prayers controller also includes extra resourceful routes for <code>prayed_for</code> and <code>report</code> resource member actions.</p>
+
+<h4>Legal</h4>
+
+<p>Displays TOS and Privacy policy.</p>
+
+<h4>Api::V1::Base</h4>
+
+<p>Base controller (think of it like a namespaced application controller) for V1 API.</p>
+
+<h4>Api::V1::Prayers</h4>
+
+<p>Prayers API. Features json and xml returns for all prayers (paginated) and an individual prayer request.</p>
+
+<h3>Helpers</h3>
+
+<h4>Application</h4>
+
+<p>Used for core application helpers, like the timeago helper for jQuery Timeago compatible HTML5 tags.</p>
+
+<h3>Mailers</h3>
+
+<h4>Prayers</h4>
+
+<p>Used to email user the permalink of a new prayer request that they posted.</p>
+
+<h2>Feature Requests</h2>
+
+<p>Please make all feature requests as detailed as possible and add them to the <a href="https://github.com/shareaprayer/shareaprayer/issues">issue tracker</a>. Please add &quot;[FEATURE]&quot; to the beginning of the issue&#39;s title so that we know that you are submitting a feature request and not a bug.</p>
+
+<h2>Bugs &amp; Fixes</h2>
+
+<h3>Bugs</h3>
+
+<p>If you find a bug please report it to the <a href="https://github.com/shareaprayer/shareaprayer/issues">issue tracker</a>.</p>
+
+<h3>Fixes</h3>
+
+<p>If you&#39;ve fixed a bug, please submit a pull request to this repository with a detailed explanation of what you fixed. When the pull request is accepted, Github will automatically add your username to the <a href="https://github.com/shareaprayer/shareaprayer/contributors">contributors list</a>.</p>
+
+<h2>Changelog</h2>
+
+<p>Please see the CHANGELOG.md file.</p>
+
+<h2>License</h2>
+
+<p>Please see the LICENSE file.</p>
+
+<h2>Contributors</h2>
+
+<p>Please see <a href="https://github.com/shareaprayer/shareaprayer/contributors">Github&#39;s contributors list</a>.</p>
+
+<h2>Copyright</h2>
+
+<p>Share a Prayer is Copyright (C) 2012 Robert Klubenspies. All rights reserved.</p>
+</div></div>
+    
+    <div id="footer">
+  Generated on Sun Jan 22 16:30:44 2012 by 
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.7.4 (ruby-1.9.2).
+</div>
+
+  </body>
+</html>

@@ -1,0 +1,4 @@
+--private
+--title "Share a Prayer"
+app/**/*.rb -
+README.md CHANGELOG.md LICENSE
