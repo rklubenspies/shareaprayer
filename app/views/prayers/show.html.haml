@@ -21,7 +21,7 @@
 			-# Buttons
 			%p
 				-# Back button
-				=link_to "Back", prayers_path, :class => "btn"
+				=link_to "More Prayer Requests", prayers_path, :class => "btn"
 				
 				-# If the prayer request was already prayed for display the disabled button, otherwise show the enabled one
 				-if @already_prayed_for
