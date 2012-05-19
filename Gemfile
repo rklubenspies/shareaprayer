@@ -11,6 +11,9 @@ gem 'mongoid', '>= 2.0.0.beta.19'
 # AWS
 gem 'aws-sdk'
 
+# Geolocation
+gem 'geocoder', '~> 1.1.1'
+
 # Layout & UI
 gem 'haml', '>= 3.0.0'
 gem 'haml-rails'

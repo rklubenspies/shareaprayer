@@ -65,6 +65,13 @@
 									%span.help-block We will never share your email address or spam you.
 
 							.clearfix
+								=f.label :location, "Where are you?"
+								.input
+									=f.text_field :location, :value => request.location.city != "" && request.location.state_code != "" ? "#{request.location.city}, #{request.location.state_code}" : "", :class => "span2", :placeholder => "City, State", :id => "prayer_location", :required => "required"
+									%input.btn#no_location{:type => "button", :value => "I do not want to share my location"}
+									%span.help-block We'll display your city and state with your prayer request.
+
+							.clearfix
 								=f.label :request, "Prayer Request"
 								.input
 									=f.text_area :request, :class => "span5", :placeholder => "Mauris iaculis porttitor posuere. Praesent id metus massa.", :id => "prayer_request", :rows => "5", :required => "required", :maxlength => "160"
@@ -135,6 +142,13 @@
 		$('#prayer_name').val("Anonymous").addClass('uneditable-input').attr('readonly', true);
 		$('#anonymous_name').val("We will respect your privacy").attr('disabled', 'disabled');
 		$('#prayer_name').nextAll(".help-block").text("Your request will be posted anonymously");
+	});
+	
+	// Click action for location opt-out button
+	$('#no_location').click(function() {
+		$('#prayer_location').val("Anonymous").addClass('uneditable-input').attr('readonly', true);
+		$('#no_location').val("We will respect your privacy").attr('disabled', 'disabled');
+		$('#prayer_location').nextAll(".help-block").text("Your request will be posted without a location");
 	});
 	
 	// Disable submit button on submit

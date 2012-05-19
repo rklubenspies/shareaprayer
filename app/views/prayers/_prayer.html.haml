@@ -9,11 +9,14 @@
 				.info
 					%small
 						%i.icon-user
-						=prayer.name.split(" ")[0]
+						\-#{prayer.name.split(" ")[0]}
+						
 						%i.icon-time
 						=timeago prayer.created_at
-						%i.icon-map-marker
-						City, State
+						
+						-if prayer.location
+							%i.icon-map-marker
+							from #{prayer.location}
 			
 			-# Prayed for button
 			.prayed-for

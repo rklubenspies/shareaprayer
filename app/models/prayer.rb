@@ -22,8 +22,8 @@ class Prayer
   # @return [Integer] reported the number of times that the prayer request was reported
   field :reported, type: Integer, default: 0
   
-  # @return [String] gravatar_id the MD5 hash of the user's email address, which is used to show their Gravatar
-  field :gravatar_id, type: String
+  # @return [String] location the plain-English location (city, state, country, etc.) that a request was posted with
+  field :location, type: String
   
   # Protect the id and times_prayed_for from being mass assigned
   attr_protected :id, :times_prayed_for

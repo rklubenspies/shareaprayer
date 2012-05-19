@@ -41,6 +41,14 @@ class PrayersController < ApplicationController
     # Create form parameter for User's IP Address
     params[:prayer][:ip_address] = request.env['REMOTE_ADDR']
     
+    # Ensure location data is correct
+    if params[:prayer][:location] != "Anonymous"
+      l = Geocoder.search(params[:prayer][:location])
+      params[:prayer][:location] = l[0].address
+    elsif params[:prayer][:location] == "Anonymous"
+      params[:prayer][:location] = nil
+    end
+    
     # Intialize Prayer object and "build" it under Email object persisted in @email instance variable
     @prayer = @email.prayers.build(params[:prayer])
     
