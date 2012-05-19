@@ -14,6 +14,10 @@ gem 'aws-sdk'
 # Geolocation
 gem 'geocoder', '~> 1.1.1'
 
+# API
+gem 'rabl', '~> 0.6.11'
+gem 'yajl-ruby', '~> 1.1.0'
+
 # Layout & UI
 gem 'haml', '>= 3.0.0'
 gem 'haml-rails'
