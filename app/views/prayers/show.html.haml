@@ -6,7 +6,7 @@
 		.span8
 			%h2 "#{@prayer.request}"
 			%p
-				%small Posted by #{@prayer.name.split(" ")[0]} #{timeago(@prayer.created_at)}
+				%small Posted by #{@prayer.name.split(" ")[0]} #{timeago(@prayer.created_at)} #{@prayer.location ? "from #{@prayer.location}" : ""}
 	
 	-# Create a new row for the buttons
 	.row
