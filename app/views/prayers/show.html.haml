@@ -2,12 +2,8 @@
 %section#home-show.animated.fadeInLeft
 	-# Create a new row for the prayer request
 	.row
-		-# Show the Gravatar on the left using the CSS grid
-		.span1
-			=image_tag "http://www.gravatar.com/avatar/#{@prayer.gravatar_id}?size=70"
-			
-		-# Show the prayer request on the right using the CSS grid
-		.span7
+		-# Show the prayer request using the CSS grid
+		.span8
 			%h2 "#{@prayer.request}"
 			%p
 				%small Posted by #{@prayer.name.split(" ")[0]} #{timeago(@prayer.created_at)}
@@ -82,9 +78,3 @@
 	.row
 		.span8
 			=render 'shared/footer'
-
--# Intialize jQuery timeago
-:javascript
-	$(document).ready(function(){
-		jQuery("time#timeago").timeago();
-	});

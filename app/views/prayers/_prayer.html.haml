@@ -1,16 +1,19 @@
 -# Create a new row for the prayer request
-.row
+.row.request-container
 	.span8
 		-# Encompass everything in a link
 		%a.prayer-link{:href => prayer_path(prayer)}
-			-# Profile picture based on gravatar_id
-			.profile-pic
-				=image_tag "http://www.gravatar.com/avatar/#{prayer.gravatar_id}?size=50"
-				
 			-# Prayer request
 			.request
-				%span.text "#{prayer.request}"
-				%small -#{prayer.name.split(" ")[0]}
+				%span.text &#8220;#{prayer.request}&#8221;
+				.info
+					%small
+						%i.icon-user
+						=prayer.name.split(" ")[0]
+						%i.icon-time
+						=timeago prayer.created_at
+						%i.icon-map-marker
+						City, State
 			
 			-# Prayed for button
 			.prayed-for

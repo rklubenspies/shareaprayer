@@ -11,7 +11,9 @@
 //= require_tree .
 //= require_self
 
-$(function () {
+$(function() {
+	jQuery("time#timeago").timeago();
+	
 	$("a[rel=twipsy]")
 		.twipsy({
 			live: true,

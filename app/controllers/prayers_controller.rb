@@ -41,9 +41,6 @@ class PrayersController < ApplicationController
     # Create form parameter for User's IP Address
     params[:prayer][:ip_address] = request.env['REMOTE_ADDR']
     
-    # Create form parameter for User's Gravater ID (MD5 hash of their email address)
-    params[:prayer][:gravatar_id] = Digest::MD5.hexdigest(@email.email.downcase)
-    
     # Intialize Prayer object and "build" it under Email object persisted in @email instance variable
     @prayer = @email.prayers.build(params[:prayer])
     
