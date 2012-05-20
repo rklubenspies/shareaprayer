@@ -2,6 +2,7 @@
 <% unless @prayers.blank? %>
 	$(".prayers").append("<%= escape_javascript(render(@prayers)) %>");
 	$(".prayers").data('last', '<%=@prayers.last.created_at%>')
+	jQuery("time#timeago").timeago();
 <% else %>
 	// Show the no more prayers notice
 	$("#no-more-prayers").show();

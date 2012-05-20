@@ -1,13 +1,13 @@
 %section#home-index.animated.fadeInDown
 	.row
 		.span8
-			%ul.tabs{:data => {:tabs => "tabs"}}
+			%ul.nav.nav-tabs
 				%li.active
-					%a{:href => "#prayers"} Prayer Requests
+					%a{:href => "#prayers", :"data-toggle" => "tab"} Prayer Requests
 				%li
-					%a{:href => "#new-prayer"} Submit a Prayer Request
+					%a{:href => "#new-prayer", :"data-toggle" => "tab"} Submit a Prayer Request
 				%li
-					%a{:href => "#about"} About Share a Prayer
+					%a{:href => "#about", :"data-toggle" => "tab"} About Share a Prayer
 
 			.tab-content
 				.tab-pane.active#prayers
@@ -15,78 +15,70 @@
 						-unless @prayers.blank?
 							=render @prayers
 					
-					#no-more-prayers.alert-message.warning.hide
-						%p
-							%strong Uh-oh!
-							We don't have any more prayer requests to show you right now.
-					
+					#no-more-prayers.alert.hide
+						%button.close{:"data-dismiss" => "alert"} ×
+						<strong>Uh-oh!</strong> We don't have any more prayer requests to show you right now.
+				
 				.tab-pane#new-prayer
 					#new-prayer-result
-						#posted-email.alert-message.success.hide{:data => {:alert => "alert"}}
-							%a.close{:href => "#"} &times;
-							%p
-								%strong Request Posted!
-								We'll be sure to email you a link to it so that you can share it and comment on it with your friends!
+						#posted-email.alert.alert-success.hide
+							%button.close{:"data-dismiss" => "alert"} ×
+							<strong>Request Posted!</strong> We'll be sure to email you a link to it so that you can share it and comment on it with your friends!
 								
-						#posted-no-email.alert-message.success.hide{:data => {:alert => "alert"}}
-							%a.close{:href => "#"} &times;
-							%p
-								%strong Request Posted!
-								Per your request, we have not emailed you a link to your prayer request.
+						#posted-no-email.alert.alert-success.hide
+							%button.close{:"data-dismiss" => "alert"} ×
+							<strong>Request Posted!</strong> Per your request, we have not emailed you a link to your prayer request.
 						
-						#post-error.alert-message.error.hide{:data => {:alert => "alert"}}
-							%a.close{:href => "#"} &times;
-							%p
-								%strong We encountered an error!
-								Please try submitting your prayer request again later. If the problem persists, please email dev@shareaprayer.org.
+						#post-error.alert.alert-error.hide
+							%button.close{:"data-dismiss" => "alert"} ×
+							<strong>We encountered an error!</strong> Please try submitting your prayer request again later. If the problem persists, please email dev@shareaprayer.org.
 
 					#new-prayer-assembly
-						#spam-for-jerks.alert-message.info{:data => {:alert => "alert"}}
-							%a.close{:href => "#"} &times;
-							%p
-								%strong Spamming is not tolerated at Share a Prayer!
-								We're all about creating a community and bringing people together. We believe that spam destroys community and trust. We will never share your email address or spam you. See our #{link_to "privacy policy", privacy_path} for more details.
+						#spam-not-tolerated.alert.alert-info
+							%button.close{:"data-dismiss" => "alert"} ×
+							%h4.alert-heading Spamming is not tolerated at Share a Prayer!
+							We're all about creating a community and bringing people together. We believe that spam destroys community and trust. We will never share your email address or spam you. See our #{link_to "privacy policy", privacy_path} for more details.
 						
 						%p Want to share a prayer request with the world? Fill out the following form and we'll be sure to put your request online right away.
 						
 						%br
-						=form_for :prayer, :url => { :controller => "prayers", :action => "create" }, :html => { :id => "prayer-form" }, :remote => true do |f|
-							.clearfix
-								=f.label :name, "First Name"
-								.input
-									=f.text_field :name, :class => "span2", :placeholder => "Joe", :id => "prayer_name", :required => "required"
-									%input.btn#anonymous_name{:type => "button", :value => "I'd prefer to be anonymous"}
-									%span.help-block We'll display your first name below your prayer request.
+						
+						=form_for :prayer, :url => { :controller => "prayers", :action => "create" }, :html => { :id => "prayer-form", :class => "form-horizontal" }, :remote => true do |f|
+							%fieldset
+								.control-group
+									=f.label :name, "First Name", :class => "control-label"
+									.controls
+										=f.text_field :name, :class => "span2", :placeholder => "Joe", :id => "prayer_name", :required => "required"
+										%input.btn#anonymous_name{:type => "button", :value => "I'd prefer to be anonymous"}
+										%p.help-block We'll display your first name below your prayer request.
 
-							.clearfix
-								=f.label :email, "Your Email"
-								.input
-									=f.email_field :email, :class => "span5", :placeholder => "john@example.com", :id => "prayer_email", :required => "required"
-									%span.help-block We will never share your email address or spam you.
+								.control-group
+									=f.label :email, "Your Email", :class => "control-label"
+									.controls
+										=f.email_field :email, :class => "span4", :placeholder => "john@example.com", :id => "prayer_email", :required => "required"
+										%p.help-block We will never share your email address or spam you.
 
-							.clearfix
-								=f.label :location, "Where are you?"
-								.input
-									=f.text_field :location, :value => request.location.city != "" && request.location.state_code != "" ? "#{request.location.city}, #{request.location.state_code}" : "", :class => "span2", :placeholder => "City, State", :id => "prayer_location", :required => "required"
-									%input.btn#no_location{:type => "button", :value => "I do not want to share my location"}
-									%span.help-block We'll display your city and state with your prayer request.
+								.control-group
+									=f.label :location, "Where are you?", :class => "control-label"
+									.controls
+										=f.text_field :location, :value => request.location.city != "" && request.location.state_code != "" ? "#{request.location.city}, #{request.location.state_code}" : "", :class => "span2", :placeholder => "City, State", :id => "prayer_location", :required => "required"
+										%input.btn#no_location{:type => "button", :value => "I do not want to share my location"}
+										%p.help-block We'll display your city and state with your prayer request.
 
-							.clearfix
-								=f.label :request, "Prayer Request"
-								.input
-									=f.text_area :request, :class => "span5", :placeholder => "Mauris iaculis porttitor posuere. Praesent id metus massa.", :id => "prayer_request", :rows => "5", :required => "required", :maxlength => "160"
-									%span.help-block Please keep it within 160 characters
+								.control-group
+									=f.label :request, "Prayer Request", :class => "control-label"
+									.controls
+										=f.text_area :request, :class => "span5", :placeholder => "Mauris iaculis porttitor posuere. Praesent id metus massa.", :id => "prayer_request", :rows => "5", :required => "required", :maxlength => "160"
+										%p.help-block Please keep it within 160 characters
 
-							.clearfix
-								.input
-									%ul.inputs-list
-										%li
-											%label
-												=f.check_box :email_me, {:checked => true}
-												%span Yes, please email me a link to my prayer request's page
+								.control-group
+									.controls
+										%label.checkbox
+											=f.check_box :email_me, {:checked => true}
+											Yes, please email me a link to my prayer request's page
 
-							.actions
-								%input.btn.primary{:name => "commit", :type => "submit", :value => "Post Request"}
+							.form-actions
+								%input.btn.btn-primary{:name => "commit", :type => "submit", :value => "Post Request"}
 								%input.btn{:name => "reset", :type => "reset", :value => "Cancel"}
 				
 				.tab-pane#about
@@ -171,9 +163,9 @@
 	$('#prayer-form').validate({
 	    errorClass:'error',
 	    validClass:'success',
-	    errorElement:'span',
+	    errorElement:'p',
 	    highlight: function (element, errorClass, validClass) { 
-				$(element).parents("div[class='clearfix']").addClass(errorClass).removeClass(validClass); 
+				$(element).parents("div[class='control-group']").addClass(errorClass).removeClass(validClass); 
 	    }, 
 	    unhighlight: function (element, errorClass, validClass) { 
 				$(element).parents(".error").removeClass(errorClass).addClass(validClass); 

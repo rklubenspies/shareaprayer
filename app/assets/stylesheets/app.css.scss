@@ -16,8 +16,14 @@ section, header {
   > .row {
     margin-bottom: 10px; } }
 
+@media (min-width: 768px) {
+	.container-fluid {
+		width: 620px;
+	}
+}
+
 #logo {
-		text-align: center; }
+	text-align: center; }
 		
 #posted {
 	display: none; }
@@ -38,7 +44,10 @@ section, header {
 			.info {
 				color: #8d8d8d;
 				font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-				font-size: 11px; } }
+				font-size: 11px;
+				margin-top: 5px;
+				i {
+					opacity: 0.5; } } }
 
 		.prayed-for {
 			width: 48px;
@@ -55,17 +64,23 @@ section, header {
 
 #home-show {
 	h2 {
-		font-size: 20px;
-		line-height: 24px;
-		font-weight: 500; }
-	small {
+		font-family: "Lucida Bright", Georgia, serif;
+		font-size: 24px;
+		line-height: 30px;
+		font-weight: 300; }
+	.info {
 		color: #8d8d8d;
-		font-size: 11px; }
-	img {
-		margin-top: 5px; }
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		font-size: 11px;
+		margin-top: 5px;
+		i {
+			opacity: 0.5; } }
 	.prayed_for {
 		font-size: 14px;
 		font-style: italic; } }
+
+form p.help-block {
+	color: #9c9c9c; }
 
 /* CSS3 Text Selection Color */	
 ::selection {
@@ -80,19 +95,18 @@ $gridColumnWidth: 60px;
 $gridGutterWidth: 20px;
 
 /* Custom Tabs */
-.tabs {
+ul.nav-tabs {
   > li {
-    > a {
-      &:hover {
-        text-decoration: none;
-        background-color: #eee;
-        border-color: #eee #eee #ddd; } } }
-  .active > a, .active > a:hover {
+    > a:hover {
+			text-decoration: none;
+      background-color: #eee;
+      border-color: #eee #eee #ddd; } }
+	li.active > a, a:hover {
 		background: url(/assets/body_bg.png);
-    background-color: #f6f6f6 !important; } }
+		background-color: #f6f6f6 !important; } }
 
 /* Custom Form Actions */
-.actions {
+.form-actions {
   background: url(/assets/body_bg.png) !important;
   background-color: #f6f6f6 !important; }
 

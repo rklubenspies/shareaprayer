@@ -22,7 +22,7 @@ gem 'yajl-ruby', '~> 1.1.0'
 gem 'haml', '>= 3.0.0'
 gem 'haml-rails'
 gem 'jquery-rails'
-gem 'bootstrap-sass'
+gem 'anjlab-bootstrap-rails', '>= 2.0', :require => 'bootstrap-rails'
 gem 'gritter', '1.0.0'
 
 # Gems used only for assets and not required

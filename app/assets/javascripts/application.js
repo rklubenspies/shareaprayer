@@ -14,10 +14,5 @@
 $(function() {
 	jQuery("time#timeago").timeago();
 	
-	$("a[rel=twipsy]")
-		.twipsy({
-			live: true,
-			placement: "above",
-			offset: 5
-		})
+	$("a[rel=tooltip]").tooltip()
 })
