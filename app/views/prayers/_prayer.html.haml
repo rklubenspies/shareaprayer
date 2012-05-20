@@ -1,21 +1,27 @@
 -# Create a new row for the prayer request
-.row
+.row.request-container
 	.span8
 		-# Encompass everything in a link
 		%a.prayer-link{:href => prayer_path(prayer)}
-			-# Profile picture based on gravatar_id
-			.profile-pic
-				=image_tag "http://www.gravatar.com/avatar/#{prayer.gravatar_id}?size=50"
-				
 			-# Prayer request
 			.request
-				%span.text "#{prayer.request}"
-				%small -#{prayer.name.split(" ")[0]}
+				%span.text &#8220;#{prayer.request}&#8221;
+				.info
+					%small
+						%i.icon-user
+						=prayer.name.split(" ")[0]
+						
+						%i.icon-time
+						=timeago prayer.created_at
+						
+						-if prayer.location
+							%i.icon-map-marker
+							=prayer.location
 			
 			-# Prayed for button
 			.prayed-for
 				-# If the prayer request was already prayed for show disabled version, otherwise show enabled one
 				-if already_prayed_for? prayer.id
-					=link_to image_tag("prayed_for_icon.png"), "#", :class => "btn disabled", :"data-prayed-for-id" => prayer.id, :rel => "twipsy", :title => prayed_for_number(true, prayer.times_prayed_for)
+					=link_to image_tag("prayed_for_icon.png"), "#", :class => "btn disabled", :"data-prayed-for-id" => prayer.id, :rel => "tooltip", :title => prayed_for_number(true, prayer.times_prayed_for)
 				-else
-					=link_to image_tag("prayed_for_icon.png"), prayed_for_prayer_path(prayer), :remote => true, :class => "btn", :"data-prayed-for-id" => prayer.id, :rel => "twipsy", :title => prayed_for_number(false, prayer.times_prayed_for) + " Click here to pray for this."
+					=link_to image_tag("prayed_for_icon.png"), prayed_for_prayer_path(prayer), :remote => true, :class => "btn", :"data-prayed-for-id" => prayer.id, :rel => "tooltip", :title => prayed_for_number(false, prayer.times_prayed_for) + " Click here to pray for this."

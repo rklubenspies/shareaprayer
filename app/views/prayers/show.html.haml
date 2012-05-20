@@ -2,15 +2,19 @@
 %section#home-show.animated.fadeInLeft
 	-# Create a new row for the prayer request
 	.row
-		-# Show the Gravatar on the left using the CSS grid
-		.span1
-			=image_tag "http://www.gravatar.com/avatar/#{@prayer.gravatar_id}?size=70"
-			
-		-# Show the prayer request on the right using the CSS grid
-		.span7
-			%h2 "#{@prayer.request}"
-			%p
-				%small Posted by #{@prayer.name.split(" ")[0]} #{timeago(@prayer.created_at)}
+		-# Show the prayer request using the CSS grid
+		.span8
+			%h2 &#8220;#{@prayer.request}&#8221;
+			.info
+				%i.icon-user
+				=@prayer.name.split(" ")[0]
+		
+				%i.icon-time
+				=timeago @prayer.created_at
+		
+				-if @prayer.location
+					%i.icon-map-marker
+					=@prayer.location
 	
 	-# Create a new row for the buttons
 	.row
@@ -21,19 +25,29 @@
 			-# Buttons
 			%p
 				-# Back button
-				=link_to "More Prayer Requests", prayers_path, :class => "btn"
+				%a.btn{:href => url_for(prayers_path)}
+					%i.icon-home
+					More Prayer Requests
 				
 				-# If the prayer request was already prayed for display the disabled button, otherwise show the enabled one
 				-if @already_prayed_for
-					=link_to "You already prayed for this", "#", :class => "btn success disabled", :id => "home-show-prayed-for"
+					%a.btn.btn-success.disabled#home-show-prayed-for{:href => "#"}
+						%i.icon-ok.icon-white
+						You already prayed for this
 				-else
-					=link_to "I prayed for this", prayed_for_prayer_path(@prayer), :remote => true, :class => "btn success", :id => "home-show-prayed-for"
+					%a.btn.btn-success#home-show-prayed-for{:href => url_for(prayed_for_prayer_path(@prayer)), :"data-remote" => "true"}
+						%i.icon-ok.icon-white
+						I prayed for this
 				
 				-# If the prayer request was already reported display the disabled button, otherwise show the enabled one
 				-if @already_reported
-					=link_to "You already reported this content", "#", :class => "btn danger disabled", :id => "home-show-report"
+					%a.btn.btn-danger.disabled#home-show-report{:href => "#"}
+						%i.icon-ban-circle.icon-white
+						You already reported this content
 				-else
-					=link_to "Report Inappropriate Content", report_prayer_path(@prayer), :remote => true, :class => "btn danger", :id => "home-show-report"
+					%a.btn.btn-danger#home-show-report{:href => url_for(report_prayer_path(@prayer)), :"data-remote" => "true"}
+						%i.icon-ban-circle.icon-white
+						Report Inappropriate Content
 	
 	-# Create a new row for comments
 	.row
@@ -82,9 +96,3 @@
 	.row
 		.span8
 			=render 'shared/footer'
-
--# Intialize jQuery timeago
-:javascript
-	$(document).ready(function(){
-		jQuery("time#timeago").timeago();
-	});

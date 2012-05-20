@@ -1,13 +1,13 @@
 %section#home-index.animated.fadeInDown
 	.row
 		.span8
-			%ul.tabs{:data => {:tabs => "tabs"}}
+			%ul.nav.nav-tabs
 				%li.active
-					%a{:href => "#prayers"} Prayer Requests
+					%a{:href => "#prayers", :"data-toggle" => "tab"} Prayer Requests
 				%li
-					%a{:href => "#new-prayer"} Submit a Prayer Request
+					%a{:href => "#new-prayer", :"data-toggle" => "tab"} Submit a Prayer Request
 				%li
-					%a{:href => "#about"} About Share a Prayer
+					%a{:href => "#about", :"data-toggle" => "tab"} About Share a Prayer
 
 			.tab-content
 				.tab-pane.active#prayers
@@ -15,93 +15,81 @@
 						-unless @prayers.blank?
 							=render @prayers
 					
-					#no-more-prayers.alert-message.warning.hide
-						%p
-							%strong Uh-oh!
-							We don't have any more prayer requests to show you right now.
-					
+					#no-more-prayers.alert.hide
+						%button.close{:"data-dismiss" => "alert"} ×
+						<strong>Uh-oh!</strong> We don't have any more prayer requests to show you right now.
+				
 				.tab-pane#new-prayer
 					#new-prayer-result
-						#posted-email.alert-message.success.hide{:data => {:alert => "alert"}}
-							%a.close{:href => "#"} &times;
-							%p
-								%strong Request Posted!
-								We'll be sure to email you a link to it so that you can share it and comment on it with your friends!
+						#posted-email.alert.alert-success.hide
+							%button.close{:"data-dismiss" => "alert"} ×
+							<strong>Request Posted!</strong> We'll be sure to email you a link to it so that you can share it and comment on it with your friends!
 								
-						#posted-no-email.alert-message.success.hide{:data => {:alert => "alert"}}
-							%a.close{:href => "#"} &times;
-							%p
-								%strong Request Posted!
-								Per your request, we have not emailed you a link to your prayer request.
+						#posted-no-email.alert.alert-success.hide
+							%button.close{:"data-dismiss" => "alert"} ×
+							<strong>Request Posted!</strong> Per your request, we have not emailed you a link to your prayer request.
 						
-						#post-error.alert-message.error.hide{:data => {:alert => "alert"}}
-							%a.close{:href => "#"} &times;
-							%p
-								%strong We encountered an error!
-								Please try submitting your prayer request again later. If the problem persists, please email dev@shareaprayer.org.
+						#post-error.alert.alert-error.hide
+							%button.close{:"data-dismiss" => "alert"} ×
+							<strong>We encountered an error!</strong> Please try submitting your prayer request again later. If the problem persists, please email dev@shareaprayer.org.
 
 					#new-prayer-assembly
-						#spam-for-jerks.alert-message.info{:data => {:alert => "alert"}}
-							%a.close{:href => "#"} &times;
-							%p
-								%strong Spamming is not tolerated at Share a Prayer!
-								We're all about creating a community and bringing people together. We believe that spam destroys community and trust. We will never share your email address or spam you. See our #{link_to "privacy policy", privacy_path} for more details.
+						#spam-not-tolerated.alert.alert-info
+							%button.close{:"data-dismiss" => "alert"} ×
+							%h4.alert-heading Spamming is not tolerated at Share a Prayer!
+							We're all about creating a community and bringing people together. We believe that spam destroys community and trust. We will never share your email address or spam you. See our #{link_to "privacy policy", privacy_path} for more details.
 						
 						%p Want to share a prayer request with the world? Fill out the following form and we'll be sure to put your request online right away.
 						
 						%br
-						=form_for :prayer, :url => { :controller => "prayers", :action => "create" }, :html => { :id => "prayer-form" }, :remote => true do |f|
-							.clearfix
-								=f.label :name, "First Name"
-								.input
-									=f.text_field :name, :class => "span2", :placeholder => "Joe", :id => "prayer_name", :required => "required"
-									%input.btn#anonymous_name{:type => "button", :value => "I'd prefer to be anonymous"}
-									%span.help-block We'll display your first name below your prayer request.
+						
+						=form_for :prayer, :url => { :controller => "prayers", :action => "create" }, :html => { :id => "prayer-form", :class => "form-horizontal" }, :remote => true do |f|
+							%fieldset
+								.control-group
+									=f.label :name, "First Name", :class => "control-label"
+									.controls
+										=f.text_field :name, :class => "span2", :placeholder => "Joe", :id => "prayer_name", :required => "required"
+										%input.btn#anonymous_name{:type => "button", :value => "I'd prefer to be anonymous"}
+										%p.help-block We'll display your first name below your prayer request.
 
-							.clearfix
-								=f.label :email, "Your Email"
-								.input
-									=f.email_field :email, :class => "span5", :placeholder => "john@example.com", :id => "prayer_email", :required => "required"
-									%span.help-block We will never share your email address or spam you.
-									
-							.clearfix.hide#form_profile_icon
-								%label Profile Icon
-								.input
-									.alert-message{:data => {:alert => "alert"}}
-										%a.close{:href => "#"} &times;
-										%p
-											%strong This is your profile icon
-											that will display next to your prayer request. We use Gravatar to display this image. Gravatar is an online service that provides you with a profile image that you can use all over the internet. If you have a Gravatar you should see it below, otherwise you should see the default big "G" on a blue background. You can get a Gravatar at #{link_to "gravatar.com", "http://gravatar.com/"}.
-									%span#prayer_gravatar
-										=image_tag "http://www.gravatar.com/avatar/?size=100"
+								.control-group
+									=f.label :email, "Your Email", :class => "control-label"
+									.controls
+										=f.email_field :email, :class => "span4", :placeholder => "john@example.com", :id => "prayer_email", :required => "required"
+										%p.help-block We will never share your email address or spam you.
 
-							.clearfix
-								=f.label :request, "Prayer Request"
-								.input
-									=f.text_area :request, :class => "span5", :placeholder => "Mauris iaculis porttitor posuere. Praesent id metus massa.", :id => "prayer_request", :rows => "5", :required => "required", :maxlength => "160"
-									%span.help-block Please keep it within 160 characters
+								.control-group
+									=f.label :location, "Where are you?", :class => "control-label"
+									.controls
+										=f.text_field :location, :value => request.location.city != "" && request.location.state_code != "" ? "#{request.location.city}, #{request.location.state_code}" : "", :class => "span2", :placeholder => "City, State", :id => "prayer_location", :required => "required"
+										%input.btn#no_location{:type => "button", :value => "I do not want to share my location"}
+										%p.help-block We'll display your city and state with your prayer request.
 
-							.clearfix
-								.input
-									%ul.inputs-list
-										%li
-											%label
-												=f.check_box :email_me, {:checked => true}
-												%span Yes, please email me a link to my prayer request's page
+								.control-group
+									=f.label :request, "Prayer Request", :class => "control-label"
+									.controls
+										=f.text_area :request, :class => "span5", :placeholder => "Mauris iaculis porttitor posuere. Praesent id metus massa.", :id => "prayer_request", :rows => "5", :required => "required", :maxlength => "160"
+										%p.help-block Please keep it within 160 characters
 
-							.actions
-								%input.btn.primary{:name => "commit", :type => "submit", :value => "Post Request"}
+								.control-group
+									.controls
+										%label.checkbox
+											=f.check_box :email_me, {:checked => true}
+											Yes, please email me a link to my prayer request's page
+
+							.form-actions
+								%input.btn.btn-primary{:name => "commit", :type => "submit", :value => "Post Request"}
 								%input.btn{:name => "reset", :type => "reset", :value => "Cancel"}
 				
 				.tab-pane#about
 					%h3 The Story
-					%p Share a Prayer is a simple, minimalistic way to share prayer requests and pray for others. The brainchild of #{link_to "Shane Maloy","http://www.facebok.com/Shaneqmaloy"} and #{link_to "Robert Klubenspies","http://robertklubenspies.com/"}, Share a Prayer started back in the Summer of 2010. A recent influx in interest in the project has sparked active development. The new, redesigned version of Share a Prayer features a bleeding-edge design, an account-less prayer sharing system, and a continuous feed of prayer requests from around the world. The most recent version has been open-sourced under the MIT license so that others may learn from Share a Prayer, or help support continuing development. We hope you that enjoy Share a Prayer and may God be with you in your journey.
+					%p Share a Prayer is a simple, minimalistic way to share prayer requests and pray for others. The brainchild of #{link_to "Shane Maloy","http://www.facebok.com/Shaneqmaloy"} and #{link_to "Robert Klubenspies","http://robertklubenspies.com/"}, Share a Prayer started back in the Summer of 2010. A recent influx in interest in the project has sparked active development. The new, redesigned version of Share a Prayer features a bleeding-edge design, an account-less prayer sharing system, and a continuous feed of prayer requests from around the world. The most recent version has been #{link_to "open-sourced","http://github.com/shareaprayer/shareaprayer"} under the MIT license so that others may learn from Share a Prayer, or help support continuing development. We hope you that enjoy Share a Prayer and share it with your friends.
 					
 					%br
 						
 					%h3 The Mission
-					%p It is our goal at Share a Prayer to become the premier prayer sharing website. We offer something unique; our minimalistic experience allows users to get straight to what matters most: prayer.
-					%p.mission Our mission is to glorify God through providing a universal, minimalistic prayer sharing experience for everyone.
+					%p It is our goal at Share a Prayer to become a community unlike any other. We offer something unique; our minimalistic experience allows users to get straight to what matters most: prayer.
+					%p.mission Our mission is to glorify God by providing a way to connect others with God through prayer.
 					
 					%br
 					
@@ -116,10 +104,10 @@
 						.span6
 							%h4
 								Robert Klubenspies
-								%small Web Application Developer
+								%small Co-Founder
 							%p
 								I'm a geek, no doubt. Among other things I'm a rubyist, theorist, idealist, and metaphysicist. I believe that every website or web app that you use should be beautiful, minimalist, and help you accomplish your goals in a fraction of amount of time they would normally consume. Utilizing Ruby, HTML 4/5, CSS 3, and NoSQL data stores, I strive to build beautiful interfaces and web apps for myself and clients.
-								%small #{link_to "robertklubenspies.com","http://robertklubenspies.com/"}
+								%small #{link_to "robertklubenspies.com","http://www.robertklubenspies.com/"}
 					%br
 					.row
 						.span2
@@ -127,9 +115,9 @@
 						.span6
 							%h4
 								Shane Maloy
-								%small Promoter
+								%small Co-Founder 
 							%p
-								I am a 17 year old website designer from Orlando, FL with a passion to glorify God in all that I do. Besides occasional work and dual enrollment at Seminole State College, I enjoy bike rides, working on my car, Starbucks, Chipotle, music, leading worship at my church and photography. I play a 1970’s Gibson SG, a 1983 Fender Stratocaster and a Ibanez Acoustic guitar. I love playing guitar, bass, drums, synth, and even a little keyboard. Overall, I’m just a geek.
+								I'm a 17 year old geek from Orlando, FL. Besides my work as a social media guru and web developer, I am dual enrolled at Seminole State College.  I love creating useful tools in Ruby that help make the world a better place.  In my spare time, I enjoy playing music, working on my car, drinking Starbucks, eating Chipotle, and photography. Overall I’m just a geek with a passion for web apps, technology, and music.
 								%small #{link_to "shanemaloy.com","http://shanemaloy.com/"}
 			
 			=render 'shared/footer'
@@ -141,17 +129,18 @@
 		#{extend_gritter :fade_in_speed => 2000}
 	});
 	
-	// Blur action for email address field triggers Gravatar load/reload
-	$('#prayer_email').blur(function() {
-		$('#prayer_gravatar').html($.gravatar($(this).val(), {size: '100'}));
-		$('#form_profile_icon').slideDown();
-	});
-	
 	// Click action for anonymous button
 	$('#anonymous_name').click(function() {
 		$('#prayer_name').val("Anonymous").addClass('uneditable-input').attr('readonly', true);
 		$('#anonymous_name').val("We will respect your privacy").attr('disabled', 'disabled');
 		$('#prayer_name').nextAll(".help-block").text("Your request will be posted anonymously");
+	});
+	
+	// Click action for location opt-out button
+	$('#no_location').click(function() {
+		$('#prayer_location').val("Anonymous").addClass('uneditable-input').attr('readonly', true);
+		$('#no_location').val("We will respect your privacy").attr('disabled', 'disabled');
+		$('#prayer_location').nextAll(".help-block").text("Your request will be posted without a location");
 	});
 	
 	// Disable submit button on submit
@@ -174,9 +163,9 @@
 	$('#prayer-form').validate({
 	    errorClass:'error',
 	    validClass:'success',
-	    errorElement:'span',
+	    errorElement:'p',
 	    highlight: function (element, errorClass, validClass) { 
-				$(element).parents("div[class='clearfix']").addClass(errorClass).removeClass(validClass); 
+				$(element).parents("div[class='control-group']").addClass(errorClass).removeClass(validClass); 
 	    }, 
 	    unhighlight: function (element, errorClass, validClass) { 
 				$(element).parents(".error").removeClass(errorClass).addClass(validClass); 

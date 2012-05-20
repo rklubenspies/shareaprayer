@@ -11,11 +11,8 @@
 //= require_tree .
 //= require_self
 
-$(function () {
-	$("a[rel=twipsy]")
-		.twipsy({
-			live: true,
-			placement: "above",
-			offset: 5
-		})
+$(function() {
+	jQuery("time#timeago").timeago();
+	
+	$("a[rel=tooltip]").tooltip()
 })
