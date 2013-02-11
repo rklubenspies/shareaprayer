@@ -1,0 +1,26 @@
+development:
+  adapter: postgresql
+  host: localhost
+  encoding: unicode
+  database: shareaprayer_development
+  pool: 5
+  username: rklubenspies
+  password: 
+
+test:
+  adapter: postgresql
+  host: localhost
+  encoding: unicode
+  database: shareaprayer_test
+  pool: 5
+  username: rklubenspies
+  password: 
+
+production:
+  adapter: postgresql
+  host: localhost
+  encoding: unicode
+  database: shareaprayer_production
+  pool: 5
+  username: rklubenspies
+  password: 
