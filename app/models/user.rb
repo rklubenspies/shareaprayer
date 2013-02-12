@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
   easy_roles :roles
   has_many :church_memberships, dependent: :destroy
   has_many :churches, through: :church_memberships
+  has_many :requests, dependent: :destroy
 
   # @comment This enforces a default role of "invisible" on all entries
   #   created without roles. We couldn't set the default in the migration
@@ -45,7 +46,7 @@ class User < ActiveRecord::Base
   # @return [ChurchMembership] the newly created ChurchMembership object
   # @raise [UserNotSignedUp] if the user is not a signed up user
   # @raise [UserAlreadyChurchMember] if the user already belongs to the church
-  def join_church!(church_id, roles = ["member"])
+  def join_church(church_id, roles = ["member"])
     user = self
 
     raise "UserNotSignedUp" if !user.roles.include?("user")
@@ -69,5 +70,60 @@ class User < ActiveRecord::Base
 
     # @comment return true or false instead of deleted object
     membership.destroy_all ? true : false
+  end
+
+  # Is the user a member of a church?
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @param [Integer] church_id the id of the church where the user should be
+  #   a member
+  # @return [Boolean] true if the user is a member, false if not
+  def is_church_member?(church_id)
+    user = self
+    ChurchMembership.where(user_id: user.id, church_id: church_id).exists?
+  end
+
+  # Is the user NOT a member of a church?
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @param [Integer] church_id the id of the church where the user should not
+  #   be a member
+  # @return [Boolean] true if the user is not a member, false if they are
+  def is_not_church_member?(church_id)
+    user = self
+    !ChurchMembership.where(user_id: user.id, church_id: church_id).exists?
+  end
+
+  # Posts a prayer request
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @param [Hash] opts a the options to create a request with
+  # @option opts [String] :text the request's full text
+  # @option opts [Boolean] :anonymous whether or not the request is posted
+  #   anonymously. Will default to false if key is not present.
+  # @option opts [String] :ip_address the orriginating ip address of the request
+  # @param [Integer] church_id the id of the church the request was posted into
+  # @return [Request] the newly created Request object
+  # @raise [UserNotChurchMember] if the user does not belong to the church they
+  #   are trying to post a request into
+  def post_request(opts, church_id = nil)
+    user = self
+
+    raise "UserNotChurchMember" if user.is_not_church_member?(church_id) && church_id != nil
+
+    build_opts = {
+      text: opts[:text],
+      anonymous: opts.has_key?(:anonymous) ? opts[:anonymous] : false
+    }
+
+    request = user.requests.build(build_opts)
+    request.ip_address = opts["ip_address"]
+    request.church_id = church_id
+
+    request.save!
+    request
   end
 end

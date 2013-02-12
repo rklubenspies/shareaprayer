@@ -9,4 +9,5 @@ class Church < ActiveRecord::Base
   attr_accessible :name
   has_many :church_memberships, dependent: :destroy
   has_many :users, through: :church_memberships
+  has_many :requests
 end

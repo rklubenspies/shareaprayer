@@ -67,7 +67,7 @@ module Shareaprayer
 
     # Automatically generate factories
     config.generators do |g|
-        g.fixture_replacement :factory_girl
+        g.fixture_replacement :factory_girl, :dir => 'spec/factories'
     end
   end
 end

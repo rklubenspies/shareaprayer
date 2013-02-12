@@ -7,6 +7,7 @@ describe User do
 
   it { should have_many(:church_memberships) }
   it { should have_many(:churches).through(:church_memberships) }
+  it { should have_many(:requests) }
 
   describe '.create' do
     context 'when no role is provided' do
@@ -53,13 +54,13 @@ describe User do
     end
   end
 
-  describe '#join_church!' do
+  describe '#join_church' do
     let (:church) { FactoryGirl.create :church }
 
     context 'when user is not signed up' do
       let (:user) { FactoryGirl.create :user, roles: ["invisible"] }
 
-      it { expect { user.join_church!(church.id) }.to raise_error }
+      it { expect { user.join_church(church.id) }.to raise_error("UserNotSignedUp") }
     end
 
     context 'when user is signed up' do
@@ -67,13 +68,13 @@ describe User do
         let (:user) { FactoryGirl.create :user }
         before { ChurchMembership.create(user_id: user.id, church_id: church.id) }
 
-        it { expect { user.join_church!(church.id) }.to raise_error }
+        it { expect { user.join_church(church.id) }.to raise_error("UserAlreadyChurchMember") }
       end
 
       context 'and is not a part of church already' do
         let (:user) { FactoryGirl.create :user }
 
-        it { expect { user.join_church!(church.id) }.to change { ChurchMembership.count }.by(1) }
+        it { expect { user.join_church(church.id) }.to change { ChurchMembership.count }.by(1) }
       end
     end
   end
@@ -84,7 +85,7 @@ describe User do
     context 'when user is not a part of church already' do
       let (:user) { FactoryGirl.create :user }
 
-      it { expect { user.leave_church!(church.id) }.to raise_error }
+      it { expect { user.leave_church!(church.id) }.to raise_error("UserNotChurchMember") }
     end
 
     context 'when user is part of church already' do
@@ -92,6 +93,83 @@ describe User do
       before { ChurchMembership.create(user_id: user.id, church_id: church.id) }
 
       it { expect { user.leave_church!(church.id) }.to change { ChurchMembership.count }.by(-1) }
+    end
+  end
+
+  describe '#is_church_member?' do
+    let (:user) { FactoryGirl.create :user }
+    let (:church) { FactoryGirl.create :church }
+
+    context 'user is not part of church' do
+      it 'should return false' do
+        user.is_church_member?(church.id).should be_false
+      end
+    end
+
+    context 'user is part of church' do
+      before { ChurchMembership.create(user_id: user.id, church_id: church.id) }
+
+      it 'should return true' do
+        user.is_church_member?(church.id).should be_true
+      end
+    end
+  end
+
+  describe '#is_not_church_member?' do
+    let (:user) { FactoryGirl.create :user }
+    let (:church) { FactoryGirl.create :church }
+
+    context 'user is part of church' do
+      before { ChurchMembership.create(user_id: user.id, church_id: church.id) }
+
+      it 'should return false' do
+        user.is_not_church_member?(church.id).should be_false
+      end
+    end
+
+    context 'user is not part of church' do
+      it 'should return true' do
+        user.is_not_church_member?(church.id).should be_true
+      end
+    end
+  end
+
+  describe '#post_request' do
+    let (:user) { FactoryGirl.create :user }
+    let (:church) { FactoryGirl.create :church }
+    let (:request_opts) { FactoryGirl.attributes_for(:post_request_opts) }
+
+    context 'user is posting into church' do
+      context 'user is not part of church' do
+        it { expect { user.post_request(request_opts, church.id) }.to raise_error("UserNotChurchMember") }
+      end
+
+      context 'user is part of church' do
+        before { ChurchMembership.create(user_id: user.id, church_id: church.id) }
+
+        it { expect { user.post_request(request_opts, church.id) }.to change { Request.count }.by(1) }
+        it { expect { user.post_request(request_opts, church.id) }.to change { church.requests.count }.by(1) }
+      end
+    end
+
+    context 'saving request' do
+      context 'it should set the anonymous attribute' do
+        context 'to true if specified' do
+          let (:request_opts) { FactoryGirl.attributes_for(:post_request_opts, anonymous: true) }
+
+          it 'should be true' do
+            user.post_request(request_opts).anonymous.should be_true
+          end
+        end
+
+        context 'to false otherwise' do
+          it 'should be false' do
+            user.post_request(request_opts).anonymous.should be_false
+          end
+        end
+      end
+
+      it { expect { user.post_request(request_opts) }.to change { Request.count }.by(1) }
     end
   end
 end
