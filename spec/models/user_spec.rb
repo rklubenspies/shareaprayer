@@ -271,7 +271,7 @@ describe User do
     end
   end
 
-  describe '#has_not_prayed_for?' do
+  describe '#has_not_reported_for?' do
     let (:request) { FactoryGirl.create :request }
     let (:user) { request.user }
 
