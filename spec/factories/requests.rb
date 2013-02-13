@@ -8,6 +8,7 @@ FactoryGirl.define do
     visibility ["visible"]
     anonymous false
     ip_address "127.0.0.1"
+    user
   end
 
   factory :post_request_opts, class: "Request" do

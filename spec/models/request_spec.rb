@@ -10,6 +10,7 @@ describe Request do
 
   it { should belong_to(:user) }
   it { should belong_to(:church) }
+  it { should have_many(:prayers) }
 
   it { should validate_presence_of(:text) }
   it { should validate_presence_of(:user_id) }

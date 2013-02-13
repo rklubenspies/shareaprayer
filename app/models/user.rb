@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
   has_many :church_memberships, dependent: :destroy
   has_many :churches, through: :church_memberships
   has_many :requests, dependent: :destroy
+  has_many :prayers, dependent: :destroy
 
   # @comment This enforces a default role of "invisible" on all entries
   #   created without roles. We couldn't set the default in the migration
@@ -96,7 +97,7 @@ class User < ActiveRecord::Base
     !ChurchMembership.where(user_id: user.id, church_id: church_id).exists?
   end
 
-  # Posts a prayer request
+  # Posts a request
   # 
   # @since 1.0.0
   # @author Robert Klubenspies
@@ -125,5 +126,47 @@ class User < ActiveRecord::Base
 
     request.save!
     request
+  end
+
+  # Prays for a request
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @param [Integer] request_id the request to pray for
+  # @param [String] ip_address the orriginating ip address of the prayer
+  # @return [Prayer] the newly created Prayer object
+  # @raise [UserAlreadyPrayedForRequest] if the user already prayed for the
+  #   request before
+  def pray_for(request_id, ip_address = nil)
+    user = self
+
+    raise "UserAlreadyPrayedForRequest" if user.has_prayed_for?(request_id)
+
+    Prayer.create!(user_id: user.id, request_id: request_id, ip_address: ip_address)
+  end
+
+  # Has the user prayed for a request?
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @param [Integer] request_id the id of the request the user should have
+  #   prayed for
+  # @return [Boolean] true if the user prayed for this request, false if not
+  def has_prayed_for?(request_id)
+    user = self
+    Prayer.where(user_id: user.id, request_id: request_id).exists?
+  end
+
+  # Has the user NOT prayed for a request?
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @param [Integer] request_id the id of the request the user should not
+  #   have prayed for
+  # @return [Boolean] true if the user has not prayed for this request,
+  #   false if they have
+  def has_not_prayed_for?(request_id)
+    user = self
+    !Prayer.where(user_id: user.id, request_id: request_id).exists?
   end
 end

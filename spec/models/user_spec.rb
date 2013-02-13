@@ -8,10 +8,11 @@ describe User do
   it { should have_many(:church_memberships) }
   it { should have_many(:churches).through(:church_memberships) }
   it { should have_many(:requests) }
+  it { should have_many(:prayers) }
 
   describe '.create' do
     context 'when no role is provided' do
-      let(:user) { FactoryGirl.build :user, roles: [] }
+      let (:user) { FactoryGirl.build :user, roles: [] }
 
       context 'when user is built' do
         it 'should have no role' do
@@ -48,9 +49,9 @@ describe User do
 
   describe '#roles' do
     context 'when user is invisible' do
-      let!(:invisible_user) { FactoryGirl.create :user, roles: ["invisible"] }
+      let (:user) { FactoryGirl.create :user, roles: ["invisible"] }
 
-      specify { invisible_user.roles.include?("invisible").should be_true }
+      specify { user.roles.include?("invisible").should be_true }
     end
   end
 
@@ -64,32 +65,29 @@ describe User do
     end
 
     context 'when user is signed up' do
+      let (:user) { FactoryGirl.create :user }
+
+      context 'and is not a part of church already' do
+        it { expect { user.join_church(church.id) }.to change { ChurchMembership.count }.by(1) }
+      end
+
       context 'and is part of church already' do
-        let (:user) { FactoryGirl.create :user }
         before { ChurchMembership.create(user_id: user.id, church_id: church.id) }
 
         it { expect { user.join_church(church.id) }.to raise_error("UserAlreadyChurchMember") }
-      end
-
-      context 'and is not a part of church already' do
-        let (:user) { FactoryGirl.create :user }
-
-        it { expect { user.join_church(church.id) }.to change { ChurchMembership.count }.by(1) }
       end
     end
   end
 
   describe '#leave_church!' do
+    let (:user) { FactoryGirl.create :user }
     let (:church) { FactoryGirl.create :church }
     
     context 'when user is not a part of church already' do
-      let (:user) { FactoryGirl.create :user }
-
       it { expect { user.leave_church!(church.id) }.to raise_error("UserNotChurchMember") }
     end
 
     context 'when user is part of church already' do
-      let (:user) { FactoryGirl.create :user }
       before { ChurchMembership.create(user_id: user.id, church_id: church.id) }
 
       it { expect { user.leave_church!(church.id) }.to change { ChurchMembership.count }.by(-1) }
@@ -170,6 +168,59 @@ describe User do
       end
 
       it { expect { user.post_request(request_opts) }.to change { Request.count }.by(1) }
+    end
+  end
+
+  describe '#pray_for' do
+    let (:request) { FactoryGirl.create :request }
+    let (:user) { request.user }
+
+    context 'user has not prayed for request' do
+      it { expect { user.pray_for(request.id) }.to change { request.prayers.count }.by(1) }
+    end
+
+    context 'user has prayed for request already' do
+      before { user.pray_for(request.id) }
+
+      it { expect { user.pray_for(request.id) }.to raise_error("UserAlreadyPrayedForRequest") }
+    end
+  end
+
+  describe '#has_prayed_for?' do
+    let (:request) { FactoryGirl.create :request }
+    let (:user) { request.user }
+
+    context 'user has not prayed for request' do
+      it 'should return false' do
+        user.has_prayed_for?(request.id).should be_false
+      end
+    end
+
+    context 'user has prayed for request' do
+      before { user.pray_for(request.id) }
+
+      it 'should return true' do
+        user.has_prayed_for?(request.id).should be_true
+      end
+    end
+  end
+
+  describe '#has_not_prayed_for?' do
+    let (:request) { FactoryGirl.create :request }
+    let (:user) { request.user }
+
+    context 'user has not prayed for request' do
+      it 'should return true' do
+        user.has_not_prayed_for?(request.id).should be_true
+      end
+    end
+
+    context 'user has prayed for request' do
+      before { user.pray_for(request.id) }
+
+      it 'should return false' do
+        user.has_not_prayed_for?(request.id).should be_false
+      end
     end
   end
 end

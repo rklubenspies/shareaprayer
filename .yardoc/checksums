@@ -1,6 +1,0 @@
-app/models/user.rb 554e5122ad16c7310a70f24a41e04d1ed9be85e5
-app/models/church.rb 64e635460a0ed1eab50f707439e9382051af39de
-app/models/church_membership.rb 29a85f0a137b00a0c8aec1db334fa80fbee12f4a
-app/helpers/application_helper.rb eef3d3adce96afe8b14c19b6135323f47543d979
-app/controllers/application_controller.rb 2036468398e54b3fc8af23cb6f9e1716293320eb
-app/models/request.rb 2e7eeb2e45b745c40a7090f92070d2514a732529

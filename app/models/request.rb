@@ -33,6 +33,7 @@ class Request < ActiveRecord::Base
   easy_roles :visibility
   belongs_to :user
   belongs_to :church
+  has_many :prayers, dependent: :destroy
 
   validates :text, presence: true
   validates :user_id, presence: true
