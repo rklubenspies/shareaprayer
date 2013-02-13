@@ -1,23 +1,28 @@
-user = User.create({
+user1 = User.create({
   name: "John Doe",
   email: "johndoe@shareaprayer.com",
-  roles: ["invisible"]
+  roles: ["user"]
 })
 
 church = Church.create({
   name: "First Christian Church"
 })
 
-users_church_membership = ChurchMembership.create({
-  user_id: user.id,
-  church_id: church.id,
-  roles: ["member"]
-})
+user1_church_membership = user1.join_church(church.id)
 
-public_request = user.post_request({
+public_request_1 = user1.post_request({
   text: "Lorem ipsum public dolor"
 })
 
-church_request = user.post_request({
+church_request_1 = user1.post_request({
   text: "Lorem ipsum church dolor"
 }, church.id)
+
+
+user2 = User.create({
+  name: "Jane Doe",
+  email: "janedoe@shareaprayer.com",
+  roles: ["invisble"]
+})
+
+user2_report = user2.report_object(public_request_1)

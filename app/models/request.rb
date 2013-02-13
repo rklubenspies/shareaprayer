@@ -34,6 +34,7 @@ class Request < ActiveRecord::Base
   belongs_to :user
   belongs_to :church
   has_many :prayers, dependent: :destroy
+  has_many :reports, as: :reportable, class_name: "ReportedContent", dependent: :destroy
 
   validates :text, presence: true
   validates :user_id, presence: true

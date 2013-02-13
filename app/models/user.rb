@@ -29,6 +29,7 @@ class User < ActiveRecord::Base
   has_many :churches, through: :church_memberships
   has_many :requests, dependent: :destroy
   has_many :prayers, dependent: :destroy
+  has_many :reported_content, as: :owner, dependent: :destroy
 
   # @comment This enforces a default role of "invisible" on all entries
   #   created without roles. We couldn't set the default in the migration
@@ -168,5 +169,75 @@ class User < ActiveRecord::Base
   def has_not_prayed_for?(request_id)
     user = self
     !Prayer.where(user_id: user.id, request_id: request_id).exists?
+  end
+
+  # Reports an object (like a Request)
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @param [Object] object the object to report
+  # @param [Hash] opts a the options to create a request with
+  # @option opts [Integer] :priority the priority of the report
+  #   (see ReportedContent for more info)
+  # @option opts [String] :reason the reason a user is reporting the
+  #   request
+  # @option opts [String] :ip_address the orriginating ip address of the
+  #   report
+  # @return [ReportedContent] the newly created ReportedContent object
+  # @raise [UserAlreadyReportedObject] if the user already reported the
+  #   request before
+  def report_object(object, opts = { priority: 0 })
+    user = self
+
+    raise "UserAlreadyReportedObject" if user.has_reported_object?(object)
+
+    build_opts = {
+      priority: opts[:priority],
+      reason: opts[:reason],
+      ip_address: opts[:ip_address]
+    }
+
+    reported_content = object.reports.build(build_opts)
+    reported_content.owner = user
+    
+    reported_content.save!
+    reported_content
+  end
+
+  # Has the user reported an object?
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @param [Objecy] object the object the user should have reported
+  # @return [Boolean] true if the user reported this object, false if not
+  def has_reported_object?(object)
+    user = self
+
+    criteria = {
+      owner_id: user.id,
+      reportable_id: object.id,
+      reportable_type: object.class.to_s
+    }
+
+    ReportedContent.where(criteria).exists?
+  end
+
+  # Has the user NOT reported an object?
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @param [Objecy] object the object the user should not have reported
+  # @return [Boolean] true if the user has not reported this object,
+  #   false if they have
+  def has_not_reported_object?(object)
+    user = self
+    
+    criteria = {
+      owner_id: user.id,
+      reportable_id: object.id,
+      reportable_type: object.class.to_s
+    }
+
+    !ReportedContent.where(criteria).exists?
   end
 end

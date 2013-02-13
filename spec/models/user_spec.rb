@@ -9,6 +9,7 @@ describe User do
   it { should have_many(:churches).through(:church_memberships) }
   it { should have_many(:requests) }
   it { should have_many(:prayers) }
+  it { should have_many(:reported_content) }
 
   describe '.create' do
     context 'when no role is provided' do
@@ -220,6 +221,71 @@ describe User do
 
       it 'should return false' do
         user.has_not_prayed_for?(request.id).should be_false
+      end
+    end
+  end
+
+  describe '#report_object' do
+    let (:request) { FactoryGirl.create :request }
+    let (:user) { request.user }
+
+    context 'user wants to report a request' do
+      context 'user has not reported request' do
+        context 'user reports content' do
+          it 'should set a priority of 0 if not specified' do
+            user.report_object(request).priority.should == 0
+          end
+
+          it 'should accept a priority if specified' do
+            user.report_object(request, { priority: 9 }).priority.should == 9
+          end
+          
+          it { expect { user.report_object(request) }.to change { request.reports.count }.by(1) }
+        end
+      end
+
+      context 'user has reported request already' do
+        before { user.report_object(request) }
+
+        it { expect { user.report_object(request) }.to raise_error("UserAlreadyReportedObject") }
+      end
+    end
+  end
+
+  describe '#has_reported_object?' do
+    let (:request) { FactoryGirl.create :request }
+    let (:user) { request.user }
+
+    context 'user has not reported object' do
+      it 'should return false' do
+        user.has_reported_object?(request).should be_false
+      end
+    end
+
+    context 'user has reported object' do
+      before { user.report_object(request) }
+
+      it 'should return true' do
+        user.has_reported_object?(request).should be_true
+      end
+    end
+  end
+
+  describe '#has_not_prayed_for?' do
+    let (:request) { FactoryGirl.create :request }
+    let (:user) { request.user }
+
+    context 'user has not reported object' do
+      it 'should return true' do
+        user.has_not_reported_object?(request).should be_true
+      end
+    end
+
+    context 'user has reported object' do
+      before { user.report_object(request) }
+
+      it 'should return false' do
+        user.has_not_reported_object?(request).should be_false
       end
     end
   end
