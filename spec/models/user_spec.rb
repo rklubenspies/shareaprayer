@@ -3,7 +3,6 @@ require 'spec_helper'
 describe User do
   it { should have_db_column(:name).of_type(:string) }
   it { should have_db_column(:email).of_type(:string) }
-  it { should have_db_column(:roles).of_type(:string) }
 
   it { should have_many(:church_memberships) }
   it { should have_many(:churches).through(:church_memberships) }
@@ -11,48 +10,17 @@ describe User do
   it { should have_many(:prayers) }
   it { should have_many(:reported_content) }
 
-  describe '.create' do
-    context 'when no role is provided' do
-      let (:user) { FactoryGirl.build :user, roles: [] }
-
-      context 'when user is built' do
-        it 'should have no role' do
-          user.roles.should be_empty
-        end
-      end
-
-      context 'when user is saved' do
-        it 'should be assigned the invisible role' do
-          user.save!
-          user.roles.should include("invisible")
-        end
-      end
-    end
-
-    context 'when a role is provided' do
-      let (:user) { FactoryGirl.build :user, roles: ["invisible"] }
-
-      context 'when user is built' do
-        it 'should have a role' do
-          user.roles.should_not be_empty
-        end
-      end
-
-      context 'when user is saved' do
-        it 'role should be present' do
-          user.save!
-          user.roles.should include("invisible")
-          user.roles.should_not be_empty
-        end
-      end
-    end
-  end
-
   describe '#roles' do
-    context 'when user is invisible' do
-      let (:user) { FactoryGirl.create :user, roles: ["invisible"] }
+    context 'when user is site_user' do
+      let! (:user) { FactoryGirl.create :user }
 
-      specify { user.roles.include?("invisible").should be_true }
+      specify { user.has_role?("site_user").should be_true }
+    end
+
+    context 'when user is invisible_user' do
+      let! (:user) { FactoryGirl.create :invisible_user }
+
+      specify { user.has_role?("invisible_user").should be_true }
     end
   end
 
@@ -60,7 +28,7 @@ describe User do
     let (:church) { FactoryGirl.create :church }
 
     context 'when user is not signed up' do
-      let (:user) { FactoryGirl.create :user, roles: ["invisible"] }
+      let (:user) { FactoryGirl.create :invisible_user }
 
       it { expect { user.join_church(church.id) }.to raise_error("UserNotSignedUp") }
     end

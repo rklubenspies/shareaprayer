@@ -1,8 +1,8 @@
 user1 = User.create({
   name: "John Doe",
-  email: "johndoe@shareaprayer.com",
-  roles: ["user"]
+  email: "johndoe@shareaprayer.com"
 })
+user1.add_role("site_user")
 
 church = Church.create({
   name: "First Christian Church"
@@ -21,8 +21,8 @@ church_request_1 = user1.post_request({
 
 user2 = User.create({
   name: "Jane Doe",
-  email: "janedoe@shareaprayer.com",
-  roles: ["invisble"]
+  email: "janedoe@shareaprayer.com"
 })
+user2.add_role("invisible_user")
 
 user2_report = user2.report_object(public_request_1)

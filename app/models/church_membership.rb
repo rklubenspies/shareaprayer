@@ -1,4 +1,8 @@
-# Represents a user's membership in a church
+# A ChurchMembership is created when a user joins a church. It is
+# used to keep track of people who belong to a church on SAP.
+# Church managers are not stored in this table. They are stored
+# using a resource role from rolify, which references both the
+# User and Church objects to create a manager role.
 # 
 # @since 1.0.0
 # @author Robert Klubenspies
@@ -11,23 +15,7 @@ class ChurchMembership < ActiveRecord::Base
   #   @return [Integer] user's id
   #   @see User
 
-  # @!attribute roles
-  #   @return [Array] representation of user's roles in church they
-  #     are a member of
-  #   @note Used by easy_role gem
-  #   @see https://github.com/platform45/easy_roles easy_roles gem
-  #     documentation
-
-  attr_accessible :church_id, :roles, :user_id
-  easy_roles :roles
+  attr_accessible :church_id, :user_id
   belongs_to :church
   belongs_to :user
-
-  # @comment This enforces a default role of "member" on all entries
-  #   created without roles. We couldn't set the default in the migration
-  #   because roles are saved as a String, but adding a role creates a
-  #   String representation of an Array to be saved to the database.
-  before_validation(on: :create) do
-    self.roles = ["member"] if !attribute_present?("roles")
-  end
 end

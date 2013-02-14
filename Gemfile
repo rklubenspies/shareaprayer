@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.11'
 gem 'pg'
+gem 'rolify', '~> 3.2.0'
 gem 'easy_roles', '~> 1.2.0'
 
 group :test, :development do
