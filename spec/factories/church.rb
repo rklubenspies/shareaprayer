@@ -1,5 +1,5 @@
 FactoryGirl.define do
   factory :church do
-    name "First Christian Church"
+    association :profile, factory: :church_profile
   end
 end

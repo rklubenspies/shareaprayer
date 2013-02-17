@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe Church do
-  it { should have_db_column(:name).of_type(:string) }
-
   it { should have_many(:church_memberships) }
   it { should have_many(:members).through(:church_memberships) }
   it { should have_many(:church_managerships) }
@@ -75,6 +73,27 @@ describe Church do
       it { expect { Church.register({}, user.id) }.to change { ChurchProfile.count }.by(1) }
       it { expect { Church.register({}, user.id) }.to change { ChurchMembership.count }.by(1) }
       it { expect { Church.register({}, user.id) }.to change { ChurchManagership.count }.by(1) }
+    end
+  end
+
+  describe '#update_profile!' do
+    let (:church) { FactoryGirl.create :church }
+    let! (:profile) { church.profile }
+    let! (:updates) { {
+      name: profile.name,
+      bio: "Some awesome new bio"
+    } }
+
+    context 'updates attribute' do
+      it 'should call update_profile! with only changed attributes' do
+        church.should_receive(:update_profile!).with(updates).once
+        church.update_profile!(updates)
+      end
+
+      it 'should save the appropriate changes' do
+        lambda { church.update_profile!(updates) }.should change { profile.bio }
+        lambda { church.update_profile!(updates) }.should_not change { profile.name }
+      end
     end
   end
 end

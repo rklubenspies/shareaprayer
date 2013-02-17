@@ -5,7 +5,12 @@ user1 = User.create({
 user1.add_role("site_user")
 
 church = Church.register({
-  name: "First Christian Church"
+  name: "First Christian Church",
+  bio: "Lorem ipsum",
+  address: "100 Main Street, Fake Town, FL",
+  phone: "4075550525",
+  email: "contact@firstchrisitanchurch.com",
+  website: "www.firstchrisitanchurch.com"
 }, user1.id)
 
 church_request = user1.post_request({
