@@ -9,11 +9,11 @@ class ChurchManagership < ActiveRecord::Base
   #   @return [Integer] church's id
   #   @see Church
 
-  # @!attribute manager_id
-  #   @return [Integer] managers's id
+  # @!attribute user_id
+  #   @return [Integer] user's id
   #   @see User
 
-  attr_accessible :church_id, :manager_id
+  attr_accessible :church_id, :user_id
   belongs_to :church
-  belongs_to :manager, class_name: "User"
+  belongs_to :user
 end

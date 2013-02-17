@@ -4,10 +4,11 @@ describe Church do
   it { should have_db_column(:name).of_type(:string) }
 
   it { should have_many(:church_memberships) }
-  it { should have_many(:users).through(:church_memberships) }
+  it { should have_many(:members).through(:church_memberships) }
   it { should have_many(:church_managerships) }
   it { should have_many(:managers).through(:church_managerships) }
   it { should have_many(:requests) }
+  it { should have_one(:profile) }
 
   describe '#add_manager' do
     let (:church) { FactoryGirl.create :church }
@@ -29,7 +30,7 @@ describe Church do
         before { ChurchMembership.create(user_id: user.id, church_id: church.id) }
 
         context 'and is a manager of church already' do
-          before { ChurchManagership.create(manager_id: user.id, church_id: church.id) }
+          before { ChurchManagership.create(user_id: user.id, church_id: church.id) }
 
           it { expect { church.add_manager(user.id) }.to raise_error("UserAlreadyChurchManager") }
         end
@@ -50,9 +51,30 @@ describe Church do
     end
 
     context 'when user is a church manager already' do
-      before { ChurchManagership.create(manager_id: user.id, church_id: church.id) }
+      before { ChurchManagership.create(user_id: user.id, church_id: church.id) }
 
       it { expect { church.remove_manager!(user.id) }.to change { ChurchManagership.count }.by(-1) }
+    end
+  end
+
+  describe '.register' do
+    context 'when no user_id is provided' do
+      it { expect { Church.register({}, nil) }.to raise_error(ActiveRecord::RecordNotFound) }
+    end
+
+    context 'when the user_id does not represent a site user' do
+      let (:invisible_user) { FactoryGirl.create :invisible_user }
+
+      it { expect { Church.register({}, invisible_user.id) }.to raise_error("UserNotSignedUp") }
+    end
+
+    context 'when the user_id is provided and valid' do
+      let (:user) { FactoryGirl.create :user }
+
+      it { expect { Church.register({}, user.id) }.to change { Church.count }.by(1) }
+      it { expect { Church.register({}, user.id) }.to change { ChurchProfile.count }.by(1) }
+      it { expect { Church.register({}, user.id) }.to change { ChurchMembership.count }.by(1) }
+      it { expect { Church.register({}, user.id) }.to change { ChurchManagership.count }.by(1) }
     end
   end
 end

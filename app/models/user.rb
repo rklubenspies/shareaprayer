@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
   attr_accessible :name, :email, :facebook_id, :facebook_token
   has_many :church_memberships, dependent: :destroy
   has_many :churches, through: :church_memberships
-  has_many :church_managerships, as: :manager, dependent: :destroy
+  has_many :church_managerships, dependent: :destroy
   has_many :managed_churches, through: :church_managerships
   has_many :requests, dependent: :destroy
   has_many :prayers, dependent: :destroy
@@ -97,7 +97,7 @@ class User < ActiveRecord::Base
   # @return [Boolean] true if the user is a manager, false if not
   def is_church_manager?(church_id)
     user = self
-    ChurchManagership.where(manager_id: user.id, church_id: church_id).exists?
+    ChurchManagership.where(user_id: user.id, church_id: church_id).exists?
   end
 
   # Is the user NOT a manager of a church?
@@ -109,7 +109,7 @@ class User < ActiveRecord::Base
   # @return [Boolean] true if the user is not a manager, false if they are
   def is_not_church_manager?(church_id)
     user = self
-    !ChurchManagership.where(manager_id: user.id, church_id: church_id).exists?
+    !ChurchManagership.where(user_id: user.id, church_id: church_id).exists?
   end
 
   # Posts a request
@@ -125,10 +125,13 @@ class User < ActiveRecord::Base
   # @return [Request] the newly created Request object
   # @raise [UserNotChurchMember] if the user does not belong to the church they
   #   are trying to post a request into
-  def post_request(opts, church_id = nil)
+  # @raise ChurchRequiredToPost if the user tries to post the request without
+  #   providing a church_id
+  def post_request(opts, church_id)
     user = self
 
     raise "UserNotChurchMember" if user.is_not_church_member?(church_id) && !church_id.blank?
+    raise "ChurchRequiredToPost" if church_id.blank?
 
     build_opts = {
       text: opts[:text],
@@ -190,7 +193,7 @@ class User < ActiveRecord::Base
   # @since 1.0.0
   # @author Robert Klubenspies
   # @param [Object] object the object to report
-  # @param [Hash] opts a the options to create a request with
+  # @param [Hash] opts the options to create a request with
   # @option opts [Integer] :priority the priority of the report
   #   (see ReportedContent for more info)
   # @option opts [String] :reason the reason a user is reporting the

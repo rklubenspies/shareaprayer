@@ -114,7 +114,7 @@ describe User do
     end
 
     context 'user is part of church' do
-      before { ChurchManagership.create(manager_id: user.id, church_id: church.id) }
+      before { ChurchManagership.create(user_id: user.id, church_id: church.id) }
 
       it 'should return true' do
         user.is_church_manager?(church.id).should be_true
@@ -127,7 +127,7 @@ describe User do
     let (:church) { FactoryGirl.create :church }
 
     context 'user is part of church' do
-      before { ChurchManagership.create(manager_id: user.id, church_id: church.id) }
+      before { ChurchManagership.create(user_id: user.id, church_id: church.id) }
 
       it 'should return false' do
         user.is_not_church_manager?(church.id).should be_false
@@ -146,6 +146,10 @@ describe User do
     let (:church) { FactoryGirl.create :church }
     let (:request_opts) { FactoryGirl.attributes_for(:post_request_opts) }
 
+    context 'no church_id was provided' do
+      it { expect { user.post_request(request_opts, nil) }.to raise_error("ChurchRequiredToPost") }
+    end
+
     context 'user is posting into church' do
       context 'user is not part of church' do
         it { expect { user.post_request(request_opts, church.id) }.to raise_error("UserNotChurchMember") }
@@ -160,23 +164,23 @@ describe User do
     end
 
     context 'saving request' do
+      before { ChurchMembership.create(user_id: user.id, church_id: church.id) }
+      
       context 'it should set the anonymous attribute' do
         context 'to true if specified' do
           let (:request_opts) { FactoryGirl.attributes_for(:post_request_opts, anonymous: true) }
 
           it 'should be true' do
-            user.post_request(request_opts).anonymous.should be_true
+            user.post_request(request_opts, church.id).anonymous.should be_true
           end
         end
 
         context 'to false otherwise' do
           it 'should be false' do
-            user.post_request(request_opts).anonymous.should be_false
+            user.post_request(request_opts, church.id).anonymous.should be_false
           end
         end
       end
-
-      it { expect { user.post_request(request_opts) }.to change { Request.count }.by(1) }
     end
   end
 

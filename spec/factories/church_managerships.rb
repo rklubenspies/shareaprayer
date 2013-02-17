@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :church_managership do
-    association :manager, factory: :user
+    user
     church
   end
 end
