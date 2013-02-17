@@ -6,6 +6,8 @@ describe User do
 
   it { should have_many(:church_memberships) }
   it { should have_many(:churches).through(:church_memberships) }
+  it { should have_many(:church_managerships) }
+  it { should have_many(:managed_churches).through(:church_managerships) }
   it { should have_many(:requests) }
   it { should have_many(:prayers) }
   it { should have_many(:reported_content) }
@@ -97,6 +99,44 @@ describe User do
     context 'user is not part of church' do
       it 'should return true' do
         user.is_not_church_member?(church.id).should be_true
+      end
+    end
+  end
+
+  describe '#is_church_manager?' do
+    let (:user) { FactoryGirl.create :user }
+    let (:church) { FactoryGirl.create :church }
+
+    context 'user is not part of church' do
+      it 'should return false' do
+        user.is_church_manager?(church.id).should be_false
+      end
+    end
+
+    context 'user is part of church' do
+      before { ChurchManagership.create(manager_id: user.id, church_id: church.id) }
+
+      it 'should return true' do
+        user.is_church_manager?(church.id).should be_true
+      end
+    end
+  end
+
+  describe '#is_not_church_member?' do
+    let (:user) { FactoryGirl.create :user }
+    let (:church) { FactoryGirl.create :church }
+
+    context 'user is part of church' do
+      before { ChurchManagership.create(manager_id: user.id, church_id: church.id) }
+
+      it 'should return false' do
+        user.is_not_church_manager?(church.id).should be_false
+      end
+    end
+
+    context 'user is not part of church' do
+      it 'should return true' do
+        user.is_not_church_manager?(church.id).should be_true
       end
     end
   end

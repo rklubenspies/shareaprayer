@@ -2,6 +2,8 @@
 # 
 # @since 1.0.0
 # @author Robert Klubenspies
+# @note User uses rolify to faciliate roles on User model, as well as on any
+#   resource object.
 class User < ActiveRecord::Base
   # @!attribute name
   #   @return [String] user's full name
@@ -21,6 +23,8 @@ class User < ActiveRecord::Base
   attr_accessible :name, :email, :facebook_id, :facebook_token
   has_many :church_memberships, dependent: :destroy
   has_many :churches, through: :church_memberships
+  has_many :church_managerships, as: :manager, dependent: :destroy
+  has_many :managed_churches, through: :church_managerships
   has_many :requests, dependent: :destroy
   has_many :prayers, dependent: :destroy
   has_many :reported_content, as: :owner, dependent: :destroy
@@ -30,11 +34,10 @@ class User < ActiveRecord::Base
   # @since 1.0.0
   # @author Robert Klubenspies
   # @param [Integer] church_id the id of the church which the user is joining
-  # @param [Symbol] role the role of the user in the church
   # @return [ChurchMembership] the newly created ChurchMembership object
   # @raise [UserNotSignedUp] if the user is not a signed up user
   # @raise [UserAlreadyChurchMember] if the user already belongs to the church
-  def join_church(church_id, role = :church_member)
+  def join_church(church_id)
     user = self
     church = Church.find(church_id)
 
@@ -83,6 +86,30 @@ class User < ActiveRecord::Base
   def is_not_church_member?(church_id)
     user = self
     !ChurchMembership.where(user_id: user.id, church_id: church_id).exists?
+  end
+
+  # Is the user a manager of a church?
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @param [Integer] church_id the id of the church where the user should be
+  #   a manager
+  # @return [Boolean] true if the user is a manager, false if not
+  def is_church_manager?(church_id)
+    user = self
+    ChurchManagership.where(manager_id: user.id, church_id: church_id).exists?
+  end
+
+  # Is the user NOT a manager of a church?
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @param [Integer] church_id the id of the church where the user should not
+  #   be a manager
+  # @return [Boolean] true if the user is not a manager, false if they are
+  def is_not_church_manager?(church_id)
+    user = self
+    !ChurchManagership.where(manager_id: user.id, church_id: church_id).exists?
   end
 
   # Posts a request

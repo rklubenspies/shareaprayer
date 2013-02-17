@@ -1,8 +1,6 @@
 # A ChurchMembership is created when a user joins a church. It is
 # used to keep track of people who belong to a church on SAP.
-# Church managers are not stored in this table. They are stored
-# using a resource role from rolify, which references both the
-# User and Church objects to create a manager role.
+# Church managers are not stored in this table.
 # 
 # @since 1.0.0
 # @author Robert Klubenspies
