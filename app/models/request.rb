@@ -29,8 +29,7 @@ class Request < ActiveRecord::Base
   # @!attribute ip_address
   #   @return [String] the ip address used to post the request
 
-  attr_accessible :text, :visibility, :anonymous
-  easy_roles :visibility
+  attr_accessible :text, :anonymous
   belongs_to :user
   belongs_to :church
   has_many :prayers, dependent: :destroy
@@ -39,12 +38,7 @@ class Request < ActiveRecord::Base
   validates :text, presence: true
   validates :user_id, presence: true
 
-  # @comment This enforces a default visibility of "visible" on all
-  #   entries created without a visibility. We couldn't set the default
-  #   in the migration because visibility is saved as a String, but
-  #   adding visibility creates a String representation of an Array to be
-  #   saved to the database.
-  before_validation(on: :create) do
-    self.visibility = ["visible"] if !attribute_present?("visibility")
+  state_machine :state, initial: :visible do
+    # TODO: Implement events to change state
   end
 end

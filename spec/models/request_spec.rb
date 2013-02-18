@@ -18,36 +18,12 @@ describe Request do
 
   describe '.create' do
     context 'when no visibility is provided' do
-      let(:request) { FactoryGirl.build :request, visibility: [] }
-
-      context 'when built' do
-        it 'should have no visibility' do
-          request.visibility.should be_empty
-        end
-      end
+      let(:request) { FactoryGirl.build :request }
 
       context 'when saved' do
-        it 'should be assigned the visible visibility' do
+        it 'should have a visible state' do
           request.save!
-          request.visibility.should include("visible")
-        end
-      end
-    end
-
-    context 'when a role is provided' do
-      let (:request) { FactoryGirl.build :request }
-
-      context 'when built' do
-        it 'should have a role' do
-          request.visibility.should_not be_empty
-        end
-      end
-
-      context 'when saved' do
-        it 'role should be present' do
-          request.save!
-          request.visibility.should include("visible")
-          request.visibility.should_not be_empty
+          request.visible?.should be_true
         end
       end
     end

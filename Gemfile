@@ -3,7 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '3.2.11'
 gem 'pg'
 gem 'rolify', '~> 3.2.0'
-gem 'easy_roles', '~> 1.2.0'
+gem 'state_machine', '~> 1.1.2'
 
 group :test, :development do
   gem 'rspec-rails', '~> 2.0'
@@ -11,6 +11,7 @@ group :test, :development do
   gem 'pry-rails', '~> 0.2.2'
   gem 'ZenTest', '~> 4.9.0'
   gem 'autotest-rails', '~> 4.1.2'
+  gem 'dotenv', '~> 0.5.0'
 end
 
 group :test do
@@ -21,6 +22,8 @@ end
 
 group :development do
   gem 'yard', '~> 0.8.4.1'
+  gem 'binding_of_caller', '~> 0.7.1'
+  gem 'better_errors', '~> 0.6.0'
 end
 
 group :assets do
