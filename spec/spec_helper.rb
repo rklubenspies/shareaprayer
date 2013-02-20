@@ -10,6 +10,8 @@ require 'database_cleaner'
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+OmniAuth.config.test_mode = true
+
 RSpec.configure do |config|
   config.before :each do
     DatabaseCleaner.strategy = :truncation

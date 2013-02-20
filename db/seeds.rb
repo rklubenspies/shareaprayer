@@ -1,6 +1,10 @@
 user1 = User.create({
-  name: "John Doe",
-  email: "johndoe@shareaprayer.com"
+  first_name: "John",
+  last_name: "Doe",
+  email: "johndoe@shareaprayer.com",
+  facebook_id: 100000000000000,
+  facebook_token: "abcdefg",
+  facebook_token_expires_at: Time.now
 })
 user1.add_role("site_user")
 
@@ -19,8 +23,12 @@ church_request = user1.post_request({
 
 
 user2 = User.create({
-  name: "Jane Doe",
-  email: "janedoe@shareaprayer.com"
+  first_name: "Jane",
+  last_name: "Doe",
+  email: "janedoe@shareaprayer.com",
+  facebook_id: 100000000000001,
+  facebook_token: "abcdefg",
+  facebook_token_expires_at: Time.now
 })
 user2.add_role("site_user")
 

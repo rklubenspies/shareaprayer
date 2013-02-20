@@ -4,6 +4,9 @@ gem 'rails', '3.2.11'
 gem 'pg'
 gem 'rolify', '~> 3.2.0'
 gem 'state_machine', '~> 1.1.2'
+gem 'omniauth', '~> 1.1.3'
+gem 'omniauth-facebook', '~> 1.4.1'
+gem 'high_voltage', '~> 1.2.2'
 
 group :test, :development do
   gem 'rspec-rails', '~> 2.0'
@@ -24,6 +27,7 @@ group :development do
   gem 'yard', '~> 0.8.4.1'
   gem 'binding_of_caller', '~> 0.7.1'
   gem 'better_errors', '~> 0.6.0'
+  gem 'sextant', '~> 0.2.3'
 end
 
 group :assets do

@@ -114,7 +114,7 @@ class Church < ActiveRecord::Base
       update_opts[key] = opts[key] if church.profile[key] != opts[key]
     end
 
-    # @comment return true or false instead of updated object
-    church.profile.update_attributes(update_opts) ? true : false
+    # @comment return true or false
+    church.profile.update_attributes(update_opts)
   end
 end

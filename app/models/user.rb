@@ -5,8 +5,11 @@
 # @note User uses rolify to faciliate roles on User model, as well as on any
 #   resource object.
 class User < ActiveRecord::Base
-  # @!attribute name
-  #   @return [String] user's full name
+  # @!attribute first_name
+  #   @return [String] user's first name
+
+  # @!attribute last_name
+  #   @return [String] user's last name
 
   # @!attribute email
   #   @return [String] user's email address
@@ -16,11 +19,14 @@ class User < ActiveRecord::Base
   #   @return [Integer] user's Facebook UID
 
   # @!attribute facebook_token
-  #   @return user's Facebook access token, usually used to verify login
+  #   @return [String] user's Facebook access token, usually used to verify login
   #     or execute offline Graph API queries
 
+  # @!attribute facebook_token_expires_at
+  #   @return [DateTime] when the user's current Facebook token expires
+
   rolify
-  attr_accessible :name, :email, :facebook_id, :facebook_token
+  attr_accessible :first_name, :last_name, :email, :facebook_id, :facebook_token
   has_many :church_memberships, dependent: :destroy
   has_many :churches, through: :church_memberships
   has_many :church_managerships, dependent: :destroy
@@ -28,6 +34,76 @@ class User < ActiveRecord::Base
   has_many :requests, dependent: :destroy
   has_many :prayers, dependent: :destroy
   has_many :reported_content, as: :owner, dependent: :destroy
+
+  # A convenience method that returns a user's fullname
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @return [String] the user's full name
+  def name
+    "#{first_name} #{last_name}"
+  end
+
+  # Processes an OmniAuth hash to either log in or create a user
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @param [Hash] omniauth the OmniAuth auth hash
+  # @return [User] the user found by the auth hash
+  def self.from_omniauth(omniauth)
+    # @comment allow access to hash keys by string or symbol
+    omniauth = omniauth.with_indifferent_access
+
+    user = self.where({ facebook_id: omniauth[:uid] }).first
+    user ? user.update_from_omniauth(omniauth) : self.create_from_omniauth(omniauth)
+  end
+
+  # Updates a User from an omniauth hash. Used by .from_omniauth during
+  # existing user login.
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @param [Hash] omniauth the OmniAuth auth hash
+  # @return [User] the user updated by the auth hash
+  def update_from_omniauth(omniauth)
+    user = self
+
+    possible_new_info = {
+      # first_name:                 omniauth[:info][:first_name],
+      # last_name:                  omniauth[:info][:last_name],
+      # email:                      omniauth[:info][:email],
+      facebook_token:             omniauth[:credentials][:token],
+      facebook_token_expires_at:  Time.at(omniauth[:credentials][:expires_at])
+    }
+
+    update_opts = {}
+
+    # @comment add a key to update_opts for each key that was changed
+    possible_new_info.each do |key, opt|
+      update_opts[key] = possible_new_info[key] if user[key] != possible_new_info[key] && !possible_new_info[key].empty?
+    end
+
+    user.update_attributes(update_opts)
+    
+    return user
+  end
+
+  # Creates a User from an omniauth hash. Used by .from(omniauth).
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @param [Hash] omniauth the OmniAuth auth hash
+  # @return [User] the user created by the auth hash
+  def self.create_from_omniauth(omniauth)
+    create! do |user|
+      user.first_name                 = omniauth[:info][:first_name]
+      user.last_name                  = omniauth[:info][:last_name]
+      user.email                      = omniauth[:info][:email]
+      user.facebook_id                = omniauth[:uid].to_i
+      user.facebook_token             = omniauth[:credentials][:token]
+      user.facebook_token_expires_at  = Time.at(omniauth[:credentials][:expires_at])
+    end
+  end
 
   # Adds a user as a member of a church
   # 

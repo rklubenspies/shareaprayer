@@ -1,7 +1,11 @@
 FactoryGirl.define do
   factory :user do
-    name "John Doe"
+    first_name "John"
+    last_name "Doe"
     email "johndoe@shareaprayer.com"
+    facebook_id 100000000000000
+    facebook_token "abcdefg"
+    facebook_token_expires_at { Time.now }
 
     after(:create) do |user|
       user.add_role("site_user")
@@ -9,8 +13,12 @@ FactoryGirl.define do
   end
 
   factory :invisible_user, class: "User" do
-    name "Invisible Joe"
+    first_name "Invisible"
+    last_name "Joe"
     email "invisiblejoe@shareaprayer.com"
+    facebook_id 100000000000000
+    facebook_token "abcdefg"
+    facebook_token_expires_at { Time.now }
 
     after(:create) do |user|
       user.add_role("invisible_user")
