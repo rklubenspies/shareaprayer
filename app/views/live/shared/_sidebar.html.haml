@@ -1,0 +1,10 @@
+%nav
+  =@sidebar.user_name
+  %br
+  Your churches:
+  %ul
+    -@sidebar.churches.each do |church|
+      %li=church.name
+      
+    -if @sidebar.no_churches?
+      %li You don't belong to any churches!

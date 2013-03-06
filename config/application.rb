@@ -69,5 +69,10 @@ module Shareaprayer
     config.generators do |g|
         g.fixture_replacement :factory_girl, :dir => 'spec/factories'
     end
+
+    # Auto load presenter
+    config.autoload_paths += %W(
+      #{Rails.root}/app/presenters 
+    )
   end
 end

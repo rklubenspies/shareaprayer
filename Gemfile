@@ -7,6 +7,7 @@ gem 'state_machine', '~> 1.1.2'
 gem 'omniauth', '~> 1.1.3'
 gem 'omniauth-facebook', '~> 1.4.1'
 gem 'high_voltage', '~> 1.2.2'
+gem 'haml-rails', '~> 0.4'
 
 group :test, :development do
   gem 'rspec-rails', '~> 2.0'

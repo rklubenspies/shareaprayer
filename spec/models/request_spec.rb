@@ -28,4 +28,40 @@ describe Request do
       end
     end
   end
+
+  describe '#anonymous?' do
+    context 'when the request was posted anonymously' do
+      let (:request) { FactoryGirl.create :request, anonymous: true }
+
+      it 'should show as anonymous' do
+        request.anonymous?.should be_true
+      end
+    end
+
+    context 'when the request was not posted anonymously' do
+      let (:request) { FactoryGirl.create :request }
+
+      it 'should not show as anonymous' do
+        request.anonymous?.should be_false
+      end
+    end
+  end
+
+  describe '#author' do
+    context 'when the request was posted anonymously' do
+      let (:request) { FactoryGirl.create :request, anonymous: true }
+
+      it 'should show the display name as Anonymous' do
+        request.author.should == "Anonymous"
+      end
+    end
+
+    context 'when the request was not posted anonymously' do
+      let (:request) { FactoryGirl.create :request }
+
+      it 'should should the users real name' do
+        request.author.should == request.user.name
+      end
+    end
+  end
 end

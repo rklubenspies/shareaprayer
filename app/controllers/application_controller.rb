@@ -23,7 +23,8 @@ class ApplicationController < ActionController::Base
   private :user_signed_in?
   helper_method :user_signed_in?
 
-  # Forces a user to be logged in
+  # Forces a user to be logged in. If they're not logged in, it
+  # redirects them to Facebook auth.
   # 
   # @since 1.0.0
   # @author Robert Klubenspies

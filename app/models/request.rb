@@ -41,4 +41,23 @@ class Request < ActiveRecord::Base
   state_machine :state, initial: :visible do
     # TODO: Implement events to change state
   end
+
+  # Conveience method to check if request was posted anonymously
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @return [Boolean] whether the request was posted anonymously
+  def anonymous?
+    anonymous
+  end
+
+  # Returns the name to display for the request author. Honors their
+  # privacy if they want to remain anonymous.
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @return [String] the author's display name for this request
+  def author
+    self.anonymous? ? "Anonymous" : self.user.name
+  end
 end
