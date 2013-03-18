@@ -1,10 +1,14 @@
-%nav
-  =@sidebar.user_name
-  %br
-  Your churches:
+%nav.sidebar#main-nav
   %ul
+    %li.profile
+      .image=image_tag @sidebar.user_image_url
+      .info
+        .name=@sidebar.user_name
+        =link_to "Logout", logout_path, class: "logout"
+
+    %li.icon-calendar=link_to "Recent", "#"
+
     -@sidebar.churches.each do |church|
-      %li=church.name
-      
-    -if @sidebar.no_churches?
-      %li You don't belong to any churches!
+      %li.icon-church=link_to church.profile.name, live_church_page_path(church)
+    
+    %li.icon-add=link_to (@sidebar.no_churches? ? "Add a church" : "Add another church"), "#"

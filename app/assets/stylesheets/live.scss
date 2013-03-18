@@ -1,0 +1,200 @@
+/*
+ *= require_self
+ *= require foundation
+ */
+
+// Compass mixins
+@import "compass/css3";
+@import "mixins/photoshop-drop-shadow";
+
+// Import the rest of the mixins
+@import "foundation_and_overrides";
+
+// nav.sidebar {
+//   width: 200px;
+//   height: 100%;
+//   float: left;
+//   background: #e1e1e1;
+// }
+
+
+* {
+  box-sizing: border-box;
+}
+
+html, body { min-height: 100%; }
+
+body { background-image: image-url("live/body-bg.png") !important; }
+
+nav.sidebar {
+  position: fixed;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background: #232323;
+  font-family: 'Montserrat', sans-serif;
+  color: white;
+  font-size: emCalc(18px);
+  overflow: hidden;
+  transition: width 0.3s ease;
+
+  ul {
+    li {
+      list-style: none;
+      border-bottom: solid 1px rgba(white, 0.05);
+      text-align: left;
+      margin: 0;
+
+      &.icon-calendar {
+        background-image: image-url("live/nav/calendar.png");
+        background-repeat: no-repeat;
+        background-position: 30px center;
+      }
+
+      &.icon-add {
+        background-image: image-url("live/nav/add.png");
+        background-repeat: no-repeat;
+        background-position: 30px center;
+      }
+
+      &.icon-church {
+        background-image: image-url("live/nav/church.png");
+        background-repeat: no-repeat;
+        background-position: 28px center;
+      }
+
+      &.active, &:hover, &:focus {
+        background-color: #5a9aa8;
+      }
+
+      a {
+        display: block;
+        text-decoration: none;
+        color: white;
+        padding: 20px 70px;
+      }
+
+      &.profile {
+        min-height: 80px;
+        padding: 10px;
+
+        &:hover, &:focus {
+          background-color: transparent;
+        }
+
+        .image {
+          height: 60px;
+          width: 60px;
+          margin-right: 20px;
+          float: left;
+        }
+
+        .name { display: block; }
+
+        a.logout {
+          display: inline;
+          text-decoration: none;
+          color: rgba(white, 0.4);
+          padding: 10px 0;
+          font-size: emCalc(13px);
+          
+          &:hover, &:focus {
+            text-decoration: underline;
+            background: transparent;
+          }
+        }
+      }
+    }
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 20px;
+    @include background(linear-gradient(left, rgba(black, 0), rgba(black, 0.25)));
+  }
+}
+
+header.main {
+  @include background(linear-gradient(#3F94BF, #246485));
+  padding: 5px;
+  text-align: center;
+  color: white;
+  text-shadow: #222 0px -1px 1px;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  transition: all 0.3s ease;
+
+  a {
+    position: absolute;
+    left: 20px;
+    top: 15px;
+    color: white;
+    font-size: 20px;
+  }
+
+  h1 {
+    font-size: emCalc(20px);
+    line-height: emCalc(20px);
+    color: white;
+  }
+}
+
+// For navigation on desktops
+@media #{$medium} {
+  nav.sidebar {
+    width: 27%;
+  }
+
+  .page-wrap {
+    width: 73%;
+    float: right;
+    transition: width 0.3s ease;
+  }
+
+  .content {
+    padding: 20px;
+  }
+
+  header.main {
+    display: none;
+  }
+}
+
+// For navigation on tablets/phones
+@media only screen and (max-width:"#{$medium-screen}") {
+  .page-wrap {
+    width: 100%;
+    float: right;
+    transition: width 0.3s ease;
+  }
+
+  .content {
+    padding: 70px 20px 20px 20px;
+  }
+
+  .close-menu {
+    display: none;
+  }
+
+  #main-nav:target {
+    width: 73%;
+  }
+  #main-nav:target + .page-wrap {
+    width: 27%;
+    .open-menu {
+       display: none; 
+    }
+    .close-menu {
+       display: block;
+    }
+    header.main {
+      width: 27%;
+      left: 73%;
+    }
+  }
+}

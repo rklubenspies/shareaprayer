@@ -25,6 +25,15 @@ module LivePresenters
       @user.name
     end
 
+    # User's profile pic from Facebook
+    # 
+    # @since 1.0.0
+    # @author Robert Klubenspies
+    # @return [String] the url of the photo
+    def user_image_url
+      "https://graph.facebook.com/#{@user.facebook_id}/picture?width=60&height=60"
+    end
+
     # User's churches
     # 
     # @since 1.0.0

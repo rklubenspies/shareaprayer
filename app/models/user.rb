@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   #   @return [DateTime] when the user's current Facebook token expires
 
   rolify
-  attr_accessible :first_name, :last_name, :email, :facebook_id, :facebook_token
+  attr_accessible :first_name, :last_name, :email, :facebook_id, :facebook_token, :facebook_token_expires_at
   has_many :church_memberships, dependent: :destroy
   has_many :churches, through: :church_memberships
   has_many :church_managerships, dependent: :destroy
@@ -80,7 +80,7 @@ class User < ActiveRecord::Base
 
     # @comment add a key to update_opts for each key that was changed
     possible_new_info.each do |key, opt|
-      update_opts[key] = possible_new_info[key] if user[key] != possible_new_info[key] && !possible_new_info[key].empty?
+      update_opts[key] = possible_new_info[key] if user[key] != possible_new_info[key] && !possible_new_info[key].blank?
     end
 
     user.update_attributes(update_opts)
