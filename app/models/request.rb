@@ -50,14 +50,4 @@ class Request < ActiveRecord::Base
   def anonymous?
     anonymous
   end
-
-  # Returns the name to display for the request author. Honors their
-  # privacy if they want to remain anonymous.
-  # 
-  # @since 1.0.0
-  # @author Robert Klubenspies
-  # @return [String] the author's display name for this request
-  def author
-    self.anonymous? ? "Anonymous" : self.user.name
-  end
 end

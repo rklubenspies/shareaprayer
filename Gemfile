@@ -9,6 +9,8 @@ gem 'omniauth', '~> 1.1.3'
 gem 'omniauth-facebook', '~> 1.4.1'
 gem 'high_voltage', '~> 1.2.2'
 gem 'haml-rails', '~> 0.4'
+gem 'draper', '~> 1.1.0'
+gem 'StreetAddress', '~> 1.0.4', :require => "street_address"
 
 group :test, :development do
   gem 'rspec-rails', '~> 2.0'

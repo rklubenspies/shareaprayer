@@ -1,4 +1,18 @@
--title @church.profile.name
+-title @church.name
 
-%h1 Requests for #{@church.profile.name}
-=render partial: 'live/shared/request', collection: @church.requests
+.church.show
+  %section.main
+    .call-to-action.join-church
+      %h1 Want to pray with #{@church.name}?
+      %h2 Share a Prayer brings people together online in prayer
+      %a{href: "#"} Join Prayer Group
+
+    =render partial: 'live/shared/request', collection: @requests
+
+  %section.sidebar
+    =@church.picture
+    %p=@church.bio
+    .contact-info
+      .phone.first-icon=@church.phone
+      .address=@church.address
+      .website=@church.website

@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    StreetAddress (1.0.4)
     ZenTest (4.9.0)
     actionmailer (3.2.11)
       actionpack (= 3.2.11)
@@ -59,6 +60,10 @@ GEM
     debug_inspector (0.0.2)
     diff-lcs (1.2.1)
     dotenv (0.5.0)
+    draper (1.1.0)
+      actionpack (>= 3.0)
+      activesupport (>= 3.0)
+      request_store (~> 1.0.3)
     erubis (2.7.0)
     execjs (1.4.0)
       multi_json (~> 1.0)
@@ -147,6 +152,7 @@ GEM
     rake (10.0.3)
     rdoc (3.12.2)
       json (~> 1.4)
+    request_store (1.0.5)
     rolify (3.2.0)
     rspec-core (2.13.1)
     rspec-expectations (2.13.0)
@@ -194,6 +200,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  StreetAddress (~> 1.0.4)
   ZenTest (~> 4.9.0)
   autotest-rails (~> 4.1.2)
   better_errors (~> 0.6.0)
@@ -202,6 +209,7 @@ DEPENDENCIES
   compass-rails (~> 1.0.3)
   database_cleaner (~> 0.9.1)
   dotenv (~> 0.5.0)
+  draper (~> 1.1.0)
   factory_girl_rails (~> 4.2.1)
   haml-rails (~> 0.4)
   high_voltage (~> 1.2.2)
