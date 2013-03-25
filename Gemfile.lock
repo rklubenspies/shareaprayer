@@ -16,6 +16,7 @@ GEM
       rack-cache (~> 1.2)
       rack-test (~> 0.6.1)
       sprockets (~> 2.2.1)
+    active_link_to (1.0.0)
     activemodel (3.2.11)
       activesupport (= 3.2.11)
       builder (~> 3.0.0)
@@ -202,6 +203,7 @@ PLATFORMS
 DEPENDENCIES
   StreetAddress (~> 1.0.4)
   ZenTest (~> 4.9.0)
+  active_link_to (~> 1.0.0)
   autotest-rails (~> 4.1.2)
   better_errors (~> 0.6.0)
   binding_of_caller (~> 0.7.1)

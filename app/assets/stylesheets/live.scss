@@ -65,8 +65,12 @@ nav.sidebar {
         background-position: 28px center;
       }
 
-      &.active, &:hover, &:focus {
+      &.active {
         background-color: #5a9aa8;
+      }
+
+      &:hover, &:focus {
+        background-color: shade(#5a9aa8, 10);
       }
 
       a {
@@ -155,8 +159,9 @@ header.main {
     @include grid-column(8);
 
     article.request {
-      margin-left: 30px;
+      margin-top: 10px;
       margin-bottom: 40px;
+      margin-left: 30px;
       position: relative;
       background: white;
       @include photoshop-drop-shadow (90, 0, 0, 5px, rgba(0,0,0,0.25));
@@ -248,45 +253,93 @@ header.main {
 
   section.sidebar {
     @include grid-column(4);
-    @include panel(white, 0px);
-    @include photoshop-drop-shadow (90, 0, 0, 5px, rgba(0,0,0,0.25));
-    border: none;
-    font-family: 'Montserrat', sans-serif;
-    font-size: emCalc(15px);
 
-    p {
-      padding: 10px;
-      margin-bottom: 0px;
+    .container {
+      @include panel(white, 0px);
+      margin-bottom: 16px;
+      @include photoshop-drop-shadow (90, 0, 0, 5px, rgba(0,0,0,0.25));
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      font-size: emCalc(15px);
+
+      .image {
+        position: relative;
+
+        h1 { 
+          position: absolute;
+          bottom: 5px;
+          left: 0;
+          padding-left: 10px;
+          padding-right: 12px;
+          margin-bottom: 0;
+          width: 100%;
+          font-family: 'Montserrat', sans-serif;
+          font-size: emCalc(32px);
+          line-height: emCalc(20px);
+          color: white;
+        }
+      }
+
+      p {
+        padding: 10px;
+        margin-bottom: 0px;
+      }
+
+      .contact-info {
+        font-size: emCalc(16px);
+        line-height: emCalc(20px);
+        padding-bottom: 10px;
+
+        div {
+          margin-top: 10px;
+          margin-left: 10px;
+          padding-left: 18px;
+          background-repeat: no-repeat;
+
+          &.phone {
+            background-image: image-url("live/church/phone.png");
+            background-position: 2px center;
+          }
+
+          &.address {
+            background-image: image-url("live/church/address.png");
+            background-position: 1px top;
+          }
+
+          &.website {
+            background-image: image-url("live/church/website.png");
+            background-position: left center;
+          }
+
+          &.first-icon {
+            margin-top: 0;
+          }
+        }
+      }
     }
 
-    .contact-info {
-      font-size: emCalc(16px);
-      line-height: emCalc(20px);
-      padding-bottom: 10px;
+    .buttons {
+      a {
+        @include button-base;
+        @include button-size;
+        width: 100%;
+        background: #d42925;
+        padding: 24px;
+        margin: 0px;
+        border: none;
+        color: white;
+        font-family: 'Montserrat', sans-serif;
+        font-size: emCalc(16px);
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 1px;
 
-      div {
-        margin-top: 10px;
-        margin-left: 10px;
-        padding-left: 18px;
-        background-repeat: no-repeat;
-
-        &.phone {
-          background-image: image-url("live/church/phone.png");
-          background-position: 2px center;
+        &:visited {
+          color: white;
         }
 
-        &.address {
-          background-image: image-url("live/church/address.png");
-          background-position: 1px top;
-        }
-
-        &.website {
-          background-image: image-url("live/church/website.png");
-          background-position: left center;
-        }
-
-        &.first-icon {
-          margin-top: 0;
+        &:hover {
+          background: shade(#d42925, 10);
         }
       }
     }
@@ -341,6 +394,31 @@ header.main {
     }
   }
 }
+
+.flash {
+  cursor: pointer;
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 3em;
+  top: 0;
+  left: 0;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  z-index: 10000;
+  color: white;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1em;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+
+  &.error { background-color: #d42925; }
+  &.alert{ background-color: #5a9aa8; }
+  &.notice { background-color: #1f7f5c; }
+}
+
 
 // For navigation on desktops
 @media #{$medium} {

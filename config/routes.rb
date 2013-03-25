@@ -12,9 +12,12 @@ Shareaprayer::Application.routes.draw do
     as: :omniauth_callback
 
   namespace :live do
-    get '/church/:id',
-      to: 'church#show',
-      as: :church_page
+    resources :church, only: [:show], as: "church" do
+      member do
+        get 'join'
+        get 'leave'
+      end
+    end
   end
 
   root to: 'high_voltage/pages#show', id: 'home'

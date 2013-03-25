@@ -27,9 +27,6 @@
   =csrf_meta_tags
 
 %body
-  -if flash[:notice]
-    =flash[:notice]
-
   =render 'live/shared/sidebar', object: @sidebar
 
   .page-wrap
@@ -39,6 +36,8 @@
       
       %h1=content_for?(:title) ? yield(:title) : "Share a Prayer Live"
 
-    .content=yield
+    .content
+      =render "live/shared/flash_notices"
+      =yield
 
   =javascript_include_tag "live/application"

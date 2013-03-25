@@ -2,17 +2,31 @@
 
 .church.show
   %section.main
-    .call-to-action.join-church
-      %h1 Want to pray with #{@church.name}?
-      %h2 Share a Prayer brings people together online in prayer
-      %a{href: "#"} Join Prayer Group
+    -if current_user.is_not_church_member?(@church.id)
+      .call-to-action.join-church
+        %h1 Want to pray with #{@church.name}?
+        %h2 Share a Prayer brings people together online in prayer
+        =link_to "Join Prayer Group", join_live_church_path(@church.id)
 
+    =render partial: 'live/shared/request', collection: @requests
+    =render partial: 'live/shared/request', collection: @requests
+    =render partial: 'live/shared/request', collection: @requests
+    =render partial: 'live/shared/request', collection: @requests
     =render partial: 'live/shared/request', collection: @requests
 
   %section.sidebar
-    =@church.picture
-    %p=@church.bio
-    .contact-info
-      .phone.first-icon=@church.phone
-      .address=@church.address
-      .website=@church.website
+    .container
+      .image
+        =@church.picture
+        %h1=@church.name
+      %p=@church.bio
+      .contact-info
+        .phone.first-icon=@church.phone
+        .address=@church.address
+        .website=@church.website
+    .buttons
+      -if current_user.is_church_member?(@church.id)
+        =link_to "Leave Prayer Group", leave_live_church_path(@church.id)
+
+      -if current_user.is_church_manager?(@church.id)
+        =link_to "Manage Church", "#"
