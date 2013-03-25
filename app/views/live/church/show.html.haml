@@ -13,7 +13,7 @@
     .requests{ data: { :"load-more-url" => live_church_path(@church.id) } }
       =render partial: 'live/shared/request', collection: @requests
 
-    .end-of-list
+    .end-of-list{ style: @requests.blank? ? "display: block;" : nil }
       %p No more requests to load!
 
   %section.sidebar

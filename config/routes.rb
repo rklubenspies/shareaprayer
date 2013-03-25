@@ -12,8 +12,8 @@ Shareaprayer::Application.routes.draw do
     as: :omniauth_callback
 
   namespace :live do
+    resources :recent, only: [:index], as: "recent"
     resources :requests, only: [:create]
-    
     resources :church, only: [:show], as: "church" do
       member do
         get 'join'

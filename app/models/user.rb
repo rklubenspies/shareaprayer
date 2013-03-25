@@ -32,6 +32,7 @@ class User < ActiveRecord::Base
   has_many :church_managerships, dependent: :destroy
   has_many :managed_churches, through: :church_managerships
   has_many :requests, dependent: :destroy
+  has_many :church_requests, through: :churches, as: :requests, source: :requests, class_name: "Request"
   has_many :prayers, dependent: :destroy
   has_many :reported_content, as: :owner, dependent: :destroy
 

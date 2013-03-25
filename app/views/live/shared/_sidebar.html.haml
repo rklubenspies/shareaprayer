@@ -6,7 +6,7 @@
         .name=@sidebar.user_name
         =link_to "Logout", logout_path, class: "logout"
 
-    %li.icon-calendar=link_to "Recent", "#"
+    %li.icon-calendar=link_to "Recent", live_recent_index_path
 
     -@sidebar.churches.each do |church|
       =active_link_to church.profile.name, live_church_path(church), wrap_tag: :li, class: "icon-church"
