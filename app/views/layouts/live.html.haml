@@ -41,3 +41,4 @@
       =yield
 
   =javascript_include_tag "live/application"
+  =content_for?(:page_specific) ? yield(:page_specific) : yield

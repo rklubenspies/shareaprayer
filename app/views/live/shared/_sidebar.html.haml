@@ -9,7 +9,6 @@
     %li.icon-calendar=link_to "Recent", "#"
 
     -@sidebar.churches.each do |church|
-      / %li.icon-church=link_to church.profile.name, live_church_page_path(church)
-      =active_link_to church.profile.name, live_church_page_path(church), wrap_tag: :li, class: "icon-church"
+      =active_link_to church.profile.name, live_church_path(church), wrap_tag: :li, class: "icon-church"
     
     %li.icon-add=link_to (@sidebar.no_churches? ? "Add a church" : "Add another church"), "#"

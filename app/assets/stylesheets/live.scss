@@ -192,6 +192,7 @@ header.main {
 
       .text {
         position: relative;
+        min-height: 130px;
         margin-left: 105px;
         margin-right: 30px;
         padding-top: 15px;
@@ -249,12 +250,117 @@ header.main {
         }
       }
     }
+
+    .end-of-list {
+      @include panel(#8c6635, emCalc(24px));
+      @include border-radius(emCalc(10px));
+      background: rgba(140, 102, 53, 0.05);
+      border: 4px dashed #a5998b;
+      margin-bottom: 40px;
+      text-align: center;
+      display: none;
+
+      p {
+        color: #4c443b;
+        font-family: 'Montserrat', sans-serif;
+        font-size: emCalc(20px);
+        line-height: emCalc(14px);
+        margin-bottom: 8px;
+      }
+    }
   }
 
   section.sidebar {
     @include grid-column(4);
 
-    .container {
+    .post-request {
+      margin-bottom: 16px;
+
+      form {
+        textarea {
+          margin: 0;
+          padding: 20px;
+          width: 100%;
+          height: emCalc(60px);
+          background: white;
+          color: #666666;
+          font-family: 'Montserrat', sans-serif;
+          font-size: emCalc(18px);
+          line-height: emCalc(24px);
+        }
+
+        .options {
+          display: none;
+          margin-top: 8px;
+
+          .dropdown {
+            margin: 0;
+            padding: 20px;
+            width: 100%;
+            height: emCalc(58px);
+            background: white;
+            color: #666666;
+            font-family: 'Montserrat', sans-serif;
+            font-size: emCalc(18px);
+            line-height: emCalc(18px);
+
+            .current {
+              font-size: emCalc(18px);
+              line-height: emCalc(18px);
+              margin-left: 0;
+            }
+
+            .selector {
+              height: emCalc(58px);
+            }
+
+            ul {
+              margin-top: emCalc(20px);
+            }
+          }
+
+          .buttons {
+            margin-top: 8px;
+            margin-bottom: 92px;
+
+            input {
+              @include button-base;
+              @include button-size;
+              padding: 24px;
+              border: none;
+              color: white;
+              font-family: 'Montserrat', sans-serif;
+              font-size: emCalc(16px);
+              font-weight: 400;
+              text-transform: uppercase;
+              letter-spacing: 1px;
+            }
+
+            input[type="reset"] {
+              background: #d42925;
+              width: 21%;
+              float: left;
+
+              &:hover {
+                background: shade(#d42925, 10);
+              }
+            }
+
+            input[type="submit"] {
+              background: #1f7f5c;
+              width: 76%;
+              float: right;
+
+              &:hover {
+                background: shade(#1f7f5c, 10);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .profile {
       @include panel(white, 0px);
       margin-bottom: 16px;
       @include photoshop-drop-shadow (90, 0, 0, 5px, rgba(0,0,0,0.25));

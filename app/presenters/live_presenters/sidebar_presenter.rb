@@ -51,5 +51,14 @@ module LivePresenters
     def no_churches?
       @user.churches.empty?
     end
+
+    # User's churches for request form
+    # 
+    # @since 1.0.0
+    # @author Robert Klubenspies
+    # @return [Array] the user's churches
+    def request_form_churches
+      @user.churches.collect { |c| [ c.profile.name, c.id ] }
+    end
   end
 end

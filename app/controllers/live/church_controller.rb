@@ -9,8 +9,14 @@ class Live::ChurchController < Live::ApplicationController
   # @author Robert Klubenspies
   def show
     @church = Church.find(params[:id], include: [:profile]).decorate
-    @requests = @church.requests.order("created_at DESC").decorate
+    @requests = @church.requests.order("created_at DESC").page(params[:page]).decorate
+
+    respond_to do |format|
+      format.js { render template: "live/shared/pagination" }
+      format.html
+    end
   end
+  
   # Join a church
   # 
   # @since 1.0.0

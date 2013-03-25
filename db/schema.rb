@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130323221907) do
+ActiveRecord::Schema.define(:version => 20130325201733) do
 
   create_table "church_managerships", :force => true do |t|
     t.integer  "church_id"
@@ -64,14 +64,14 @@ ActiveRecord::Schema.define(:version => 20130323221907) do
   end
 
   create_table "requests", :force => true do |t|
-    t.text     "text"
+    t.string   "text",       :limit => 10000
     t.integer  "user_id"
     t.integer  "church_id"
     t.string   "visibility"
     t.boolean  "anonymous"
     t.string   "ip_address"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
     t.string   "state"
   end
 
