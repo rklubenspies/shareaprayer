@@ -23,9 +23,7 @@
           $(window).sausage('draw');
           loading=false;
 
-          console.log(response.getResponseHeader('Content-Length'))
-
-          if(response.getResponseHeader('Content-Length') == "0") {
+          if(response.getResponseHeader('X-SAP-End-Of-List') === '1') {
             console.log("end of list!")
             endOfList = true;
             $('.end-of-list').fadeIn();

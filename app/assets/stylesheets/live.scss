@@ -431,7 +431,7 @@ header.main {
         width: 100%;
         background: #d42925;
         padding: 24px;
-        margin: 0px;
+        margin: 0 0 8px 0;
         border: none;
         color: white;
         font-family: 'Montserrat', sans-serif;
@@ -446,6 +446,14 @@ header.main {
 
         &:hover {
           background: shade(#d42925, 10);
+        }
+
+        &.manage {
+          background: #de8550;
+
+          &:hover {
+            background: shade(#de8550, 10);
+          }
         }
       }
     }

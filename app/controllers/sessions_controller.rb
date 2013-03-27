@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
   def create
     user = User.from_omniauth(env['omniauth.auth'])
     session[:user_id] = user.id
-    redirect_to (request.env['omniauth.origin'] || root_path), notice: "Signed in!"
+    redirect_to (request.env['omniauth.origin'] || recent_index_path), notice: "Signed in!"
   end
 
   # Logs out user

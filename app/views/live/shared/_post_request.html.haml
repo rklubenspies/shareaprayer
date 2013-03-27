@@ -1,5 +1,5 @@
 .post-request
-  =form_tag(live_requests_path, method: :post, remote: true, class: "custom" ) do
+  =form_tag(requests_path, method: :post, remote: true, class: "custom" ) do
     =text_area_tag(:text, "", placeholder: "Write a prayer request")
 
     .options

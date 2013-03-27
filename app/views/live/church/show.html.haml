@@ -8,9 +8,9 @@
       .call-to-action.join-church
         %h1 Want to pray with #{@church.name}?
         %h2 Share a Prayer brings people together online in prayer
-        =link_to "Join Prayer Group", join_live_church_path(@church.id)
+        =link_to "Join Prayer Group", join_church_path(@church.subdomain)
 
-    .requests{ data: { :"load-more-url" => live_church_path(@church.id) } }
+    .requests{ data: { :"load-more-url" => church_path(@church.id) } }
       =render partial: 'live/shared/request', collection: @requests
 
     .end-of-list{ style: @requests.blank? ? "display: block;" : nil }
@@ -32,7 +32,7 @@
     
     .buttons
       -if current_user.is_church_member?(@church.id)
-        =link_to "Leave Prayer Group", leave_live_church_path(@church.id)
+        =link_to "Leave Prayer Group", leave_church_path(@church.subdomain), class: "leave"
 
       -if current_user.is_church_manager?(@church.id)
-        =link_to "Manage Church", "#"
+        =link_to "Manage Church", "#", class: "manage"

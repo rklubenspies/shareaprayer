@@ -9,7 +9,7 @@
       %h2 Why not take a tour of Share a Prayer?
       =link_to "Take The Tour", "#"
 
-    .requests{ data: { :"load-more-url" => live_recent_index_path } }
+    .requests{ data: { :"load-more-url" => root_path } }
       =render partial: 'live/shared/request', collection: @requests
 
     .end-of-list{ style: @requests.blank? ? "display: block;" : nil }

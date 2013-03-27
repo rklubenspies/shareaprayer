@@ -3,6 +3,9 @@
 # @since 1.0.0
 # @author Robert Klubenspies
 class Church < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :subdomain
+
   has_one :profile, dependent: :destroy, class_name: "ChurchProfile"
   has_many :church_memberships, dependent: :destroy
   has_many :members, through: :church_memberships, source: :user, class_name: "User"

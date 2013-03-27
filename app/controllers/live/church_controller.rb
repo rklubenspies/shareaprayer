@@ -12,7 +12,13 @@ class Live::ChurchController < Live::ApplicationController
     @requests = @church.requests.order("created_at DESC").page(params[:page]).decorate
 
     respond_to do |format|
-      format.js { render template: "live/shared/pagination" }
+      if @requests && @requests.count > 0
+        format.js { render template: "live/shared/pagination" }
+      elsif @requests
+        response.headers["X-SAP-End-Of-List"] = "1"
+        format.js { render text: "" }
+      end
+      
       format.html
     end
   end
@@ -22,10 +28,11 @@ class Live::ChurchController < Live::ApplicationController
   # @since 1.0.0
   # @author Robert Klubenspies
   def join
-    if current_user.join_church(params[:id])
-      redirect_to live_church_path(params[:id]), notice: "Successfully joined prayer group!"
+    church = Church.find(params[:id])
+    if current_user.join_church(church.id)
+      redirect_to church_path(church.subdomain), notice: "Successfully joined prayer group!"
     else
-      redirect_to live_church_path(params[:id]), alert: "We encountered an unknown error. Please try again later."
+      redirect_to church_path(church.subdomain), alert: "We encountered an unknown error. Please try again later."
     end
   end
 
@@ -34,10 +41,11 @@ class Live::ChurchController < Live::ApplicationController
   # @since 1.0.0
   # @author Robert Klubenspies
   def leave
-    if current_user.leave_church!(params[:id])
-      redirect_to live_church_path(params[:id]), notice: "Successfully left prayer group!"
+    church = Church.find(params[:id])
+    if current_user.leave_church!(church.id)
+      redirect_to church_path(church.subdomain), notice: "Successfully left prayer group!"
     else
-      redirect_to live_church_path(params[:id]), alert: "We encountered an unknown error. Please try again later."
+      redirect_to church_path(church.subdomain), alert: "We encountered an unknown error. Please try again later."
     end
   end
 end
