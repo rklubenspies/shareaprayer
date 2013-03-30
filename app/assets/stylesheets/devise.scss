@@ -1,0 +1,25 @@
+/*
+ *= require_self
+ *= require foundation
+ */
+
+// Compass mixins
+@import "compass/css3";
+@import "mixins/photoshop-drop-shadow";
+
+// Import the rest of the mixins
+@import "foundation_and_overrides";
+
+* {
+  box-sizing: border-box;
+}
+
+html, body { min-height: 100%; }
+
+body {
+  background-image: image-url("shared/body-bg.png") !important;
+}
+
+.content {
+  @include grid-row();
+}
