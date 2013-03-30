@@ -36,9 +36,8 @@ class RequestDecorator < Draper::Decorator
   # @author Robert Klubenspies
   # @return [String] an image tag containing photo
   def profile_pic
-    facebook_id = source.user.facebook_id
-    if !facebook_id.blank?
-      h.image_tag("https://graph.facebook.com/#{source.user.facebook_id}/picture?width=220&height=220")
+    if !source.user.provider.blank?
+      h.image_tag("https://graph.facebook.com/#{source.user.provider_uid}/picture?width=220&height=220")
     else
       h.image_tag("live/no-profile-pic.jpg")
     end

@@ -1,17 +1,5 @@
 Shareaprayer::Application.routes.draw do
-  constraints(subdomain: /^(|www|live)$/) do
-    get '/login',
-      to: 'sessions#new',
-      as: :login
-
-    get '/logout',
-      to: 'sessions#destroy',
-      as: :logout
-
-    match '/auth/:provider/callback',
-      to: 'sessions#create',
-      as: :omniauth_callback
-  end
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
   constraints(subdomain: /^(|www)$/) do
     root to: 'high_voltage/pages#show', id: 'home'

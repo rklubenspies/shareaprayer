@@ -4,7 +4,8 @@ describe User do
   it { should have_db_column(:first_name).of_type(:string) }
   it { should have_db_column(:last_name).of_type(:string) }
   it { should have_db_column(:email).of_type(:string) }
-  it { should have_db_column(:facebook_id).of_type(:integer) }
+  it { should have_db_column(:provider).of_type(:string) }
+  it { should have_db_column(:provider_uid).of_type(:string) }
   it { should have_db_column(:facebook_token).of_type(:string) }
   it { should have_db_column(:facebook_token_expires_at).of_type(:datetime) }
 
@@ -35,30 +36,6 @@ describe User do
 
     it 'should return the users full name' do
       user.name.should == "#{user.first_name} #{user.last_name}"
-    end
-  end
-
-  describe '.from_omniauth' do
-    subject { User.from_omniauth(omniauth) }
-    let! (:omniauth) { { uid: '100000109531535', credentials: { token: 'abcdefg', expires_at: Time.now.to_i },  info: { first_name: 'Jane', last_name: 'Doe', email: 'janedoe@shareaprayer.org' } } }
-
-    context 'when passed a previously saved auth hash' do
-      let (:user) { User.where({ facebook_id: omniauth[:uid] }).first }
-
-      it { should == user }
-    end
-
-    context 'when passed a new auth hash' do
-      it 'persists a user' do
-        expect { subject }.to change(User, :count).by 1
-      end
-
-      its (:first_name) { should == omniauth[:info][:first_name] }
-      its (:last_name) { should == omniauth[:info][:last_name] }
-      its (:email) { should == omniauth[:info][:email] }
-      its (:facebook_id) { should == omniauth[:uid].to_i }
-      its (:facebook_token) { should == omniauth[:credentials][:token] }
-      its (:facebook_token_expires_at) { should == Time.at(omniauth[:credentials][:expires_at]) }
     end
   end
 

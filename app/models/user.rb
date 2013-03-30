@@ -26,7 +26,13 @@ class User < ActiveRecord::Base
   #   @return [DateTime] when the user's current Facebook token expires
 
   rolify
-  attr_accessible :first_name, :last_name, :email, :facebook_id, :facebook_token, :facebook_token_expires_at
+  
+  attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :remember_me,
+                  :provider, :provider_uid, :facebook_id, :facebook_token, :facebook_token_expires_at
+
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable,
+         :omniauthable, :omniauth_providers => [:facebook]
+
   has_many :church_memberships, dependent: :destroy
   has_many :churches, through: :church_memberships
   has_many :church_managerships, dependent: :destroy
@@ -45,48 +51,61 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
-  # Processes an OmniAuth hash to either log in or create a user
+  # Finds and updates or creates a User from a Devise OmniAuth response
   # 
   # @since 1.0.0
-  # @author Robert Klubenspies
-  # @param [Hash] omniauth the OmniAuth auth hash
-  # @return [User] the user found by the auth hash
-  def self.from_omniauth(omniauth)
-    # @comment allow access to hash keys by string or symbol
-    omniauth = omniauth.with_indifferent_access
+  # @see https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview
+  # @return [User]
+  def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
+    # Find the User if they exist
+    user = User.where(:provider => auth.provider, :provider_uid => auth.uid).first
 
-    user = self.where({ facebook_id: omniauth[:uid] }).first
-    user ? user.update_from_omniauth(omniauth) : self.create_from_omniauth(omniauth)
-  end
+    # If the User exists, update any changed information
+    if user
+      possible_new_info = {
+        first_name:                 auth.info.first_name,
+        last_name:                  auth.info.last_name,
+        facebook_token:             auth.credentials.token,
+        facebook_token_expires_at:  Time.at(auth.credentials.expires_at),
+      }
 
-  # Updates a User from an omniauth hash. Used by .from_omniauth during
-  # existing user login.
-  # 
-  # @since 1.0.0
-  # @author Robert Klubenspies
-  # @param [Hash] omniauth the OmniAuth auth hash
-  # @return [User] the user updated by the auth hash
-  def update_from_omniauth(omniauth)
-    user = self
+      update_opts = {}
 
-    possible_new_info = {
-      # first_name:                 omniauth[:info][:first_name],
-      # last_name:                  omniauth[:info][:last_name],
-      # email:                      omniauth[:info][:email],
-      facebook_token:             omniauth[:credentials][:token],
-      facebook_token_expires_at:  Time.at(omniauth[:credentials][:expires_at])
-    }
+      # Add a key to update_opts for each key that was changed
+      possible_new_info.each do |key, opt|
+        if user[key] != possible_new_info[key] && !possible_new_info[key].blank?
+          update_opts[key] = possible_new_info[key]
+        end
+      end
 
-    update_opts = {}
-
-    # @comment add a key to update_opts for each key that was changed
-    possible_new_info.each do |key, opt|
-      update_opts[key] = possible_new_info[key] if user[key] != possible_new_info[key] && !possible_new_info[key].blank?
+      user.update_attributes(update_opts)
+    # If no User exists, create them
+    else
+      user = User.create(
+        first_name:                 auth.info.first_name,
+        last_name:                  auth.info.last_name,
+        provider:                   auth.provider,
+        provider_uid:               auth.uid,
+        facebook_token:             auth.credentials.token,
+        facebook_token_expires_at:  Time.at(auth.credentials.expires_at),
+        email:                      auth.info.email,
+        password:                   Devise.friendly_token[0,20],
+      )
     end
 
-    user.update_attributes(update_opts)
-    
-    return user
+    user
+  end
+
+  # Overrides Devise method to add Facebook email to default User data
+  # 
+  # @since 1.0.0
+  # @see https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview
+  def self.new_with_session(params, session)
+    super.tap do |user|
+      if data = session["devise.facebook_data"] && session["devise.facebook_data"]["extra"]["raw_info"]
+        user.email = data["email"] if user.email.blank?
+      end
+    end
   end
 
   # Creates a User from an omniauth hash. Used by .from(omniauth).

@@ -6,6 +6,8 @@ class Church < ActiveRecord::Base
   extend FriendlyId
   friendly_id :subdomain
 
+  attr_accessible :subdomain
+
   has_one :profile, dependent: :destroy, class_name: "ChurchProfile"
   has_many :church_memberships, dependent: :destroy
   has_many :members, through: :church_memberships, source: :user, class_name: "User"
@@ -58,6 +60,7 @@ class Church < ActiveRecord::Base
   # @author Robert Klubenspies
   # @param [Hash] opts the options to register a church with
   # @option opts [String] :name the name of the church
+  # @option opts [String] :subdomain the church's subdomain
   # @option opts [String] :bio the church's bio
   # @option opts [String] :address the church's address
   # @option opts [String] :phone the church's phone number
@@ -74,15 +77,17 @@ class Church < ActiveRecord::Base
 
     raise "UserNotSignedUp" if !user.has_role?("site_user")
 
-    church = Church.create
+    church = Church.create({
+      subdomain:  opts[:subdomain],
+    })
 
     church_profile_opts = {
-      name: opts[:name],
-      bio: opts[:bio],
-      address: opts[:address],
-      phone: opts[:phone],
-      email: opts[:email],
-      website: opts[:website]
+      name:       opts[:name],
+      bio:        opts[:bio],
+      address:    opts[:address],
+      phone:      opts[:phone],
+      email:      opts[:email],
+      website:    opts[:website],
     }
 
     church.profile = ChurchProfile.create(church_profile_opts)

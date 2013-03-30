@@ -1,9 +1,14 @@
 FactoryGirl.define do
+  sequence :email do |n|
+    "test-email-#{n}@shareaprayer.org"
+  end
+
   factory :user do
     first_name "John"
     last_name "Doe"
-    email "johndoe@shareaprayer.com"
-    facebook_id 100000000000000
+    email
+    provider "facebook"
+    provider_uid "100000000000000"
     facebook_token "abcdefg"
     facebook_token_expires_at { Time.now }
 
@@ -15,8 +20,9 @@ FactoryGirl.define do
   factory :invisible_user, class: "User" do
     first_name "Invisible"
     last_name "Joe"
-    email "invisiblejoe@shareaprayer.com"
-    facebook_id 100000000000000
+    email
+    provider "facebook"
+    provider_uid "100000000000000"
     facebook_token "abcdefg"
     facebook_token_expires_at { Time.now }
 

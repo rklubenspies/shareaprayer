@@ -14,7 +14,7 @@ describe RequestDecorator do
       let (:request) { FactoryGirl.create(:request).decorate }
 
       it 'should should the users real name' do
-        request.author.should == request.user.name
+        request.author.should == request.user.first_name
       end
     end
   end
