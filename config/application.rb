@@ -51,5 +51,8 @@ module Shareaprayer
 
     # Selectively choose SSL settings in environment files
     config.force_ssl = false
+
+    # Fonts asset path
+    config.assets.paths << "#{Rails.root}/app/assets/fonts"
   end
 end

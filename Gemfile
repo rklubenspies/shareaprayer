@@ -41,11 +41,12 @@ group :development do
 end
 
 group :assets do
+  gem 'jquery-rails'
   gem 'sass-rails', '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
   gem 'compass-rails', '~> 1.0.3'
   gem 'zurb-foundation', '~> 4.0.8'
+  gem 'zocial', '~> 0.0.3'
+  gem 'respond-to', '~> 2.6'
 end
-
-gem 'jquery-rails'

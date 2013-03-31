@@ -1,16 +1,33 @@
-%h2 Sign in
-= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
-  %div
-    = f.label :email
-    %br/
-    = f.email_field :email, :autofocus => true
-  %div
-    = f.label :password
-    %br/
-    = f.password_field :password
-  - if devise_mapping.rememberable?
-    %div
-      = f.check_box :remember_me
-      = f.label :remember_me
-  %div= f.submit "Sign in"
-= render "devise/shared/links"
+%section.sign-in
+  %h2 Sign in
+
+  =link_to omniauth_authorize_path(resource_name, "facebook"), class: "zocial facebook" do
+    %span Sign in with Facebook
+
+  %p.or-email Or, sign in with your email address
+
+  =form_for(resource, :as => resource_name, :url => session_path(resource_name), html: { class: "custom" } ) do |f|
+    .row.collapse
+      .small-4.columns
+        %span.prefix E-mail
+      .small-8.columns
+        =f.email_field :email, :autofocus => true
+
+    .row.collapse
+      .small-4.columns
+        %span.prefix Password
+      .small-8.columns
+        =f.password_field :password
+
+    .submit-block
+      - if devise_mapping.rememberable?
+        .remember-me
+          =f.label :remember_me do
+            =f.check_box :remember_me, style: "display: none;"
+            %span.custom.checkbox
+            Remember me
+
+      .submit-button
+        =f.submit "Sign in"
+
+    =link_to "Help! I forgot my password!", new_password_path(resource_name)

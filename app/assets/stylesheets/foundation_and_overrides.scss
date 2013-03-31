@@ -1,3 +1,7 @@
+// Responsive setup
+@import "respond-to";
+$breakpoints: 'small' (0 768px), 'large' (769px);
+
 // Required global settings and mixins for Foundation
 @import "foundation/foundation-global";
 

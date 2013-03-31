@@ -3,12 +3,12 @@
  *= require foundation
  */
 
-// Compass mixins
 @import "compass/css3";
+@import "zocial";
 @import "mixins/photoshop-drop-shadow";
-
-// Import the rest of the mixins
 @import "foundation_and_overrides";
+
+@include zocial;
 
 * {
   box-sizing: border-box;
@@ -22,4 +22,45 @@ body {
 
 .content {
   @include grid-row();
+
+  h1, h2, h3 {
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  section.sign-in {
+    @include grid-column(10, true, true);
+    
+    @include respond-to('large') {
+      @include grid-column(6, true, true);
+    }
+
+    .zocial {
+      margin-bottom: emCalc(14px);
+    }
+
+    p.or-email {
+      text-align: center;
+      font-style: italic;
+    }
+
+    form {
+      input[type="submit"] {
+        @include button;
+      }
+
+      .submit-block {
+        @include grid-row('collapse');
+
+        .remember-me {
+          @include grid-column(8, $collapse: true);
+          padding-top: emCalc(10px);
+        }
+
+        .submit-button {
+          @include grid-column(4, $collapse: true);
+          text-align: right;
+        }
+      }
+    }
+  }
 }
