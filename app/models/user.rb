@@ -38,7 +38,6 @@ class User < ActiveRecord::Base
 
   validates :email, presence: true, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
   validates :password, confirmation: true
-  validates :password_confirmation, presence: true
   validates :first_name, presence: true
   validates :last_name, presence: true
 
@@ -83,7 +82,7 @@ class User < ActiveRecord::Base
     connected_user = User.where(:provider => auth.provider, :provider_uid => auth.uid).first
 
     # Find an existing user who has not connected Facebook
-    disconnected_user = User.where(:email => signed_in_resource.email)
+    disconnected_user = User.where(:email => auth.info.email).first
 
     # Check for a connected User first, and if they're here, sign them in
     if connected_user
@@ -106,12 +105,25 @@ class User < ActiveRecord::Base
       user = connected_user.update_attributes(update_opts)
     # No connected User, let's look for a User who hasn't connected yet
     elsif disconnected_user
-      user = User.update_attributes(
+      possible_new_info = {
+        first_name:                 auth.info.first_name,
+        last_name:                  auth.info.last_name,
         provider:                   auth.provider,
         provider_uid:               auth.uid,
         facebook_token:             auth.credentials.token,
         facebook_token_expires_at:  Time.at(auth.credentials.expires_at),
-      )
+      }
+
+      update_opts = {}
+
+      # Add a key to update_opts for each key that was changed
+      possible_new_info.each do |key, opt|
+        if disconnected_user[key] != possible_new_info[key] && !possible_new_info[key].blank?
+          update_opts[key] = possible_new_info[key]
+        end
+      end
+
+      user = disconnected_user.update_attributes(update_opts)
     # These guys are brand new, create them from Facebook info
     else
       user = User.create(

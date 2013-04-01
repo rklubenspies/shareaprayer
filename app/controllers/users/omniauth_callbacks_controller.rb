@@ -3,12 +3,20 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # You need to implement the method below in your model (e.g. app/models/user.rb)
     @user = User.find_for_facebook_oauth(request.env["omniauth.auth"], current_user)
 
+    # User is linking an account
     if user_signed_in? && @user.persisted?
       flash[:success] = "Successfully linked Facebook account!"
       redirect_to edit_user_account_path(current_user)
-    elsif @user.persisted?
-      sign_in_and_redirect @user, :event => :authentication #this will throw if @user is not activated
+    # User is signing into an existing account OR creating a new one
+    elsif @user
+      # We need to monkey patch the @user object here because sometimes we'll get true back instead of a User
+      if !!@user == @user
+        @user = User.where(email: request.env["omniauth.auth"].info.email).first
+      end
+
+      sign_in_and_redirect @user, :event => :authentication # this will throw if @user is not activated (no worries here)
       set_flash_message(:notice, :success, :kind => "Facebook") if is_navigational_format?
+    # Something went majorly wrong and we need to send them to a signup form
     else
       session["devise.facebook_data"] = request.env["omniauth.auth"]
       redirect_to new_user_registration_url
