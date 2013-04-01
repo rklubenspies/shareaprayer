@@ -36,11 +36,7 @@ class RequestDecorator < Draper::Decorator
   # @author Robert Klubenspies
   # @return [String] an image tag containing photo
   def profile_pic
-    if !source.user.provider.blank?
-      h.image_tag("https://graph.facebook.com/#{source.user.provider_uid}/picture?width=220&height=220")
-    else
-      h.image_tag("live/no-profile-pic.jpg")
-    end
+    h.image_tag(source.user.profile_pic_url)
   end
 
   # Returns a short version of request, which has been limited to

@@ -24,14 +24,23 @@ class User < ActiveRecord::Base
 
   # @!attribute facebook_token_expires_at
   #   @return [DateTime] when the user's current Facebook token expires
-
-  rolify
   
   attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :remember_me,
                   :provider, :provider_uid, :facebook_id, :facebook_token, :facebook_token_expires_at
 
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable,
          :omniauthable, :omniauth_providers => [:facebook]
+
+  rolify
+  after_create do
+    add_role(:site_user)
+  end
+
+  validates :email, presence: true, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }
+  validates :password, confirmation: true
+  validates :password_confirmation, presence: true
+  validates :first_name, presence: true
+  validates :last_name, presence: true
 
   has_many :church_memberships, dependent: :destroy
   has_many :churches, through: :church_memberships
@@ -51,17 +60,33 @@ class User < ActiveRecord::Base
     "#{first_name} #{last_name}"
   end
 
+  # A convenience method that returns a user's profile picture URL
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @return [String] the user's profile pic URL
+  def profile_pic_url
+    if !self.provider_uid.blank?
+      "https://graph.facebook.com/#{self.provider_uid}/picture?width=220&height=220"
+    else
+      "live/shared/no-profile-pic.png"
+    end
+  end
+
   # Finds and updates or creates a User from a Devise OmniAuth response
   # 
   # @since 1.0.0
   # @see https://github.com/plataformatec/devise/wiki/OmniAuth:-Overview
   # @return [User]
   def self.find_for_facebook_oauth(auth, signed_in_resource=nil)
-    # Find the User if they exist
-    user = User.where(:provider => auth.provider, :provider_uid => auth.uid).first
+    # Find the User if they already connected Facebook
+    connected_user = User.where(:provider => auth.provider, :provider_uid => auth.uid).first
 
-    # If the User exists, update any changed information
-    if user
+    # Find an existing user who has not connected Facebook
+    disconnected_user = User.where(:email => signed_in_resource.email)
+
+    # Check for a connected User first, and if they're here, sign them in
+    if connected_user
       possible_new_info = {
         first_name:                 auth.info.first_name,
         last_name:                  auth.info.last_name,
@@ -73,13 +98,21 @@ class User < ActiveRecord::Base
 
       # Add a key to update_opts for each key that was changed
       possible_new_info.each do |key, opt|
-        if user[key] != possible_new_info[key] && !possible_new_info[key].blank?
+        if connected_user[key] != possible_new_info[key] && !possible_new_info[key].blank?
           update_opts[key] = possible_new_info[key]
         end
       end
 
-      user.update_attributes(update_opts)
-    # If no User exists, create them
+      user = connected_user.update_attributes(update_opts)
+    # No connected User, let's look for a User who hasn't connected yet
+    elsif disconnected_user
+      user = User.update_attributes(
+        provider:                   auth.provider,
+        provider_uid:               auth.uid,
+        facebook_token:             auth.credentials.token,
+        facebook_token_expires_at:  Time.at(auth.credentials.expires_at),
+      )
+    # These guys are brand new, create them from Facebook info
     else
       user = User.create(
         first_name:                 auth.info.first_name,
@@ -93,6 +126,7 @@ class User < ActiveRecord::Base
       )
     end
 
+    # Always return the User
     user
   end
 

@@ -27,6 +27,9 @@
   =csrf_meta_tags
 
 %body
+  %nav
+    .logo=image_tag "devise/logo-small.png"
+  
   .content=yield
 
   =javascript_include_tag "devise/application"

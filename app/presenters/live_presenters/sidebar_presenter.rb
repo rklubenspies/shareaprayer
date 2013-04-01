@@ -31,11 +31,7 @@ module LivePresenters
     # @author Robert Klubenspies
     # @return [String] the url of the photo
     def user_image_url
-      if !@user.provider.blank?
-        "https://graph.facebook.com/#{@user.provider_uid}/picture?width=60&height=60"
-      else
-        "live/no-profile-pic.jpg"
-      end
+      @user.profile_pic_url
     end
 
     # User's churches

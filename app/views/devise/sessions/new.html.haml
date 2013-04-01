@@ -1,33 +1,33 @@
 %section.sign-in
-  %h2 Sign in
+  .facebook
+    =link_to omniauth_authorize_path(resource_name, "facebook"), class: "zocial facebook" do
+      %span Sign in with Facebook
 
-  =link_to omniauth_authorize_path(resource_name, "facebook"), class: "zocial facebook" do
-    %span Sign in with Facebook
+  .form-block
+    %p.or-email Or, sign in with your email address
 
-  %p.or-email Or, sign in with your email address
-
-  =form_for(resource, :as => resource_name, :url => session_path(resource_name), html: { class: "custom" } ) do |f|
-    .row.collapse
-      .small-4.columns
-        %span.prefix E-mail
-      .small-8.columns
+    =form_for(resource, :as => resource_name, :url => session_path(resource_name), html: { class: "custom" } ) do |f|
+      .input-block
+        %span E-mail
         =f.email_field :email, :autofocus => true
 
-    .row.collapse
-      .small-4.columns
-        %span.prefix Password
-      .small-8.columns
+      .input-block
+        %span Password
         =f.password_field :password
 
-    .submit-block
-      - if devise_mapping.rememberable?
-        .remember-me
-          =f.label :remember_me do
-            =f.check_box :remember_me, style: "display: none;"
-            %span.custom.checkbox
-            Remember me
+      .forgot-password=link_to "Help! I forgot my password!", new_password_path(resource_name)
 
-      .submit-button
-        =f.submit "Sign in"
+      .submit-block
+        - if devise_mapping.rememberable?
+          .remember-me
+            =f.label :remember_me do
+              =f.check_box :remember_me, style: "display: none;"
+              %span.custom.checkbox
+              Remember me
 
-    =link_to "Help! I forgot my password!", new_password_path(resource_name)
+        .submit-button
+          =f.submit "Sign In"
+
+  .no-account
+    %h4 Don't have an account?
+    =link_to "Create one now!", new_user_registration_path
