@@ -4,27 +4,7 @@
 # @author Robert Klubenspies
 # @note User uses rolify to faciliate roles on User model, as well as on any
 #   resource object.
-class User < ActiveRecord::Base
-  # @!attribute first_name
-  #   @return [String] user's first name
-
-  # @!attribute last_name
-  #   @return [String] user's last name
-
-  # @!attribute email
-  #   @return [String] user's email address
-  #   @see This is usually provided by Facebook on sign up
-
-  # @!attribute facebook_id
-  #   @return [Integer] user's Facebook UID
-
-  # @!attribute facebook_token
-  #   @return [String] user's Facebook access token, usually used to verify login
-  #     or execute offline Graph API queries
-
-  # @!attribute facebook_token_expires_at
-  #   @return [DateTime] when the user's current Facebook token expires
-  
+class User < ActiveRecord::Base  
   attr_accessible :first_name, :last_name, :email, :password, :password_confirmation, :remember_me,
                   :provider, :provider_uid, :facebook_id, :facebook_token, :facebook_token_expires_at
 

@@ -4,6 +4,7 @@ FactoryGirl.define do
   end
 
   factory :church do
+    name "First Christian Church"
     subdomain
     association :profile, factory: :church_profile
   end

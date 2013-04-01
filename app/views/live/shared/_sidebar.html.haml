@@ -9,6 +9,6 @@
     =active_link_to "Recent", recent_path, wrap_tag: :li, class: "icon-calendar"
 
     -@sidebar.churches.each do |church|
-      =active_link_to church.profile.name, church_path(church), wrap_tag: :li, class: "icon-church"
+      =active_link_to church.name, church_path(church), wrap_tag: :li, class: "icon-church"
     
     %li.icon-add=link_to (@sidebar.no_churches? ? "Add a church" : "Add another church"), "#"

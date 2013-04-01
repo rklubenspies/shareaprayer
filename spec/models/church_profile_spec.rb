@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe ChurchProfile do
-  it { should have_db_column(:name).of_type(:string) }
   it { should have_db_column(:bio).of_type(:text) }
   it { should have_db_column(:address).of_type(:string) }
   it { should have_db_column(:email).of_type(:string) }

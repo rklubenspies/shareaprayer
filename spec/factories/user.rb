@@ -27,6 +27,7 @@ FactoryGirl.define do
     facebook_token_expires_at { Time.now }
 
     after(:create) do |user|
+      user.remove_role("site_user")
       user.add_role("invisible_user")
     end
   end

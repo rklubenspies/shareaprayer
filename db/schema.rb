@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130330183911) do
+ActiveRecord::Schema.define(:version => 20130401145047) do
 
   create_table "church_managerships", :force => true do |t|
     t.integer  "church_id"
@@ -36,13 +36,13 @@ ActiveRecord::Schema.define(:version => 20130330183911) do
     t.integer  "church_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.string   "name"
   end
 
   create_table "churches", :force => true do |t|
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.string   "subdomain"
+    t.string   "name"
   end
 
   add_index "churches", ["subdomain"], :name => "index_churches_on_subdomain", :unique => true

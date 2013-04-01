@@ -6,7 +6,7 @@ class Church < ActiveRecord::Base
   extend FriendlyId
   friendly_id :subdomain
 
-  attr_accessible :subdomain
+  attr_accessible :name, :subdomain, :profile
 
   has_one :profile, dependent: :destroy, class_name: "ChurchProfile"
   has_many :church_memberships, dependent: :destroy
@@ -78,11 +78,11 @@ class Church < ActiveRecord::Base
     raise "UserNotSignedUp" if !user.has_role?("site_user")
 
     church = Church.create({
+      name:       opts[:name],
       subdomain:  opts[:subdomain],
     })
 
     church_profile_opts = {
-      name:       opts[:name],
       bio:        opts[:bio],
       address:    opts[:address],
       phone:      opts[:phone],
@@ -115,14 +115,15 @@ class Church < ActiveRecord::Base
   # @return [Boolean] success of transaction
   def update_profile!(opts)
     church = self
-    update_opts = {}
+    update_opts = { profile: {}, church: {} }
 
     # @comment add a key to update_opts for each key that was changed
     opts.each do |key, opt|
-      update_opts[key] = opts[key] if church.profile[key] != opts[key]
+      update_opts[:church][key] = opts[key] if church[key] && church[key] != opts[key]
+      update_opts[:profile][key] = opts[key] if church.profile[key] && church.profile[key] != opts[key]
     end
 
     # @comment return true or false
-    church.profile.update_attributes(update_opts)
+    church.update_attributes(update_opts[:church]) && church.profile.update_attributes(update_opts[:profile])
   end
 end

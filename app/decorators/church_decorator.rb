@@ -7,7 +7,7 @@ class ChurchDecorator < Draper::Decorator
   # @author Robert Klubenspies
   # @return [String] the church's name
   def name
-    source.profile.name
+    source.name
   end
 
   # Church's bio

@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe Church do
+  it { should have_db_column(:name).of_type(:string) }
+  it { should have_db_column(:subdomain).of_type(:string) }
   it { should have_many(:church_memberships) }
   it { should have_many(:members).through(:church_memberships) }
   it { should have_many(:church_managerships) }
@@ -77,22 +79,33 @@ describe Church do
   end
 
   describe '#update_profile!' do
-    let (:church) { FactoryGirl.create :church }
+    let! (:church) { FactoryGirl.create :church }
     let! (:profile) { church.profile }
     let! (:updates) { {
-      name: profile.name,
+      name: church.name,
       bio: "Some awesome new bio"
     } }
 
-    context 'updates attribute' do
-      it 'should call update_profile! with only changed attributes' do
-        church.should_receive(:update_profile!).with(updates).once
-        church.update_profile!(updates)
-      end
+    it 'should call update_profile! with attributes' do
+      church.should_receive(:update_profile!).with(updates).once
+      church.update_profile!(updates)
+    end
 
-      it 'should save the appropriate changes' do
+    context 'partial update' do
+      it 'should save some changes' do
         lambda { church.update_profile!(updates) }.should change { profile.bio }
-        lambda { church.update_profile!(updates) }.should_not change { profile.name }
+        lambda { church.update_profile!(updates) }.should_not change { church.name }
+      end
+    end
+
+    context 'complete update' do
+      let! (:updates) { {
+        name: "#{church.name} Updated",
+        bio: "ANOTHER awesome new bio"
+      } }
+
+      it 'should save all changes' do
+        lambda { church.update_profile!(updates) }.should change { church.name } && change { profile.bio }
       end
     end
   end
