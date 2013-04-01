@@ -24,6 +24,7 @@ group :test, :development do
   gem 'autotest-rails', '~> 4.1.2'
   gem 'dotenv', '~> 0.5.0'
   gem 'unicorn-rails', '~> 1.0.0'
+  gem 'railroady', '1.1.0'
 end
 
 group :test do

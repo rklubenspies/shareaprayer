@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130401145047) do
+ActiveRecord::Schema.define(:version => 20130401173319) do
 
   create_table "church_managerships", :force => true do |t|
     t.integer  "church_id"
@@ -119,5 +119,18 @@ ActiveRecord::Schema.define(:version => 20130401145047) do
   end
 
   add_index "users_roles", ["user_id", "role_id"], :name => "index_users_roles_on_user_id_and_role_id"
+
+  create_table "vip_signups", :force => true do |t|
+    t.string   "code"
+    t.string   "rep_uid"
+    t.string   "name"
+    t.string   "subdomain"
+    t.string   "bio",        :limit => 10000
+    t.string   "address"
+    t.string   "phone"
+    t.string   "website"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+  end
 
 end
