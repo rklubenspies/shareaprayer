@@ -58,7 +58,7 @@ module LivePresenters
     # @author Robert Klubenspies
     # @return [Array] the user's churches
     def request_form_churches
-      @user.churches.collect { |c| [ c.id, c.name, c.subdomain ] }
+      @user.churches.collect { |c| [ c.name, c.id ] }
     end
   end
 end
