@@ -58,6 +58,7 @@ module LivePresenters
     # @author Robert Klubenspies
     # @return [Array] the user's churches
     def request_form_churches
+      # Leave this as [c.name, c.id], otherwise the new request drop down will break
       @user.churches.collect { |c| [ c.name, c.id ] }
     end
   end
