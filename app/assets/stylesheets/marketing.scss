@@ -20,7 +20,10 @@ body {
 }
 
 section.top {
-  background: image-url("marketing/hero-2560.jpg") no-repeat center center fixed;
+  background-image: image-url("marketing/hero-2560.jpg");
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  background-position: top center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -204,13 +207,13 @@ section.for-churches {
       @include grid-column(12, $collapse: true);
       width: 342px;
       height: 60px;
-      margin: 48px 28px 25px 28px;
+      margin: 48px 28px 0px 28px;
       background: image-url("marketing/for-churches.png") no-repeat;
       display: block;
     }
   }
 
-  .heading {
+  header {
     @include grid-row();
 
     .its-all-about {
@@ -226,161 +229,79 @@ section.for-churches {
       }
     }
   }
-}
 
-// nav {
-//   @include grid-row();
-//   margin-top: emCalc(18px);
-//   margin-bottom: emCalc(32px);
+  section.feature-blocks {
+    @include grid-row();
+    margin-bottom: emCalc(80px);
 
-//   .logo {
-//     @include grid-column(12);
-//     text-align: center;
-//   }
-// }
+    article {
+      @include grid-column(4);
 
-.content {
-  @include grid-row();
+      .community, .engagement, .simplicity {
+        @include border-radius(10px);
+        @include panel($padding: 25px);
+        border: none;
+        background: transparent;
+        min-height: emCalc(430px);
 
-  h1, h2, h3, h4, h5, h6 {
-    font-family: 'Open Sans', sans-serif;
-  }
-
-  section.sign-in {
-    @include grid-column(10, true, true);
-    
-    @include respond-to('large') {
-      @include grid-column(6, true, true);
-    }
-
-    .no-account {
-      margin-top: emCalc(36px);
-
-      a {
-        @include button(emCalc(16px), $success-color, $full-width: true);
-      }
-    }
-
-    .submit-block {
-      margin-top: emCalc(24px);
-    }
-  }
-
-  section.sign-up {
-    @include grid-column(10, true, true);
-    
-    @include respond-to('large') {
-      @include grid-column(6, true, true);
-    }
-
-    .links {
-      @include grid-row('collapse');
-
-      .link {
-        @include grid-column(12, $collapse: true);
-    
-        @include respond-to('large') {
-          @include grid-column(6, $collapse: true);
+        &.active {
+          background: white;
         }
 
-        &.forgot-password {
-          padding-right: 5px;
-          a {
-            @include button(emCalc(16px), $primary-color, $full-width: true);
-          }
-        }
-        
-        &.have-account {
-          padding-left: 5px;
-          a {
-            @include button(emCalc(16px), $success-color, $full-width: true);
-          }
-        }
-      }
-    }
-  }
-  
-  section.forgot-password {
-    @include grid-column(10, true, true);
-    
-    @include respond-to('large') {
-      @include grid-column(6, true, true);
-    }
-
-    .submit-button {
-      padding-top: emCalc(5px);
-    }
-  }
-
-  .facebook {
-    text-align: center;
-
-    .zocial {
-      margin-bottom: emCalc(14px);
-    }
-  }
-
-  .form-block {
-    @include panel;
-
-    p.message, p.or-email {
-      font-style: italic;
-    }
-
-    p.or-email {
-      text-align: center;
-    }
-
-    form {      
-      input[type="submit"] {
-        @include button;
-      }
-
-      .input-block {
-        @include grid-row('collapse');
-
-        span {
-          @include prefix-postfix-base;
-          @include prefix;
-          @include grid-column(4, $float: left, $collapse: true);
+        i {
+          display: block;
+          width: 160px;
+          height: 160px;
+          background-repeat: no-repeat;
+          margin-left: auto;
+          margin-right: auto;
         }
 
-        input {
-          @include grid-column(8, $collapse: true);
+        h2 {
+          margin: 0px;
+          padding-bottom: 0.2em;
+          font-family: 'Open Sans', sans-serif;
+          font-weight: 600;
+          font-size: 2.3em;
+          line-height: 2.0em;
+          text-align: center;
         }
 
-        label.error {
-          @include grid-column(8, $push: 4, $collapse: true);
-          @include form-error-message;
-          padding: emCalc(5px);
-          line-height: emCalc(18px);
+        p {
+          font-weight: 300;
+          font-size: 1.1em;
+          line-height: 1.4em;
         }
       }
 
-      .submit-block {
-        @include grid-row('collapse');
-        margin-top: emCalc(12px);
-
-        .remember-me {
-          @include grid-column(8, $collapse: true);
-          padding-top: emCalc(10px);
+      .community {
+        h2 {
+          color: #5a9aa8;
         }
 
-        .disclaimer {
-          @include grid-column(8, $collapse: true);
-          padding-top: emCalc(6px);
-          font-size: emCalc(13px);
-          line-height: emCalc(19px);
-        }
-
-        .submit-button {
-          @include grid-column(4, true, $float: right, $collapse: true);
-          text-align: right;
+        i {
+          background-image: image-url("marketing/feature-community.png");
         }
       }
 
-      .forgot-password {
-        text-align: right;
+      .engagement {
+        h2 {
+          color: #de8550;
+        }
+
+        i {
+          background-image: image-url("marketing/feature-engagement.png");
+        }
+      }
+
+      .simplicity {
+        h2 {
+          color: #6a5a8c
+        }
+
+        i {
+          background-image: image-url("marketing/feature-simplicity.png");
+        }
       }
     }
   }
