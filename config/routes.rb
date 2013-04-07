@@ -2,11 +2,9 @@ Shareaprayer::Application.routes.draw do
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
   constraints(subdomain: /^(|www)$/) do
-    root to: 'high_voltage/pages#show', id: 'home'
+    root to: 'pages#show', id: 'home'
 
-    get '/:id',
-      to: 'high_voltage/pages#show',
-      as: :static
+    get '/:id', to: 'pages#show', as: :static
   end
   
   constraints(subdomain: /^(|live)$/) do

@@ -1,3 +1,5 @@
+# TODO: ADD STATUS COLUMN AND TRACK SIGNED UP OR NOT SIGNED UP (FOR SALES)
+
 class VipSignup < ActiveRecord::Base
   attr_accessible :address, :bio, :code, :name, :phone, :rep_uid,
                   :subdomain, :website

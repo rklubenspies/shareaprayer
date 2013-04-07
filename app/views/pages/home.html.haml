@@ -1,0 +1,48 @@
+%section.top
+  %header.nav-bar
+    .logo=link_to image_tag("marketing/logo-color.png"), root_path
+
+    %nav
+      %ul
+        %li=link_to "For churches", "#features"
+        %li=link_to "Pricing", "#pricing"
+        %li=link_to "Contact", "#contact"
+        %li=link_to "VIP", "#"
+        -if user_signed_in?
+          %li=link_to "Logout", destroy_user_session_path, method: :delete
+        -else
+          %li=link_to "Login", new_user_session_path
+
+  %section.hero
+    .hero-title
+      %h1 Engage your church
+    
+    .hero-subtitle
+      %h2 Sunday-to-Sunday engagement online through prayer
+
+    .hero-button
+      %a=image_tag "marketing/hero-button.png"
+
+%section.members
+  .copy
+    %h2 Church members!
+    %p Keep connected with your church’s community for free, share prayer requests, and support others through prayer. There’s never been a better time to get started!
+
+  .buttons
+    .login
+      -if user_signed_in?
+        =link_to "Go to Live", "#"
+      -else
+        =link_to "Login", new_user_session_path
+      or
+
+    .find-church
+      %a.btn Find your church
+
+%section.for-churches#features
+  .float
+    .arrow
+
+  .heading
+    .its-all-about
+      %h1 It's all about community

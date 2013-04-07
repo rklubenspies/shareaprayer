@@ -1,0 +1,387 @@
+/*
+ *= require_self
+ *= require foundation
+ */
+
+// Font size: 1pt = .064285714em; 10pt = .64285714em;
+// Pixels
+
+@import "compass/css3";
+@import "marketing/foundation_and_overrides";
+
+* {
+  box-sizing: border-box;
+}
+
+html, body { min-height: 100%; }
+
+body {
+  background: #f0eae4 !important;
+}
+
+section.top {
+  background: image-url("marketing/hero-2560.jpg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  height: emCalc(650px);
+  width: 100%;
+
+  header.nav-bar {
+    @include grid-row();
+    padding-top: emCalc(10px);
+
+    a {
+      @include opacity(0.8);
+      @include transition;
+      color: white;
+
+      &:hover, &:visited {
+        color: white;
+      }
+
+      &:hover {
+        @include opacity(1.0);
+      }
+    }
+
+    .logo {
+      @include grid-column(3, $collapse: true);
+      @include opacity(0.8);
+    }
+
+    nav {
+      @include grid-column(9, $collapse: true);
+      padding-top: 1.3em;
+      font-size: 0.9em;
+      text-align: right;
+
+      ul {
+        list-style-image: none;
+        list-style-position: outside;
+        list-style-type: none;
+        display: inline;
+
+        li {
+          display: inline-block;
+          padding-left: emCalc(12px);
+        }
+      }
+    }
+  }
+
+  section.hero {
+    @include grid-row();
+    padding-top: 7.5em;
+    
+    h1, h2 {
+      color: white;
+      margin: 0;
+    }
+
+    .hero-title {
+      @include grid-column(8, $collapse: true, $center: true);
+      text-align: center;
+
+      h1 {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        font-size: 3.9em;
+      }
+    }
+
+    .hero-subtitle {
+      @include grid-column(6, $collapse: true, $center: true);
+      text-align: center;
+
+      h2 {
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 600;
+        font-size: 2.1em;
+      }
+    }
+
+    .hero-button {
+      padding-top: 3.9em;
+      text-align: center;
+
+      a {
+        img {
+          @include opacity(0.5);
+          @include transition;
+
+          &:hover {
+            @include opacity(0.8);
+          }
+        }
+      }
+    }
+  }
+}
+
+section.members {
+  @include grid-row();
+  @include panel;
+  @include border-radius(10px);
+  position: relative;
+  margin-top: emCalc(-60px);
+  height: emCalc(120px);
+  background: image-url("marketing/members-bg.png") repeat;
+  z-index: 999;
+
+  .copy {
+    @include grid-column(8, $collapse: true);
+
+    h2, p {
+      margin: 0;
+      color: #362f2d;
+    }
+
+    h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 1.9em;
+    }
+
+    p {
+      padding-top: 5px;
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 400;
+      font-size: 1.1em;
+      line-height: 1.3em;
+    }
+  }
+
+  .buttons {
+    @include grid-column(4, $collapse: true);
+    text-align: right;
+
+    .login {
+      padding-top: emCalc(24px);
+      padding-right: 5px;
+      display: inline-block;
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 400;
+      font-size: 1.2em;
+      line-height: 1.2em;
+
+      a {
+        @include transition;
+        color: #0e898a;
+
+        &:hover, &:visited {
+          color: #0e898a;
+        }
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .find-church {
+      display: inline-block;
+
+      a.btn {
+        @include button($bg: #1f7f5c, $radius: emCalc(5px));
+        padding: 20px 25px;
+        border: none;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 400;
+        font-size: 1.2em;
+        line-height: 1.2em;
+      }
+    }
+  }
+}
+
+section.for-churches {
+  .float {
+    @include grid-row();
+
+    .arrow {
+      @include grid-column(12, $collapse: true);
+      width: 342px;
+      height: 60px;
+      margin: 48px 28px 25px 28px;
+      background: image-url("marketing/for-churches.png") no-repeat;
+      display: block;
+    }
+  }
+
+  .heading {
+    @include grid-row();
+
+    .its-all-about {
+      @include grid-column(12, $collapse: true, $center: true);
+      text-align: center;
+
+      h1 {
+        margin: 0px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 600;
+        font-size: 2.7em;
+        line-height: 2.7em;
+      }
+    }
+  }
+}
+
+// nav {
+//   @include grid-row();
+//   margin-top: emCalc(18px);
+//   margin-bottom: emCalc(32px);
+
+//   .logo {
+//     @include grid-column(12);
+//     text-align: center;
+//   }
+// }
+
+.content {
+  @include grid-row();
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  section.sign-in {
+    @include grid-column(10, true, true);
+    
+    @include respond-to('large') {
+      @include grid-column(6, true, true);
+    }
+
+    .no-account {
+      margin-top: emCalc(36px);
+
+      a {
+        @include button(emCalc(16px), $success-color, $full-width: true);
+      }
+    }
+
+    .submit-block {
+      margin-top: emCalc(24px);
+    }
+  }
+
+  section.sign-up {
+    @include grid-column(10, true, true);
+    
+    @include respond-to('large') {
+      @include grid-column(6, true, true);
+    }
+
+    .links {
+      @include grid-row('collapse');
+
+      .link {
+        @include grid-column(12, $collapse: true);
+    
+        @include respond-to('large') {
+          @include grid-column(6, $collapse: true);
+        }
+
+        &.forgot-password {
+          padding-right: 5px;
+          a {
+            @include button(emCalc(16px), $primary-color, $full-width: true);
+          }
+        }
+        
+        &.have-account {
+          padding-left: 5px;
+          a {
+            @include button(emCalc(16px), $success-color, $full-width: true);
+          }
+        }
+      }
+    }
+  }
+  
+  section.forgot-password {
+    @include grid-column(10, true, true);
+    
+    @include respond-to('large') {
+      @include grid-column(6, true, true);
+    }
+
+    .submit-button {
+      padding-top: emCalc(5px);
+    }
+  }
+
+  .facebook {
+    text-align: center;
+
+    .zocial {
+      margin-bottom: emCalc(14px);
+    }
+  }
+
+  .form-block {
+    @include panel;
+
+    p.message, p.or-email {
+      font-style: italic;
+    }
+
+    p.or-email {
+      text-align: center;
+    }
+
+    form {      
+      input[type="submit"] {
+        @include button;
+      }
+
+      .input-block {
+        @include grid-row('collapse');
+
+        span {
+          @include prefix-postfix-base;
+          @include prefix;
+          @include grid-column(4, $float: left, $collapse: true);
+        }
+
+        input {
+          @include grid-column(8, $collapse: true);
+        }
+
+        label.error {
+          @include grid-column(8, $push: 4, $collapse: true);
+          @include form-error-message;
+          padding: emCalc(5px);
+          line-height: emCalc(18px);
+        }
+      }
+
+      .submit-block {
+        @include grid-row('collapse');
+        margin-top: emCalc(12px);
+
+        .remember-me {
+          @include grid-column(8, $collapse: true);
+          padding-top: emCalc(10px);
+        }
+
+        .disclaimer {
+          @include grid-column(8, $collapse: true);
+          padding-top: emCalc(6px);
+          font-size: emCalc(13px);
+          line-height: emCalc(19px);
+        }
+
+        .submit-button {
+          @include grid-column(4, true, $float: right, $collapse: true);
+          text-align: right;
+        }
+      }
+
+      .forgot-password {
+        text-align: right;
+      }
+    }
+  }
+}
