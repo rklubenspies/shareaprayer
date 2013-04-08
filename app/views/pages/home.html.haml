@@ -21,7 +21,7 @@
       %h2 Sunday-to-Sunday engagement online through prayer
 
     .hero-button
-      %a=image_tag "marketing/hero-button.png"
+      %a=link_to image_tag("marketing/hero-button.png"), "#features"
 
 %section.members
   .copy
@@ -65,3 +65,52 @@
         %i
         %h2 Simplicity
         %p An easy to use interface makes Share a Prayer easy for everyone to use. Mailchimp newsletter integration helps your church reach members outside the site, and for free.
+
+%section.contact#contact
+  .wrap
+    .info
+      %h2.questions Questions? Want to get started?
+      %h1 Email us at <a href="mailto:hello@shareaprayer.org">hello@shareaprayer.org</a>
+
+%section.pricing#pricing
+  %header
+    .honest-pricing
+      %h1 Honest Pricing
+
+  .info
+    .copy
+      %article
+        %h2 Everyone gets VIP treatment
+        %p From personalized setup to full-service support, we’re here to help you engage your community. Unlike other services, when you join our family, we’ll never treat you like that relative no one really likes.
+
+      %article
+        %h2 Our promise to you
+        %p We’ll only charge you for the members in your group, and never by your congregation size, like other services. Plus, you’re free to upgrade, downgrade, or cancel your plan at any time.
+
+    .prices
+      %ul
+        %li
+          .limit 50 members
+          .cost
+            %span.amount $19
+            %span.term /month
+          .setup $39 one-time setup
+        %li
+          .limit 100 members
+          .cost.darker
+            %span.amount $49
+            %span.term /month
+          .setup $79 one-time setup
+        %li
+          .limit 150 members
+          .cost.darkest
+            %span.amount $79
+            %span.term /month
+          .setup $119 one-time setup
+
+      .includes
+        %h3 All plans are fully featured and come with VIP signup
+
+  .call-to-action
+    .copy
+      %h2 Sign up your congregation. Email <a href="mailto:hello@shareaprayer.org">hello@shareaprayer.org</a>.

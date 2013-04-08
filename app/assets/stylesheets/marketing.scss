@@ -143,7 +143,7 @@ section.members {
 
     h2 {
       font-family: 'Montserrat', sans-serif;
-      font-weight: 600;
+      font-weight: 700;
       font-size: 1.9em;
     }
 
@@ -223,7 +223,7 @@ section.for-churches {
       h1 {
         margin: 0px;
         font-family: 'Montserrat', sans-serif;
-        font-weight: 600;
+        font-weight: 700;
         font-size: 2.7em;
         line-height: 2.7em;
       }
@@ -261,7 +261,7 @@ section.for-churches {
           margin: 0px;
           padding-bottom: 0.2em;
           font-family: 'Open Sans', sans-serif;
-          font-weight: 600;
+          font-weight: 700;
           font-size: 2.3em;
           line-height: 2.0em;
           text-align: center;
@@ -301,6 +301,212 @@ section.for-churches {
 
         i {
           background-image: image-url("marketing/feature-simplicity.png");
+        }
+      }
+    }
+  }
+}
+
+section.contact {
+  background: #0e8a54;
+
+  .wrap {
+    @include grid-row();
+
+    .info {
+      @include grid-column(12);
+      margin-top: emCalc(80px);
+      margin-bottom: emCalc(90px);
+      text-align: center;
+
+      h2.questions {
+        margin: 0;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 700;
+        font-size: 1.7em;
+        text-align: center;
+        color: #063d25;
+      }
+
+      h1 {
+        margin: 0;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        font-size: 3.1em;
+        text-align: center;
+        color: white;
+
+        a {
+          color: white;
+          text-decoration: none;
+
+          &:hover, &:visited {
+            color: white;
+            text-decoration: none;
+          }
+
+          &:hover {
+            @include opacity(0.8);
+          }
+        }
+      }    
+    }
+  }
+}
+
+section.pricing {
+  background: #e4eef0;
+
+  header {
+    @include grid-row();
+    padding-top: emCalc(50px);
+    padding-bottom: emCalc(20px);
+
+    .honest-pricing {
+      @include grid-column(12, $collapse: true, $center: true);
+      text-align: center;
+
+      h1 {
+        margin: 0px;
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        font-size: 3.3em;
+      }
+    }
+  }
+
+  .info {
+    @include grid-row();
+
+    .copy {
+      @include grid-column(4);
+
+      article {
+        margin-bottom: emCalc(20px);
+        color: #362f2d;
+
+        h2 {
+          margin: 0px;
+          padding-bottom: emCalc(5px);
+          font-family: 'Open Sans', sans-serif;
+          font-weight: 700;
+          font-size: 1.4em;
+        }
+
+        p {
+          font-weight: 300;
+          font-size: 1.0em;
+          line-height: 1.3em;
+        }
+      }
+    }
+
+    .prices {
+      @include grid-column(8);
+
+      ul {
+        @include block-grid(3);
+        float: right;
+
+        > li {
+          @include border-radius(10px);
+          width: 220px;
+          height: 220px;
+          padding: 15px;
+          margin-left: 10px;
+          margin-right: 10px;
+          display: block;
+          clear: none !important;
+          background: white;
+          text-align: center;
+
+          .limit {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 500;
+            font-size: 1.5em;
+            color: #767e80;
+          }
+
+          .cost {
+            padding-bottom: 15px;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 700;
+            color: #0e898a;
+
+            span {
+              display: inline;
+
+              &.amount {
+                font-size: 4.4em;
+              }
+
+              &.term {
+                font-size: 0.8em;
+              }
+            }
+
+            &.darker {
+              color: #0c7a7b;
+            }
+
+            &.darkest {
+              color: #0b6a6b;
+            }
+          }
+
+          .setup {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 700;
+            font-size: 1.0em;
+            color: #767e80;
+          }
+        }
+      }
+
+      .includes {
+        text-align: center;
+
+        h3 {
+          padding-left: 5px;
+          font-family: 'Open Sans', sans-serif;
+          font-weight: 500;
+          font-size: 1.2em;
+          line-height: 4.0em;
+          color: #767e80;
+        }
+      }
+    }
+  }
+
+  .call-to-action {
+    @include grid-row();
+    padding-top: emCalc(40px);
+    padding-bottom: emCalc(100px);
+
+    .copy {
+      @include grid-column(12, $collapse: true, $center: true);
+      text-align: center;
+
+      h2 {
+        margin: 0;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 700;
+        font-size: 2.0em;
+        text-align: center;
+        color: #0e8a54;
+
+        a {
+          color: #0e8a54;
+          text-decoration: none;
+
+          &:hover, &:visited {
+            color: #0e8a54;
+            text-decoration: none;
+          }
+
+          &:hover {
+            @include opacity(0.8);
+          }
         }
       }
     }
