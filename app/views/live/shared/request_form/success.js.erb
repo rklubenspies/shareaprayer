@@ -1,0 +1,7 @@
+$.FancyNotifications.notice("Request posted!");
+$(".post-request form")[0].reset();
+$('.post-request .options').slideUp();
+
+<% if @prepend %>
+  $("<%= escape_javascript(render(partial: 'live/shared/request', collection: [@request])) %>").prependTo(".requests").hide().fadeIn(2000);
+<% end %>

@@ -1,0 +1,17 @@
+%section.forgot-password
+  %h3 Reset password
+  .form-block
+    = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post, :id => "password-reset-form" }) do |f|
+      = devise_error_messages!
+
+      %h5 What's the email on your account? 
+
+      .input-block
+        %span E-mail
+        =f.email_field :email, autofocus: true, required: "required"
+
+      .submit-block
+        .disclaimer
+          We're gonna email you right away with password reset instructions. Make sure you check your spam folder!
+        .submit-button
+          =f.submit "Reset"

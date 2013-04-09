@@ -1,0 +1,162 @@
+%section.top#top
+  %header.nav-bar
+    .logo=link_to image_tag("marketing/logo-color.png"), "#top"
+
+    %nav
+      %ul
+        %li=link_to "For churches", "#features"
+        %li=link_to "Pricing", "#pricing"
+        %li=link_to "Contact", "#contact"
+        -if !Rails.env.production?
+          %li=link_to "VIP", "#", :"data-reveal-id" => "launchingSoonModal"
+        -if !Rails.env.production?
+          -if user_signed_in?
+            %li=link_to "Logout", destroy_user_session_path, method: :delete
+          -else
+            %li=link_to "Login", new_user_session_path
+
+  %section.hero
+    .hero-title
+      %h1 Engage your church
+    
+    .hero-subtitle
+      %h2 Sunday-to-Sunday engagement online through prayer
+
+    .hero-button
+      %a=link_to image_tag("marketing/hero-button.png"), "#features"
+
+%section.members
+  .copy
+    %h2 Church members!
+    %p Keep connected with your church’s community for free, share prayer requests, and support others through prayer. There’s never been a better time to get started!
+
+  .buttons
+    .login
+      -if !Rails.env.production?
+        -if user_signed_in?
+          =link_to "Go to Live", "#"
+        -else
+          =link_to "Login", new_user_session_path
+        or
+      -else
+        &nbsp;
+
+    .find-church
+      =link_to "Find your church", "#", class: "btn", :"data-reveal-id" => "launchingSoonModal"
+
+%section.for-churches#features
+  .float
+    .arrow
+
+  %header
+    .its-all-about
+      %h1 It's all about community
+
+  %section.feature-blocks
+    %article
+      .community.active
+        %i
+        %h2 Community
+        %p Create a community that connects congregations through prayer. Keep everything private, or let your church share the passion of prayer with other chruches around the world.
+
+    %article
+      .engagement.active
+        %i
+        %h2 Engagement
+        %p We engage members of your congregation on their turf and their time for you. Keeping members engaged and sharing from Sunday to Sunday has never been easy.
+
+    %article
+      .simplicity.active
+        %i
+        %h2 Simplicity
+        %p An easy to use interface makes Share a Prayer easy for everyone to use. Mailchimp newsletter integration helps your church reach members outside the site, and for free.
+
+%section.contact#contact
+  .wrap
+    .info
+      %h2.questions Questions? Want to get started?
+      %h1 Email us at <a href="mailto:hello@shareaprayer.org">hello@shareaprayer.org</a>
+
+%section.pricing#pricing
+  %header
+    .honest-pricing
+      %h1 Honest Pricing
+
+  .info
+    .copy
+      %article
+        %h2 Everyone gets VIP treatment
+        %p From personalized setup to full-service support, we’re here to help you engage your community. Unlike other services, when you join our family, we’ll never treat you like that relative no one really likes.
+
+      %article
+        %h2 Our promise to you
+        %p We’ll only charge you for the members in your group, and never by your congregation size, like other services. Plus, you’re free to upgrade, downgrade, or cancel your plan at any time.
+
+    .prices
+      %ul
+        %li
+          .limit 50 members
+          .cost
+            %span.amount $19
+            %span.term /month
+          .setup $39 one-time setup
+        %li
+          .limit 100 members
+          .cost.darker
+            %span.amount $49
+            %span.term /month
+          .setup $79 one-time setup
+        %li
+          .limit 150 members
+          .cost.darkest
+            %span.amount $79
+            %span.term /month
+          .setup $119 one-time setup
+
+      .includes
+        %h3 All plans are fully featured and come with VIP signup
+
+  .call-to-action
+    .copy
+      %h2 Sign up your congregation. Email <a href="mailto:hello@shareaprayer.org">hello@shareaprayer.org</a>.
+
+%section.bottom-details
+  .about
+    .mission
+      %h1 Mission Statement
+      %p We strive to bring people together through prayer, connect churches online, and foster a supportive community for all. 
+      / %p Nulla facilisi. Duis aliquet egestas purus in blandit. Curabitur vulputate, ligula lacinia scelerisque tempor, lacus lacus ornare ante, ac egestas est urna sit amet arcu. Class aptent taciti sociosqu.
+
+    .social
+      %h1 Connect with us
+      %ul
+        %li
+          =link_to "http://twitter.com/goshareaprayer", target: "blank" do
+            Follow us on <span class="twitter">Twitter</span>
+        %li
+          =link_to "http://facebook.com/shareaprayer", target: "blank" do
+            Like us on <span class="facebook">Facebook</span>
+
+  %footer
+    .copyright
+      =image_tag "marketing/logo-white.png"
+      %p
+        Copyright &copy; 2010-2013 Share a Prayer, Inc. All rights reserved.
+        %br
+        Share a Prayer and the Share a Prayer logo are trademarks of Share a Prayer, Inc.
+
+%section.bottom-nav
+  .wrap
+    %nav
+      %ul
+        %li=link_to "Back to top", "#top"
+        %li=link_to "For churches", "#features"
+        %li=link_to "Pricing", "#pricing"
+        %li=link_to "Contact", "#contact"
+        -if !Rails.env.production?
+          %li=link_to "VIP", "#", :"data-reveal-id" => "launchingSoonModal"
+
+#launchingSoonModal.reveal-modal
+  %h2 Almost there!
+  %p We're gearing up for launch right now. Drop us an email at <a href="mailto:hello@shareaprayer.org">hello@shareaprayer.org</a> if you have any questions about launch.
+  %a.close-reveal-modal &#215;

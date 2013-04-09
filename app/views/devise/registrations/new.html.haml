@@ -1,0 +1,44 @@
+%section.sign-up
+  .facebook
+    =link_to omniauth_authorize_path(resource_name, "facebook"), class: "zocial facebook" do
+      %span Sign up with Facebook
+
+  .form-block
+    %p.or-email Or, sign up with your email address
+
+    =form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :id => "sign-up-form" }) do |f|
+      = devise_error_messages!
+
+      %h5 We just need a little info
+
+      .input-block
+        %span E-mail
+        =f.email_field :email, autofocus: true, required: "required"
+
+      .input-block
+        %span Password
+        =f.password_field :password, required: "required"
+
+      .input-block
+        %span Confirm
+        =f.password_field :password_confirmation, required: "required"
+
+      %h5 And a little bit about you..
+
+      .input-block
+        %span First Name
+        =f.text_field :first_name, required: "required"
+      
+      .input-block
+        %span Last Name
+        =f.text_field :last_name, required: "required"
+
+      .submit-block
+        .disclaimer
+          By signing up for Share a Prayer, you're agreeing to our Terms of Service and Privacy Policy
+        .submit-button
+          =f.submit "Sign Up"
+
+  .links
+    .link.forgot-password=link_to "Forgot password?", new_password_path(resource_name)
+    .link.have-account=link_to "Have an account?", new_user_session_path

@@ -1,0 +1,38 @@
+-title @church.name
+-content_for :page_specific do
+  =javascript_include_tag "live/shared/pagination"
+
+.church.show
+  %section.main
+    -if current_user.is_not_church_member?(@church.id)
+      .call-to-action.join-church
+        %h1 Want to pray with #{@church.name}?
+        %h2 Share a Prayer brings people together online in prayer
+        =link_to "Join Prayer Group", join_church_path(@church.subdomain)
+
+    .requests{ data: { :"load-more-url" => church_path(@church.id) } }
+      =render partial: 'live/shared/request', collection: @requests
+
+    .end-of-list{ style: @requests.blank? ? "display: block;" : nil }
+      %p No more requests to load!
+
+  %section.sidebar
+    -if current_user.is_church_member?(@church.id)
+      =render partial: "live/shared/post_request", locals: { churches: @sidebar.request_form_churches, current_page: "church-#{@church.id}" }
+
+    .profile
+      .image
+        =@church.picture
+        %h1=@church.name
+      %p=@church.bio
+      .contact-info
+        .phone.first-icon=@church.phone
+        .address=@church.address
+        .website=@church.website
+    
+    .buttons
+      -if current_user.is_church_member?(@church.id)
+        =link_to "Leave Prayer Group", leave_church_path(@church.subdomain), class: "leave"
+
+      -if current_user.is_church_manager?(@church.id)
+        =link_to "Manage Church", "#", class: "manage"

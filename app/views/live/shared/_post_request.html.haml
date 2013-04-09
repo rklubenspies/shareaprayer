@@ -1,0 +1,11 @@
+.post-request
+  =form_tag(requests_path, method: :post, remote: true, class: "custom" ) do
+    =text_area_tag(:text, "", placeholder: "Write a prayer request")
+
+    .options
+      =select(:request, :church_id, churches, { include_blank: 'Select a church' })
+      =hidden_field(:request, :current_page, value: current_page)
+
+      .buttons
+        %input.reset{ type: "reset", value: "X" }
+        =submit_tag "Share"

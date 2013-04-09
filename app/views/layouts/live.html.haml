@@ -1,0 +1,44 @@
+!!! 5
+
+/ paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/
+/[if lt IE 7]
+  %html{ class: "ie6", lang: "en" }
+/[if IE 7]
+  %html{ class: "ie7", lang: "en" }
+/[if IE 8]
+  %html{ class: "ie8", lang: "en" }
+/[if (gte IE 9)|!(IE)]
+  %html{ lang: "en" }
+
+%head
+  %meta{ charset: "utf-8" }
+
+  / Uncomment to make IE8 render like IE7
+  / %meta{ http-equiv: "X-UA-Compatible" content="IE=7" }
+
+  / Set the viewport width to device width for mobile
+  %meta{ name: "viewport", content: "width=device-width, initial-scale=1.0, maximum-scale=1.0" }
+
+  %title=content_for?(:title) ? "#{yield(:title)} - Share a Prayer Live" : "Share a Prayer Live"
+
+  %link{ href: 'http://fonts.googleapis.com/css?family=Open+Sans:400,600|Montserrat:400,700', rel: 'stylesheet', type: 'text/css' }
+  =stylesheet_link_tag "live"
+  =javascript_include_tag "vendor/custom.modernizr"
+  =csrf_meta_tags
+
+%body
+  =render 'live/shared/sidebar', object: @sidebar
+
+  .page-wrap
+    %header.main
+      %a.open-menu{href: "#main-nav"} ☰
+      %a.close-menu{href: "#"} ☰
+      
+      %h1=content_for?(:title) ? yield(:title) : "Share a Prayer Live"
+
+    .content
+      =render "live/shared/flash_notices"
+      =yield
+
+  =javascript_include_tag "live/application"
+  =content_for?(:page_specific) ? yield(:page_specific) : yield

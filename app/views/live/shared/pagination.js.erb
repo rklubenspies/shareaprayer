@@ -1,0 +1,3 @@
+<% if @requests.count > 0 %>
+  $(".requests").append("<%= escape_javascript(render(partial: 'live/shared/request', collection: @requests)) %>");
+<% end %>

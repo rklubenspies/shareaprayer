@@ -1,0 +1,179 @@
+/*
+ *= require_self
+ *= require foundation
+ */
+
+@import "compass/css3";
+@import "zocial";
+@import "mixins/photoshop-drop-shadow";
+@import "foundation_and_overrides";
+
+@include zocial;
+
+* {
+  box-sizing: border-box;
+}
+
+html, body { min-height: 100%; }
+
+body {
+  background-image: image-url("shared/body-bg.png") !important;
+}
+
+nav {
+  @include grid-row();
+  margin-top: emCalc(18px);
+  margin-bottom: emCalc(32px);
+
+  .logo {
+    @include grid-column(12);
+    text-align: center;
+  }
+}
+
+.content {
+  @include grid-row();
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Open Sans', sans-serif;
+  }
+
+  section.sign-in {
+    @include grid-column(10, true, true);
+    
+    @include respond-to('large') {
+      @include grid-column(6, true, true);
+    }
+
+    .no-account {
+      margin-top: emCalc(36px);
+
+      a {
+        @include button(emCalc(16px), $success-color, $full-width: true);
+      }
+    }
+
+    .submit-block {
+      margin-top: emCalc(24px);
+    }
+  }
+
+  section.sign-up {
+    @include grid-column(10, true, true);
+    
+    @include respond-to('large') {
+      @include grid-column(6, true, true);
+    }
+
+    .links {
+      @include grid-row('collapse');
+
+      .link {
+        @include grid-column(12, $collapse: true);
+    
+        @include respond-to('large') {
+          @include grid-column(6, $collapse: true);
+        }
+
+        &.forgot-password {
+          padding-right: 5px;
+          a {
+            @include button(emCalc(16px), $primary-color, $full-width: true);
+          }
+        }
+        
+        &.have-account {
+          padding-left: 5px;
+          a {
+            @include button(emCalc(16px), $success-color, $full-width: true);
+          }
+        }
+      }
+    }
+  }
+  
+  section.forgot-password {
+    @include grid-column(10, true, true);
+    
+    @include respond-to('large') {
+      @include grid-column(6, true, true);
+    }
+
+    .submit-button {
+      padding-top: emCalc(5px);
+    }
+  }
+
+  .facebook {
+    text-align: center;
+
+    .zocial {
+      margin-bottom: emCalc(14px);
+    }
+  }
+
+  .form-block {
+    @include panel;
+
+    p.message, p.or-email {
+      font-style: italic;
+    }
+
+    p.or-email {
+      text-align: center;
+    }
+
+    form {      
+      input[type="submit"] {
+        @include button;
+      }
+
+      .input-block {
+        @include grid-row('collapse');
+
+        span {
+          @include prefix-postfix-base;
+          @include prefix;
+          @include grid-column(4, $float: left, $collapse: true);
+        }
+
+        input {
+          @include grid-column(8, $collapse: true);
+        }
+
+        label.error {
+          @include grid-column(8, $push: 4, $collapse: true);
+          @include form-error-message;
+          padding: emCalc(5px);
+          line-height: emCalc(18px);
+        }
+      }
+
+      .submit-block {
+        @include grid-row('collapse');
+        margin-top: emCalc(12px);
+
+        .remember-me {
+          @include grid-column(8, $collapse: true);
+          padding-top: emCalc(10px);
+        }
+
+        .disclaimer {
+          @include grid-column(8, $collapse: true);
+          padding-top: emCalc(6px);
+          font-size: emCalc(13px);
+          line-height: emCalc(19px);
+        }
+
+        .submit-button {
+          @include grid-column(4, true, $float: right, $collapse: true);
+          text-align: right;
+        }
+      }
+
+      .forgot-password {
+        text-align: right;
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+-title "Recent"
+-content_for :page_specific do
+  =javascript_include_tag "live/shared/pagination"
+
+.recent.index
+  %section.main
+    .call-to-action.take-tour
+      %h1 You look new here!
+      %h2 Why not take a tour of Share a Prayer?
+      =link_to "Take The Tour", "#"
+
+    .requests{ data: { :"load-more-url" => root_path } }
+      =render partial: 'live/shared/request', collection: @requests
+
+    .end-of-list{ style: @requests.blank? ? "display: block;" : nil }
+      %p No more requests to load!
+
+  %section.sidebar
+    =render partial: "live/shared/post_request", locals: { churches: @sidebar.request_form_churches, current_page: "recent" }
