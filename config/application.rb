@@ -54,5 +54,8 @@ module Shareaprayer
 
     # Fonts asset path
     config.assets.paths << "#{Rails.root}/app/assets/fonts"
+
+    # Asset precompilation for Heroku. Have to compile locally.
+    config.assets.initialize_on_precompile = false
   end
 end
