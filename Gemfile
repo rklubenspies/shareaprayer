@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.13'
 gem 'pg'
+gem 'unicorn'
+gem 'newrelic_rpm'
 gem 'sprockets', '2.2.2'
 gem 'haml-rails', '~> 0.4'
 gem 'devise', '~> 2.2.3'
