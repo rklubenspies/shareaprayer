@@ -71,6 +71,8 @@ application.css: application-b739b1bf98f5a4cfbf62114d817ebffb.css
 application/index.css: application-b739b1bf98f5a4cfbf62114d817ebffb.css
 devise.css: devise-7286ad9e12ac99a3f94fe7cac256f7e9.css
 devise/index.css: devise-7286ad9e12ac99a3f94fe7cac256f7e9.css
+legal.css: legal-e660bdf879121c10f00c7b215543fbfc.css
+legal/index.css: legal-e660bdf879121c10f00c7b215543fbfc.css
 live.css: live-9e95fc3f7e4433c1a399042f95ad5c55.css
 live/index.css: live-9e95fc3f7e4433c1a399042f95ad5c55.css
 marketing.css: marketing-dd4c81bbc8d7cba2b57dc750dce28c11.css

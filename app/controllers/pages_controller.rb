@@ -7,7 +7,7 @@ class PagesController < HighVoltage::PagesController
       when 'home'
         'marketing'
       else
-        'application'
+        'legal'
       end
     end
 end
