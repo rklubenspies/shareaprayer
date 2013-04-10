@@ -154,6 +154,8 @@
         %li=link_to "Contact", "#contact"
         -if !Rails.env.production?
           %li=link_to "VIP", "#", :"data-reveal-id" => "launchingSoonModal"
+        %li=link_to "Terms of Service", page_path("terms"), target: "blank"
+        %li=link_to "Privacy Policy", page_path("privacy"), target: "blank"
 
 #launchingSoonModal.reveal-modal
   %h2 Almost there!

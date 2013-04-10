@@ -1,0 +1,113 @@
+/*
+ *= require_self
+ *= require foundation
+ */
+
+@import "compass/css3";
+@import "foundation_and_overrides";
+
+* {
+  box-sizing: border-box;
+}
+
+html, body { min-height: 100%; }
+
+body {
+  background-image: image-url("shared/body-bg.png") !important;
+}
+
+header {
+  @include grid-row();
+  margin-top: emCalc(18px);
+  margin-bottom: emCalc(32px);
+
+  .logo {
+    @include grid-column(12);
+    text-align: center;
+  }
+}
+
+.content {
+  @include grid-row();
+
+  h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2.0em;
+  }
+
+  h2 {
+    font-size: 1.5em;
+  }
+
+  h3 {
+    font-size: 1.2em;
+  }
+
+  article {
+    @include grid-column(12);
+
+    ol {
+      padding-left: 40px;
+    }
+  }
+}
+
+footer {
+  @include grid-row();
+  
+  nav {
+    @include grid-column(12, $collapse: true, $center: true);
+    padding-top: emCalc(23px);
+    padding-bottom: emCalc(19px);
+    font-size: 0.9em;
+    font-weight: 300;
+    text-align: center;
+    color: black;
+
+    p {
+      margin: 5px;
+      color: rgba(0, 0, 0, 0.7);
+    }
+
+    ul {
+      margin: 0;
+      list-style-image: none;
+      list-style-position: outside;
+      list-style-type: none;
+      display: inline-block;
+
+      li {
+        display: inline-block;
+
+        &:before {
+          @include opacity(0.7);
+          content: '•';
+          padding-left: 0.5em;
+          padding-right: 0.5em;
+        }
+
+        &:first-child:before {
+          content: '';
+          padding-left: 0;
+          padding-right: 0;
+        }
+
+        a {
+          @include opacity(0.7);
+          @include transition;
+          color: black;
+          text-decoration: none;
+
+          &:hover, &:visited {
+            color: black;
+            text-decoration: none;
+          }
+
+          &:hover {
+            @include opacity(1.0);
+          }
+        }
+      }
+    }
+  }
+}
