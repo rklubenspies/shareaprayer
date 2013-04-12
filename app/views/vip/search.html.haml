@@ -1,0 +1,10 @@
+%header
+  .wrap
+    %h1 We can't wait for you to get started!
+    %h2 We just need to know your VIP code
+
+%section.vip-code
+  .content
+    =form_tag(vip_path, :method => "post") do
+      .field=text_field_tag :code, "", placeholder: "X12F"
+      .submit=submit_tag "Get started!"

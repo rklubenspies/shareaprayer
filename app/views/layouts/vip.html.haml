@@ -16,21 +16,20 @@
   / Uncomment to make IE8 render like IE7
   / %meta{ http-equiv: "X-UA-Compatible" content="IE=7" }
 
-  / Set the viewport width to device width for mobile
-  %meta{ name: "viewport", content: "width=device-width, initial-scale=1.0, maximum-scale=1.0" }
-
   %title=content_for?(:title) ? "#{yield(:title)} - Share a Prayer" : "Share a Prayer"
 
   %link{ href: 'http://fonts.googleapis.com/css?family=Open+Sans:400,600|Montserrat:400,700', rel: 'stylesheet', type: 'text/css' }
-  =stylesheet_link_tag "legal"
+  =stylesheet_link_tag "vip"
   =javascript_include_tag "vendor/custom.modernizr"
   =csrf_meta_tags
 
 %body
-  %header 
+  %header
     .logo=link_to image_tag("devise/logo-small.png"), root_path
   
-  .content=yield
+  .content
+    =render "live/shared/flash_notices"
+    =yield
 
   %footer
     %nav
@@ -39,3 +38,5 @@
         %li=link_to "Home", root_path
         %li=link_to "Terms of Service", page_path("terms")
         %li=link_to "Privacy Policy", page_path("privacy")
+
+  =javascript_include_tag "vip/application"

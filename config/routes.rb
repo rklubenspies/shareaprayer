@@ -1,6 +1,11 @@
 Shareaprayer::Application.routes.draw do
   if !Rails.env.production?  
     devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+
+    get   '/vip' => 'vip#search',               as: :vip_search
+    get   '/vip/:code' => 'vip#show',           as: :vip
+    post  '/vip' => 'vip#show',                 as: :vip
+    post  '/vip/:code/signup' => 'vip#signup',  as: :vip_signup
   end
   
   constraints(subdomain: /^(|www)$/) do

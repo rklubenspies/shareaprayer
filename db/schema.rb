@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130401173319) do
+ActiveRecord::Schema.define(:version => 20130409134445) do
 
   create_table "church_managerships", :force => true do |t|
     t.integer  "church_id"
@@ -131,6 +131,9 @@ ActiveRecord::Schema.define(:version => 20130401173319) do
     t.string   "website"
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
+    t.string   "state"
   end
+
+  add_index "vip_signups", ["code"], :name => "index_vip_signups_on_code", :unique => true
 
 end

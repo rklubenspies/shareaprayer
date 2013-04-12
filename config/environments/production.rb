@@ -46,7 +46,7 @@ Shareaprayer::Application.configure do
   # config.action_controller.asset_host = "http://assets.shareaprayer.org/"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( legal.css devise.css devise.js live.css live.js marketing.css marketing.js )
+  config.assets.precompile += %w( legal.css devise.css devise.js live.css live.js marketing.css marketing.js vip.css vip.js )
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false

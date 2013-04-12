@@ -1,0 +1,80 @@
+- title "VIP Signup"
+
+%header
+  .wrap
+    %h1 You're so close!
+    %h2 Finish setting up #{@vip.name}
+
+- if user_signed_in?
+  =form_for(:vip, :url => vip_signup_path(@vip.code), :html => { :id => "vip-setup-form" }) do |f|
+    %section.1-your-info
+      %header
+        %h1 Step 1: Your Information
+      
+      .content
+        .wrap
+          .note
+            %p You'll be the first church manager!
+          .form
+            .profile-block
+              .image=image_tag current_user.profile_pic_url
+              .info
+                %h2=current_user.name
+                %p=current_user.email
+
+    %section.2-your-church
+      %header
+        %h1 Step 2: Your Church
+      
+      .content
+        .wrap
+          .note
+            %p We just want to check and make sure we got all your church's info right. Feel free to change anything.
+          
+          .form
+            .input-block
+              %span Name
+              =f.text_field :name, required: "required"
+            
+            .input-block
+              %span Bio
+              =f.text_field :bio, required: "required"
+
+            .optional Optional:
+
+            .input-block
+              %span Phone
+              =f.phone_field :phone
+            
+            .input-block
+              %span Address
+              =f.text_field :address
+
+            .input-block
+              %span Website
+              =f.text_field :website
+
+    %section.ready-to-go
+      %header
+        %h1 Ready to go!
+      
+      .content
+        .wrap
+          .terms
+            %p By clicking the button to the right, you're agreeing to our #{link_to "Terms of Service", page_path("terms"), target: "blank"} and #{link_to "Privacy Policy", page_path("privacy"), target: "blank"}.
+          .lets-go=f.submit "Let's go!"
+
+-else
+  %section.account-required
+    %header
+      %h1 Looks like you're not signed in!
+    
+    .text
+      %h2 You need to have a Share a Prayer account to continue
+      %p After you #{link_to "sign in", new_user_session_path} or #{link_to "sign up", new_user_registration_path}, we'll connect your account to this church and make you the first church manager!
+
+      .links
+        .link.sign-in
+          =link_to "Sign In", new_user_session_path
+        .link.sign-up
+          =link_to "Create an Account", new_user_registration_path
