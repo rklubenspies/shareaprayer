@@ -8,7 +8,7 @@
         %li=link_to "Pricing", "#pricing"
         %li=link_to "Contact", "#contact"
         -if !Rails.env.production?
-          %li=link_to "VIP", "#", :"data-reveal-id" => "launchingSoonModal"
+          %li=link_to "VIP", vip_search_path
         -if !Rails.env.production?
           -if user_signed_in?
             %li=link_to "Logout", destroy_user_session_path, method: :delete
@@ -34,7 +34,7 @@
     .login
       -if !Rails.env.production?
         -if user_signed_in?
-          =link_to "Go to Live", "#"
+          =link_to "Go to Live", root_url(subdomain: "live")
         -else
           =link_to "Login", new_user_session_path
         or
@@ -153,7 +153,7 @@
         %li=link_to "Pricing", "#pricing"
         %li=link_to "Contact", "#contact"
         -if !Rails.env.production?
-          %li=link_to "VIP", "#", :"data-reveal-id" => "launchingSoonModal"
+          %li=link_to "VIP", vip_search_path
         %li=link_to "Terms of Service", page_path("terms"), target: "blank"
         %li=link_to "Privacy Policy", page_path("privacy"), target: "blank"
 

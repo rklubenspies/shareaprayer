@@ -71,10 +71,21 @@ class VipSignup < ActiveRecord::Base
     church = Church.register(create_opts, user_id)
 
     if church
-      vip_signup.sign_up_complete!
+      vip_signup.complete!
     end
 
     church
+  end
+
+  # Mark a signup as completed, and track any nessecary sales
+  # numbers and such
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @return [Boolean] whether the signup was completed
+  #   successfully
+  def complete!
+    self.sign_up_complete!
   end
 
   # Generate a unique, random VIP signup code

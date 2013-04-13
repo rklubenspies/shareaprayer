@@ -15,6 +15,12 @@ class Church < ActiveRecord::Base
   has_many :managers, through: :church_managerships, source: :user, class_name: "User"
   has_many :requests
 
+  validates_presence_of :name
+  validates_uniqueness_of :subdomain
+  validates_format_of :subdomain, with: /^[a-z0-9_]+$/, message: "must be lowercase alphanumerics only"
+  validates_length_of :subdomain, maximum: 32, message: "exceeds maximum of 32 characters"
+  validates_exclusion_of :subdomain, in: ['www', 'mail', 'live', 'assets', 'radiation'], message: "is not available"
+
   # Adds a manager to a church
   # 
   # @since 1.0.0
