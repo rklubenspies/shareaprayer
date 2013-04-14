@@ -20,7 +20,12 @@ Shareaprayer::Application.routes.draw do
         get '/' => 'recent#index', as: "recent"
         get '/:id' => 'church#show', as: "church"
 
-        resources :requests, only: [:create]
+        resources :requests, only: [:create] do
+          member do
+            get 'pray_for'
+          end
+        end
+        
         resources :church, only: [], as: "church" do
           member do
             get 'join'

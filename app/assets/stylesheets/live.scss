@@ -206,6 +206,7 @@ header.main {
 
           .details {
             margin-top: 12px;
+            margin-bottom: 12px;
             font-size: emCalc(14px);
             line-height: emCalc(14px);
 
@@ -232,6 +233,39 @@ header.main {
 
               &.first-icon {
                 margin-left: 0;
+              }
+            }
+          }
+
+          .pray-for {
+            margin-top: 20px;
+            
+            a {
+              @include button-base;
+              @include button-size;
+              width: 100%;
+              background: #1f7f5c;
+              padding: 20px 40px;
+              margin: 0px;
+              border: none;
+              color: white;
+              font-family: 'Montserrat', sans-serif;
+              font-size: emCalc(12px);
+              font-weight: 400;
+              text-transform: uppercase;
+              letter-spacing: 1px;
+
+              &:visited {
+                color: white;
+              }
+
+              &:hover {
+                background: shade(#1f7f5c, 10);
+              }
+
+              &[disabled] {
+                background: shade(#1f7f5c, 20);
+                cursor: default;
               }
             }
           }

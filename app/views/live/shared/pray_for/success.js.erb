@@ -1,0 +1,8 @@
+$.FancyNotifications.notice("Prayer made!");
+
+var $count = $("#request-<%= @prayer.request_id %> .text#long .details .prayers .count");
+$count.html(parseInt($count.html())+1);
+
+var $button = $("#request-<%= @prayer.request_id %> .text#long .pray-for a");
+$button.html("You already prayed for this");
+$button.attr("disabled", "disabled");

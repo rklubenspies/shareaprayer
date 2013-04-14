@@ -35,6 +35,13 @@ Shareaprayer::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
+  # Do not serve precompiled assets locally
+  config.serve_static_assets = false
+
+  # Change asset path in development to avoid hitting public folder
+  # @see http://stackoverflow.com/a/11587288/483418
+  config.assets.prefix = "/assets_dev"
+
   # ActionMailer defaults
   config.action_mailer.default_url_options = { :host => 'shareaprayer.dev' }
 end
