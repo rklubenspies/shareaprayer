@@ -1,9 +1,11 @@
 class VipSignup < ActiveRecord::Base
   attr_accessible :address, :bio, :code, :name, :phone, :rep_uid,
-                  :subdomain, :website
+                  :subdomain, :website, :plan_id, :sales_notes
 
   validates :code, presence: true, uniqueness: true
 
+  has_one :church
+  belongs_to :plan
 
   state_machine :state, initial: :pending do
     event :sign_up_complete do
@@ -15,6 +17,8 @@ class VipSignup < ActiveRecord::Base
   # 
   # @since 1.0.0
   # @author Robert Klubenspies
+  # @param [Integer] plan_id the id of the Plan for this signup. Do not
+  #   confuse for the Braintree plan identifier (i.e. "50-members").
   # @param [Hash] opts the options to register a church with
   # @option opts [String] :name the name of the church
   # @option opts [String] :subdomain the church's subdomain
@@ -23,43 +27,53 @@ class VipSignup < ActiveRecord::Base
   # @option opts [String] :phone the church's phone number
   # @option opts [String] :website the church's website
   # @option [String] rep_uid the representative that will take credit
+  # @option [String] sales_notes publiclly displayed nots on signup
   # @return [VipSignup]
-  def self.generate(opts = {}, rep_uid = nil)
+  def self.generate(plan_id, opts = {}, rep_uid = nil, sales_notes = nil)
+    opts[:plan_id] = plan_id
     opts[:code] = self.generate_code
     opts[:rep_uid] = rep_uid
+    opts[:sales_notes] = sales_notes
 
-    VipSignup.create(opts)
+    vip = VipSignup.create(opts)
+
+    vip
   end
 
   # Create a Church from a VIP signup
   # 
   # @since 1.0.0
   # @author Robert Klubenspies
-  # @param [Hash] alterations the options to change from the VIP signup
-  # @option alterations [String] :name the name of the church
-  # @option alterations [String] :subdomain the church's subdomain
-  # @option alterations [String] :bio the church's bio
-  # @option alterations [String] :address the church's address
-  # @option alterations [String] :phone the church's phone number
-  # @option alterations [String] :website the church's website
+  # @param [Hash] data the options to change from the VIP signup
+  # @option data [String] :name the name of the church
+  # @option data [String] :subdomain the church's subdomain
+  # @option data [String] :bio the church's bio
+  # @option data [String] :address the church's address
+  # @option data [String] :phone the church's phone number
+  # @option data [String] :website the church's website
+  # @param [Hash] payment the secured payment information
+  # @option data [String] :number
+  # @option data [String] :expiration_month
+  # @option data [String] :expiration_year
+  # @option data [String] :cvv
   # @option [Integer] user_id the user signing up the church, who will
   #   also be the first manager
+  # @raise [CouldNotCompleteSignup] if something went wrong with
+  #   creating the Braintree customer, was not caught by that method,
+  #   and caused us not to be able to run `vip_signup.complete!`.
   # @return [Church]
-  def create_church_with_alterations(alterations = {}, user_id)
+  def setup_church(data = {}, payment = {}, user_id)
     vip_signup = self
 
+    create_opts = { vip_signup_id: vip_signup.id }
     possible_alterations = {
-      name:       alterations[:name],
-      subdomain:  alterations[:subdomain],
-      bio:        alterations[:bio],
-      address:    alterations[:address],
-      phone:      alterations[:phone],
-      website:    alterations[:website],
+      name:       data[:name],
+      subdomain:  data[:subdomain],
+      bio:        data[:bio],
+      address:    data[:address],
+      phone:      data[:phone],
+      website:    data[:website],
     }
-
-    create_opts = {}
-
-    # Create a hash of all the create opts
     possible_alterations.each do |key, opt|
       if vip_signup[key] != possible_alterations[key] && !possible_alterations[key].blank?
         create_opts[key] = possible_alterations[key]
@@ -71,20 +85,29 @@ class VipSignup < ActiveRecord::Base
     church = Church.register(create_opts, user_id)
 
     if church
-      vip_signup.complete!
+      customer_id = church.setup_braintree_customer(user_id, payment)
+      
+      if customer_id
+        Subscription.setup(church.id, vip_signup.plan_id, customer_id)
+        vip_signup.complete!(church.id)
+      else
+        raise "CouldNotCompleteSignup"
+      end
     end
 
     church
   end
 
-  # Mark a signup as completed, and track any nessecary sales
-  # numbers and such
+  # Mark a signup as completed. In the future, we'd track any
+  # sales numbers, etc here.
   # 
   # @since 1.0.0
   # @author Robert Klubenspies
+  # @params [Integer] church_id the id of the Church we just
+  #   created
   # @return [Boolean] whether the signup was completed
   #   successfully
-  def complete!
+  def complete!(church_id)
     self.sign_up_complete!
   end
 

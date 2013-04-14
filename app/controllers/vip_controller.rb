@@ -8,6 +8,10 @@ class VipController < ApplicationController
   def search
   end
 
+  def handle_search
+    redirect_to vip_path(params[:code])
+  end
+
   def show
     @vip = VipSignup.where(code: params[:code], state: "pending").first
 
@@ -17,10 +21,19 @@ class VipController < ApplicationController
   end
 
   def signup
-    alterations = params[:vip]
     vip = VipSignup.where(code: params[:code]).first
 
-    church = vip.create_church_with_alterations(alterations, current_user.id)
+    data = params[:vip]
+
+    payment = {
+      name_on_card:       params[:name_on_card],
+      number:             params[:number],
+      expiration_month:   params[:month],
+      expiration_year:    params[:year],
+      cvv:                params[:cvv],
+    }
+
+    church = vip.setup_church(data, payment, current_user.id)
 
     if church
       redirect_to church_url(church.subdomain, subdomain: "live"), notice: "You're ready to roll! Welcome aboard!"

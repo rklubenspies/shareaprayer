@@ -3,8 +3,8 @@ Shareaprayer::Application.routes.draw do
     devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
 
     get   '/vip' => 'vip#search',               as: :vip_search
+    post  '/vip' => 'vip#handle_search',        as: :vip_handle_search
     get   '/vip/:code' => 'vip#show',           as: :vip
-    post  '/vip' => 'vip#show',                 as: :vip
     post  '/vip/:code/signup' => 'vip#signup',  as: :vip_signup
   end
   

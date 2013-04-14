@@ -54,6 +54,36 @@
               %span Website
               =f.text_field :website
 
+    %section.3-payment-info
+      %header
+        %h1 Step 3: Payment Information
+      
+      .content
+        .wrap
+          .note
+            %p Your church doesn't need its own credit card to use Share a Prayer. Anyone with a credit card can pay for you church's plan!
+          
+          .form
+            .input-block
+              %span Name on Card
+              %input{ type: "text", autocomplete: "off", name: "name_on_card"}
+
+            .input-block
+              %span Card Number
+              %input{ type: "text", autocomplete: "off", "data-encrypted-name" => "number"}
+            
+            .input-block
+              %span CVV
+              %input{ type: "text", size: "4", autocomplete: "off", "data-encrypted-name" => "cvv"}
+            
+            .input-block
+              %span Exp. Month
+              %input{ type: "text", size: "2", "data-encrypted-name" => "month"}
+            
+            .input-block
+              %span Exp. Year
+              %input{ type: "text", size: "2", "data-encrypted-name" => "year"}
+
     %section.ready-to-go
       %header
         %h1 Ready to go!

@@ -6,17 +6,19 @@ class Church < ActiveRecord::Base
   extend FriendlyId
   friendly_id :subdomain
 
-  attr_accessible :name, :subdomain, :profile
+  attr_accessible :name, :subdomain, :profile, :subscription, :vip_signup_id
 
   has_one :profile, dependent: :destroy, class_name: "ChurchProfile"
+  has_one :subscription, dependent: :destroy
   has_many :church_memberships, dependent: :destroy
   has_many :members, through: :church_memberships, source: :user, class_name: "User"
   has_many :church_managerships, dependent: :destroy
   has_many :managers, through: :church_managerships, source: :user, class_name: "User"
   has_many :requests
+  belongs_to :vip_signup, dependent: :destroy
 
-  validates_presence_of :name
-  validates_uniqueness_of :subdomain
+  validates :name, presence: true
+  validates :subdomain, presence: true
   validates_format_of :subdomain, with: /^[a-z0-9_]+$/, message: "must be lowercase alphanumerics only"
   validates_length_of :subdomain, maximum: 32, message: "exceeds maximum of 32 characters"
   validates_exclusion_of :subdomain, in: ['www', 'mail', 'live', 'assets', 'radiation'], message: "is not available"
@@ -84,8 +86,9 @@ class Church < ActiveRecord::Base
     raise "UserNotSignedUp" if !user.has_role?("site_user")
 
     church = Church.create({
-      name:       opts[:name],
-      subdomain:  opts[:subdomain],
+      name:           opts[:name],
+      subdomain:      opts[:subdomain],
+      vip_signup_id:  opts[:vip_signup_id],
     })
 
     church_profile_opts = {
@@ -95,11 +98,9 @@ class Church < ActiveRecord::Base
       email:      opts[:email],
       website:    opts[:website],
     }
-
     church.profile = ChurchProfile.create(church_profile_opts)
 
     user.join_church(church.id)
-
     church.add_manager(user.id)
 
     church
@@ -131,5 +132,46 @@ class Church < ActiveRecord::Base
 
     # @comment return true or false
     church.update_attributes(update_opts[:church]) && church.profile.update_attributes(update_opts[:profile])
+  end
+
+  # Creates a customer at Braintree from user and payment data
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @param [Integer] user_id the ID of the user creating and
+  #   paying for the Church
+  # @param [Hash] payment the secured payment information
+  # @option data [String] :number
+  # @option data [String] :expiration_month
+  # @option data [String] :expiration_year
+  # @option data [String] :cvv
+  # @raise [CouldNotCreateBraintreeCustomer] if the Braintree customer
+  #   with payment information could not be created successfully
+  # @return [String] the customer id at Braintree
+  def setup_braintree_customer(user_id, payment)
+    church = self
+    user = User.find(user_id)
+
+    result = Braintree::Customer.create(
+      id:           "church-#{church.id}",
+      first_name:   user.first_name,
+      last_name:    user.last_name,
+      company:      church.name,
+      email:        user.email,
+      credit_card:  {
+        cardholder_name:    payment[:name_on_card],
+        number:             payment[:number],
+        expiration_month:   payment[:expiration_month],
+        expiration_year:    payment[:expiration_year],
+        cvv:                payment[:cvv],
+      }
+    )
+
+    if result.success?
+      return result.customer.id
+    else
+      puts result.errors
+      raise "CouldNotCreateBraintreeCustomer"
+    end
   end
 end

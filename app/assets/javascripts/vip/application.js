@@ -5,6 +5,9 @@
 //= require jquery.validate.additional-methods
 //= require jquery.fancy-notifications
 
+var braintree = Braintree.create($("body").data("client-encryption-key"));
+braintree.onSubmitEncryptForm('vip-setup-form');
+
 $(document).foundation();
 
 $(document).ready(function() {

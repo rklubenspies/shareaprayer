@@ -26,16 +26,20 @@ class ChurchDecorator < Draper::Decorator
   # @see http://stackoverflow.com/a/5913838/483418
   # @return [String] the church's phone number
   def phone
-    digits = source.profile.phone.gsub(/\D/, '').split(//)
+    if source.profile.phone
+      digits = source.profile.phone.gsub(/\D/, '').split(//)
 
-    if (digits.length == 11 and digits[0] == '1')
-      # Strip leading 1
-      digits.shift
-    end
+      if (digits.length == 11 and digits[0] == '1')
+        # Strip leading 1
+        digits.shift
+      end
 
-    if (digits.length == 10)
-      digits = digits.join
-      '(%s) %s-%s' % [ digits[0,3], digits[3,3], digits[6,4] ]
+      if (digits.length == 10)
+        digits = digits.join
+        '(%s) %s-%s' % [ digits[0,3], digits[3,3], digits[6,4] ]
+      end
+
+      return digits
     end
   end
 
@@ -45,9 +49,11 @@ class ChurchDecorator < Draper::Decorator
   # @author Robert Klubenspies
   # @return [String] the church's address
   def address
-    address = StreetAddress::US.parse(source.profile.address)
-    output = "#{address.to_s(:line1)}\n#{address.city}, #{address.state} #{address.postal_code}"
-    h.sanitize(output.gsub("\n", "<br>").html_safe, :tags => ["br"])
+    if source.profile.address
+      address = StreetAddress::US.parse(source.profile.address)
+      output = "#{address.to_s(:line1)}\n#{address.city}, #{address.state} #{address.postal_code}"
+      return h.sanitize(output.gsub("\n", "<br>").html_safe, :tags => ["br"])
+    end
   end
 
   # Church's website
@@ -56,7 +62,9 @@ class ChurchDecorator < Draper::Decorator
   # @author Robert Klubenspies
   # @return [String] the church's website
   def website
-    h.link_to(source.profile.website, source.profile.website)
+    if source.profile.website
+      return h.link_to(source.profile.website, source.profile.website)
+    end
   end
 
   # Church's sidebar pic
