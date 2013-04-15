@@ -3,7 +3,9 @@
 # @since 1.0.0
 # @author Robert Klubenspies
 class Church < ActiveRecord::Base
+  include PgSearch
   extend FriendlyId
+
   friendly_id :subdomain
 
   attr_accessible :name, :subdomain, :profile, :subscription, :vip_signup_id
@@ -22,6 +24,15 @@ class Church < ActiveRecord::Base
   validates_format_of :subdomain, with: /^[a-z0-9_]+$/, message: "must be lowercase alphanumerics only"
   validates_length_of :subdomain, maximum: 32, message: "exceeds maximum of 32 characters"
   validates_exclusion_of :subdomain, in: ['www', 'mail', 'live', 'assets', 'radiation'], message: "is not available"
+
+  pg_search_scope :search_name_and_subdomain,
+                  :against => {
+                    :name => 'A',
+                    :subdomain => 'B'
+                  },
+                  :using => {
+                    :tsearch => { :dictionary => "english" }
+                  }
 
   # Adds a manager to a church
   # 

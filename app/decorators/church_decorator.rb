@@ -1,5 +1,15 @@
 class ChurchDecorator < Draper::Decorator
   delegate_all
+  
+  # Church's sidebar picture tag
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @return [String] an image tag containing photo
+  def picture_tag
+    # Fake it til you make it
+    h.image_tag("live/samples/church.jpg")
+  end
 
   # Church's name
   # 
@@ -25,7 +35,7 @@ class ChurchDecorator < Draper::Decorator
   # @author Robert Klubenspies
   # @see http://stackoverflow.com/a/5913838/483418
   # @return [String] the church's phone number
-  def phone
+  def formatted_phone
     if source.profile.phone
       digits = source.profile.phone.gsub(/\D/, '').split(//)
 
@@ -36,44 +46,36 @@ class ChurchDecorator < Draper::Decorator
 
       if (digits.length == 10)
         digits = digits.join
-        '(%s) %s-%s' % [ digits[0,3], digits[3,3], digits[6,4] ]
+        return '(%s) %s-%s' % [ digits[0,3], digits[3,3], digits[6,4] ]
+      else
+        return digits
       end
-
-      return digits
     end
   end
 
-  # Church's address
+  # Church's address as a hash
   # 
   # @since 1.0.0
   # @author Robert Klubenspies
-  # @return [String] the church's address
-  def address
+  # @return [OpenStruct] the church's address, in it's component parts
+  def raw_address
     if source.profile.address
       address = StreetAddress::US.parse(source.profile.address)
-      output = "#{address.to_s(:line1)}\n#{address.city}, #{address.state} #{address.postal_code}"
-      return h.sanitize(output.gsub("\n", "<br>").html_safe, :tags => ["br"])
+
+      OpenStruct.new(
+        street:   address.to_s(:line1),
+        city:     address.city,
+        state:    address.state,
+        zip:      address.postal_code
+      )
     end
   end
 
-  # Church's website
+  # Church's website in raw format (not linked)
   # 
   # @since 1.0.0
   # @author Robert Klubenspies
-  # @return [String] the church's website
-  def website
-    if source.profile.website
-      return h.link_to(source.profile.website, source.profile.website)
-    end
-  end
-
-  # Church's sidebar pic
-  # 
-  # @since 1.0.0
-  # @author Robert Klubenspies
-  # @return [String] an image tag containing photo
-  def picture
-    # Fake it til you make it
-    h.image_tag("live/samples/church.jpg")
+  def raw_website
+    source.profile.website
   end
 end

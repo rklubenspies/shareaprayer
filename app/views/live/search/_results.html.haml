@@ -1,0 +1,11 @@
+-@churches.each do |church|
+  .church
+    %h1=church.name
+    %p=church.profile.bio
+    .links
+      -if current_user.is_not_church_member?(church.id)
+        =link_to "Join Prayer Group", join_church_path(church.subdomain)
+      -else
+        =link_to "Leave Prayer Group", leave_church_path(church.subdomain), class: "leave"
+
+      =link_to "Go to Page", church_path(church.subdomain)

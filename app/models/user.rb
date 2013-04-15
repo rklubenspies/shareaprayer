@@ -195,7 +195,8 @@ class User < ActiveRecord::Base
   # @return [Boolean] true if the user is a member, false if not
   def is_church_member?(church_id)
     user = self
-    ChurchMembership.where(user_id: user.id, church_id: church_id).exists?
+    church = Church.find(church_id)
+    ChurchMembership.where(user_id: user.id, church_id: church.id).exists?
   end
 
   # Is the user NOT a member of a church?
@@ -207,7 +208,8 @@ class User < ActiveRecord::Base
   # @return [Boolean] true if the user is not a member, false if they are
   def is_not_church_member?(church_id)
     user = self
-    !ChurchMembership.where(user_id: user.id, church_id: church_id).exists?
+    church = Church.find(church_id)
+    !ChurchMembership.where(user_id: user.id, church_id: church.id).exists?
   end
 
   # Is the user a manager of a church?
@@ -219,7 +221,8 @@ class User < ActiveRecord::Base
   # @return [Boolean] true if the user is a manager, false if not
   def is_church_manager?(church_id)
     user = self
-    ChurchManagership.where(user_id: user.id, church_id: church_id).exists?
+    church = Church.find(church_id)
+    ChurchManagership.where(user_id: user.id, church_id: church.id).exists?
   end
 
   # Is the user NOT a manager of a church?
@@ -231,7 +234,8 @@ class User < ActiveRecord::Base
   # @return [Boolean] true if the user is not a manager, false if they are
   def is_not_church_manager?(church_id)
     user = self
-    !ChurchManagership.where(user_id: user.id, church_id: church_id).exists?
+    church = Church.find(church_id)
+    !ChurchManagership.where(user_id: user.id, church_id: church.id).exists?
   end
 
   # Posts a request

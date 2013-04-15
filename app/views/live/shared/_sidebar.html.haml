@@ -11,4 +11,4 @@
     -@sidebar.churches.each do |church|
       =active_link_to church.name, church_path(church), wrap_tag: :li, class: "icon-church"
     
-    %li.icon-add=link_to (@sidebar.no_churches? ? "Add a church" : "Add another church"), "#"
+    %li.icon-add=link_to (@sidebar.no_churches? ? "Find your church" : "Add another church"), search_index_path

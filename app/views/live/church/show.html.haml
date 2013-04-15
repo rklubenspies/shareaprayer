@@ -4,11 +4,7 @@
 
 .church.show
   %section.main
-    -if current_user.is_not_church_member?(@church.id)
-      .call-to-action.join-church
-        %h1 Want to pray with #{@church.name}?
-        %h2 Share a Prayer brings people together online in prayer
-        =link_to "Join Prayer Group", join_church_path(@church.subdomain)
+    =@church.join_group_call_to_action(current_user)
 
     .requests{ data: { :"load-more-url" => church_path(@church.id) } }
       =render partial: 'live/shared/request', collection: @requests
@@ -17,22 +13,18 @@
       %p No more requests to load!
 
   %section.sidebar
-    -if current_user.is_church_member?(@church.id)
-      =render partial: "live/shared/post_request", locals: { churches: @sidebar.request_form_churches, current_page: "church-#{@church.id}" }
+    =@church.members_request_form(@sidebar.request_form_churches, current_user)
 
     .profile
       .image
-        =@church.picture
+        =@church.picture_tag
         %h1=@church.name
       %p=@church.bio
       .contact-info
-        .phone.first-icon=@church.phone
-        .address=@church.address
-        .website=@church.website
+        .phone.first-icon=@church.formatted_phone
+        .address=@church.formatted_address
+        .website=@church.website_link
     
     .buttons
-      -if current_user.is_church_member?(@church.id)
-        =link_to "Leave Prayer Group", leave_church_path(@church.subdomain), class: "leave"
-
-      -if current_user.is_church_manager?(@church.id)
-        =link_to "Manage Church", "#", class: "manage"
+      =@church.leave_prayer_group_button(current_user)
+      =@church.manage_church_button(current_user)

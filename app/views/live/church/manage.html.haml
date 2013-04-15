@@ -1,0 +1,20 @@
+-title "Manage #{@church.name}"
+-content_for :page_specific do
+  =javascript_include_tag "live/shared/manage"
+
+.church.show
+  %section.main
+    %h1 Manage #{@church.name}
+
+  %section.sidebar
+    .profile
+      .image
+        =@church.picture_tag
+        %h1=@church.name
+      %p=@church.bio
+      .contact-info
+        .phone.first-icon=@church.formatted_phone
+        .address=@church.inline_address
+        .website=@church.raw_website
+    
+    .buttons

@@ -18,7 +18,12 @@ Shareaprayer::Application.routes.draw do
     constraints(subdomain: /^(|live)$/) do
       scope module: "live" do
         get '/' => 'recent#index', as: "recent"
-        get '/:id' => 'church#show', as: "church"
+
+        resources :search, only: [:index] do
+          collection do
+            post 'query'
+          end
+        end
 
         resources :requests, only: [:create] do
           member do
@@ -26,12 +31,15 @@ Shareaprayer::Application.routes.draw do
           end
         end
         
-        resources :church, only: [], as: "church" do
+        resources :church, only: [:update], as: "church" do
           member do
             get 'join'
             get 'leave'
+            get 'manage'
           end
         end
+
+        get '/:id' => 'church#show', as: "church"
       end
     end
 
