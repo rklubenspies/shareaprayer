@@ -7,6 +7,8 @@ class Church < ActiveRecord::Base
   extend FriendlyId
 
   friendly_id :subdomain
+  
+  mount_uploader :profile_picture, ChurchProfilePictureUploader
 
   attr_accessible :name, :subdomain, :profile, :subscription, :vip_signup_id
 

@@ -8,7 +8,7 @@ class ChurchDecorator < Draper::Decorator
   # @return [String] an image tag containing photo
   def picture_tag
     # Fake it til you make it
-    h.image_tag("live/samples/church.jpg")
+    h.image_tag(source.profile_picture.url)
   end
 
   # Church's name
