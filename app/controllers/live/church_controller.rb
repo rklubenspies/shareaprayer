@@ -56,29 +56,40 @@ class Live::ChurchController < Live::ApplicationController
   # @since 1.0.0
   # @author Robert Klubenspies
   def manage
-    if current_user.is_not_church_manager?(params[:id])
-      redirect_to church_path(params[:id]), alert: "You must be a church manager to manage a church!"
+    if current_user.is_church_manager?(params[:id])
+      @church = ManageChurchDecorator.decorate(
+        Church.find(params[:id], include: [:profile])
+      )
     else
+      redirect_to church_path(params[:id]), alert: "You must be a church manager to manage a church!"
+    end
+  end
+
+  # Updates a Church's profile
+  # 
+  # @author Robert Klubenspies
+  # @since 1.0.0
+  def update_profile
+    if current_user.is_not_church_manager?(params[:id])
+      redirect_to church_path(params[:id]), alert: "You must be a church manager to update a church's profile!"
+    end
+
+    church = Church.find(params[:id])
+    params[:church][:bio] = params[:bio]
+
+    update = church.update_data!(params[:church])
+
+    if update
       @church = ManageChurchDecorator.decorate(
         Church.find(params[:id], include: [:profile])
       )
     end
-  end
-
-  # Inline updating for Chruch's manage page. Uses
-  # best_in_place and respond_with_bip to facilitate
-  # editing.
-  # 
-  # @author Robert Klubenspies
-  # @since 1.0.0
-  def update
-    @church = Church.find(params[:id])
 
     respond_to do |format|
-      if @church.update_attributes(params[:church])
-        format.json { respond_with_bip(@chruch) }
+      if @church
+        format.html { redirect_to manage_church_path(params[:id]), notice: "Profile updated!" }
       else
-        format.json { respond_with_bip(@church) }
+        format.html { redirect_to manage_church_path(params[:id]), error: "There was an unknown error! Please try again later." }
       end
     end
   end

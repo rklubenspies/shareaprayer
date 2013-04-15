@@ -1,0 +1,29 @@
+%h1 Edit profile
+
+=form_for(church, as: :church, url: update_profile_church_path(church.subdomain), method: :post, html: { id: "church-update-form" }) do |f|
+  .input-block
+    %span Name
+    =f.text_field :name, value: church.name, placeholder: "Church's name", required: "required"
+
+  .input-block
+    %span Bio
+    =text_area_tag(:bio, church.bio, placeholder: "A little about #{@church.name}", required: "required", maxlength: 500)
+
+  .optional Optional:
+
+  .input-block
+    %span Phone
+    =f.phone_field :phone, value: church.formatted_phone
+  
+  .input-block
+    %span Address
+    =f.text_field :address, value: church.inline_address
+
+  .input-block
+    %span Website
+    =f.text_field :website, value: church.raw_website
+
+  .note-block #{@church.name} can be accessed from http://#{@church.subdomain}.shareaprayer.org/. Please contact support@shareaprayer.org if you would like to change this.
+
+  .submit-block
+    .buttons=f.submit "Update Church"

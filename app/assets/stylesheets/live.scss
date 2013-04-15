@@ -302,6 +302,70 @@ header.main {
         margin-bottom: 8px;
       }
     }
+
+    .edit-profile {
+      .optional {
+        font-size: 1.0em;
+        line-height: 1.4em;
+        font-weight: 600;
+        color: #4c443b;
+        padding-top: 5px;
+        padding-bottom: 10px;
+      }
+
+      .note-block {
+        font-size: 0.9em;
+        line-height: 1.2em;
+        font-weight: 400;
+        color: #4c443b;
+        padding-top: 5px;
+        padding-bottom: 10px;
+        font-style: italic;
+      }
+
+      .input-block {
+        @include grid-row('collapse');
+        font-size: 1.2em;
+
+        span {
+          @include prefix-postfix-base;
+          @include prefix;
+          @include grid-column(3, $float: left, $collapse: true);
+        }
+
+        input {
+          @include grid-column(9, $collapse: true);
+          padding-left: 1em;
+          padding-right: 1em;
+        }
+
+        textarea {
+          @include grid-column(9, $collapse: true);
+          padding-left: 1em;
+          padding-right: 1em;
+          height: 100px;
+        }
+
+        label.error {
+          @include grid-column(9, $push: 3, $collapse: true);
+          @include form-error-message;
+          padding: emCalc(5px);
+          line-height: emCalc(18px);
+        }
+      }
+
+      .submit-block {
+        @include grid-row('collapse');
+
+        .buttons {
+          @include grid-column(5, $collapse: true, $push: 7);
+
+          input[type="submit"] {
+            @include button($bg: #1f7f5c, $full-width: true, $padding: 1.1em);
+          }
+        }
+      }
+    }
   }
 
   section.sidebar {

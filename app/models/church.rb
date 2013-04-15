@@ -131,7 +131,7 @@ class Church < ActiveRecord::Base
   # @option opts [String] :email the church's email address
   # @option opts [String] :website the church's website
   # @return [Boolean] success of transaction
-  def update_profile!(opts)
+  def update_data!(opts)
     church = self
     update_opts = { profile: {}, church: {} }
 

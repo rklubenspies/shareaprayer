@@ -31,11 +31,12 @@ Shareaprayer::Application.routes.draw do
           end
         end
         
-        resources :church, only: [:update], as: "church" do
+        resources :church, only: [], as: "church" do
           member do
             get 'join'
             get 'leave'
             get 'manage'
+            post 'update_profile'
           end
         end
 
