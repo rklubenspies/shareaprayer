@@ -202,6 +202,78 @@ header {
     }
   }
 
+  section.payment-info > .content > .wrap > .form {
+    .charge-notice {
+      @include grid-row('collapse');
+      font-size: 1.0em;
+      line-height: 1.3em;
+      font-weight: 600;
+      margin-bottom: 15px;
+
+      span {
+        @include grid-column(12, $float: left, $collapse: true);
+      }
+    }
+
+    .input-block-stack {
+      @include grid-row('collapse');
+
+      span {
+        font-size: 1.0em;
+        line-height: 1.5em;
+      }
+
+      input {
+        @include grid-column(12, $collapse: true);
+        padding-left: 1em;
+        padding-right: 1em;
+      }
+
+      label.error {
+        @include grid-column(12, $collapse: true);
+        @include form-error-message;
+        padding: emCalc(5px);
+        line-height: emCalc(18px);
+      }
+    }
+
+    .credit-card {
+      @include grid-row('collapse');
+
+      .number {
+        @include grid-column(8, $collapse: true);
+      }
+
+      .cvv {
+        @include grid-column(3, $push: 1, $collapse: true);
+      }
+    }
+
+    .expiration {
+      @include grid-row('collapse');
+
+      .month {
+        @include grid-column(4, $collapse: true);
+      }
+
+      .year {
+        @include grid-column(7, $push: 1, $collapse: true);
+      }
+    }
+
+    .security-notice {
+      @include grid-row('collapse');
+      font-size: 0.8em;
+      font-weight: 400;
+      margin-top: 10px;
+      color: #4c443b;
+
+      span {
+        @include grid-column(12, $float: left, $collapse: true);
+      }
+    }
+  }
+
   section.ready-to-go > .content > .wrap {
     .terms {
       @include grid-column(6, $collapse: true);

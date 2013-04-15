@@ -7,7 +7,7 @@
 
 - if user_signed_in?
   =form_for(:vip, :url => vip_signup_path(@vip.code), :html => { :id => "vip-setup-form" }) do |f|
-    %section.1-your-info
+    %section.your-info
       %header
         %h1 Step 1: Your Information
       
@@ -22,7 +22,7 @@
                 %h2=current_user.name
                 %p=current_user.email
 
-    %section.2-your-church
+    %section.your-church
       %header
         %h1 Step 2: Your Church
       
@@ -54,7 +54,7 @@
               %span Website
               =f.text_field :website
 
-    %section.3-payment-info
+    %section.payment-info
       %header
         %h1 Step 3: Payment Information
       
@@ -64,25 +64,37 @@
             %p Your church doesn't need its own credit card to use Share a Prayer. Anyone with a credit card can pay for you church's plan!
           
           .form
-            .input-block
+            .charge-notice
+              %span You're signing up for the "#{@vip.plan.name}" plan, and you'll be charged #{@vip.plan.human_cost}.
+
+            .input-block-stack
               %span Name on Card
               %input{ type: "text", autocomplete: "off", name: "name_on_card"}
 
-            .input-block
-              %span Card Number
-              %input{ type: "text", autocomplete: "off", "data-encrypted-name" => "number"}
+            .credit-card
+              .number
+                .input-block-stack
+                  %span Card Number
+                  %input{ type: "text", autocomplete: "off", "data-encrypted-name" => "number"}
+              
+              .cvv
+                .input-block-stack
+                  %span CVV
+                  %input{ type: "text", autocomplete: "off", "data-encrypted-name" => "cvv"}
             
-            .input-block
-              %span CVV
-              %input{ type: "text", size: "4", autocomplete: "off", "data-encrypted-name" => "cvv"}
+            .expiration
+              .month
+                .input-block-stack
+                  %span Exp. Month (MM)
+                  %input{ type: "text", "data-encrypted-name" => "month"}
             
-            .input-block
-              %span Exp. Month
-              %input{ type: "text", size: "2", "data-encrypted-name" => "month"}
-            
-            .input-block
-              %span Exp. Year
-              %input{ type: "text", size: "2", "data-encrypted-name" => "year"}
+              .year
+                .input-block-stack
+                  %span Exp. Year (YYYY)
+                  %input{ type: "text", "data-encrypted-name" => "year"}
+
+            .security-notice
+              %span <strong>Your information is safe!</strong> We won't store any credit card information on our servers. Braintree Payment Solutions is used to process your transaction on PCI-compliant servers. Read our #{link_to "Privacy Policy", page_path("privacy"), target: "blank"} for more information on how use your information.
 
     %section.ready-to-go
       %header

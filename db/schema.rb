@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130414013337) do
+ActiveRecord::Schema.define(:version => 20130415164212) do
 
   create_table "church_managerships", :force => true do |t|
     t.integer  "church_id"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(:version => 20130414013337) do
     t.string   "description"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.string   "human_cost"
   end
 
   create_table "prayers", :force => true do |t|
@@ -155,6 +156,7 @@ ActiveRecord::Schema.define(:version => 20130414013337) do
     t.string   "state"
     t.string   "sales_notes"
     t.integer  "plan_id"
+    t.string   "human_cost"
   end
 
   add_index "vip_signups", ["code"], :name => "index_vip_signups_on_code", :unique => true
