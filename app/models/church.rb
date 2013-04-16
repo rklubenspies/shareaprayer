@@ -9,8 +9,7 @@ class Church < ActiveRecord::Base
   attr_accessible :name, :subdomain, :profile, :subscription, :vip_signup_id,
                   :profile_picture, :remove_profile_picture
 
-  before_destroy :cancel_subscription!
-  before_destroy :mark_vip_user_canceled!
+  before_destroy :cancel_on_destroy
 
   friendly_id :subdomain
   mount_uploader :profile_picture, ChurchProfilePictureUploader
@@ -28,7 +27,7 @@ class Church < ActiveRecord::Base
   validates :subdomain, presence: true
   validates_format_of :subdomain, with: /^[a-z0-9_]+$/, message: "must be lowercase alphanumerics only"
   validates_length_of :subdomain, maximum: 32, message: "exceeds maximum of 32 characters"
-  validates_exclusion_of :subdomain, in: ['www', 'mail', 'live', 'assets', 'radiation'], message: "is not available"
+  validates_exclusion_of :subdomain, in: ['www', 'mail', 'api', 'live', 'assets', 'radiation'], message: "is not available"
 
   pg_search_scope :search_name_and_subdomain,
                   :against => {
@@ -209,28 +208,11 @@ class Church < ActiveRecord::Base
     end
   end
 
-  # Cancels subscription and associated Braintree data
+  # Cancels stuff when a church is being destroyed
   # 
   # @since 1.0.0
   # @author Robert Klubenspies
-  # @raise [CouldNotCancelBraintreeSubscription] if the Braintree
-  #   subscription could not be cancelled
-  # @return [Boolean]
-  def cancel_subscription!
-    subscription = self.subscription
-    if Braintree::Subscription.cancel(subscription.processor_subscription)
-      subscription.cancelled!
-    else
-      raise "CouldNotCancelBraintreeSubscription"
-    end
-  end
-
-  # Marks a subscription's associated VipSignup as cancled
-  # 
-  # @since 1.0.0
-  # @author Robert Klubenspies
-  # @return [Boolean]
-  def mark_vip_user_canceled!
-    self.vip_signup.user_cancelled!
+  def cancel_on_destroy
+    self.subscription.cancel_at_braintree!
   end
 end

@@ -11,7 +11,7 @@ class Subscription < ActiveRecord::Base
   belongs_to :church
   belongs_to :plan
 
-  state_machine :state, initial: :inactive do
+  state_machine :state, initial: :active do
     event :activated do
       transition all - [:active] => :active
     end
@@ -20,8 +20,8 @@ class Subscription < ActiveRecord::Base
       transition :active => :past_due
     end
 
-    event :cancelled do
-      transition all - [:cancelled] => :cancelled
+    event :canceled do
+      transition all - [:canceled] => :canceled
     end
   end
 
@@ -82,5 +82,16 @@ class Subscription < ActiveRecord::Base
     else
       raise "ErrorCreatingSubscription"
     end
+  end
+
+  # Cancels subscription at Braintree
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @raise [CouldNotCancelBraintreeSubscription] if the Braintree
+  #   subscription could not be cancelled
+  # @return [Boolean]
+  def cancel_at_braintree!
+    raise "CouldNotCancelBraintreeSubscription" unless Braintree::Subscription.cancel(self.processor_subscription)
   end
 end

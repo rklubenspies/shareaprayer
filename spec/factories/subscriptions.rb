@@ -1,11 +1,19 @@
 # Read about factories at https://github.com/thoughtbot/factory_girl
 
 FactoryGirl.define do
+  sequence :processor_customer do |n|
+    "test-customer-#{n}"
+  end
+
+  sequence :processor_subscription do |n|
+    "test-subscription-#{n}"
+  end
+
   factory :subscription do
-    plan_id 1
-    church_id 1
-    processor_customer "MyString"
-    processor_subscription "MyString"
-    state "MyString"
+    association :plan, factory: :plan
+    association :church, factory: :church
+    processor_customer
+    processor_subscription
+    state "active"
   end
 end

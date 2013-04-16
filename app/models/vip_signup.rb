@@ -11,10 +11,6 @@ class VipSignup < ActiveRecord::Base
     event :sign_up_complete do
       transition :pending => :complete
     end
-
-    event :user_cancelled do
-      transition all - [:user_cancelled] => :user_cancelled
-    end
   end
 
   # Create a VIP signup

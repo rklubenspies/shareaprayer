@@ -1,6 +1,6 @@
 FactoryGirl.define do
   sequence :subdomain do |n|
-    "test-church-#{n}"
+    "testchurch#{n}"
   end
 
   factory :church do

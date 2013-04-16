@@ -2,9 +2,9 @@
 
 FactoryGirl.define do
   factory :plan do
-    processor_uid "MyString"
-    member_limit 1
-    name "MyString"
-    description "MyString"
+    processor_uid "test-plan"
+    member_limit 50
+    name "Test Plan"
+    description "For testing only"
   end
 end
