@@ -74,19 +74,12 @@ class Live::ChurchController < Live::ApplicationController
       redirect_to church_path(params[:id]), alert: "You must be a church manager to update a church's profile!"
     end
 
-    church = Church.find(params[:id])
     params[:church][:bio] = params[:bio]
-
+    church = Church.find(params[:id])
     update = church.update_data!(params[:church])
 
-    if update
-      @church = ManageChurchDecorator.decorate(
-        Church.find(params[:id], include: [:profile])
-      )
-    end
-
     respond_to do |format|
-      if @church
+      if update
         format.html { redirect_to manage_church_path(params[:id]), notice: "Profile updated!" }
       else
         format.html { redirect_to manage_church_path(params[:id]), error: "There was an unknown error! Please try again later." }

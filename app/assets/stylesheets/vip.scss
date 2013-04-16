@@ -138,6 +138,26 @@ header {
             }
           }
 
+          .file-block {
+            margin-bottom: 15px;
+
+            .instructions {
+              font-size: 0.9em;
+              line-height: 1.2em;
+              font-weight: 400;
+              color: #4c443b;
+              padding-bottom: 15px;
+              font-style: italic;
+            }
+
+            .remove {
+              padding-top: 15px;
+              input, label {
+                display: inline-block;
+              }
+            }
+          }
+
           .profile-block {
             @include grid-row('collapse');
             @include panel(#fafafa, emCalc(15px) emCalc(0px));

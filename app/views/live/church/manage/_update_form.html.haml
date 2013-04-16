@@ -1,6 +1,6 @@
 %h1 Edit profile
 
-=form_for(church, as: :church, url: update_profile_church_path(church.subdomain), method: :post, html: { id: "church-update-form" }) do |f|
+=form_for(church, as: :church, url: update_profile_church_path(church.subdomain), method: :post, html: { id: "church-update-form", multipart: true }) do |f|
   .input-block
     %span Name
     =f.text_field :name, value: church.name, placeholder: "Church's name", required: "required"
@@ -8,6 +8,22 @@
   .input-block
     %span Bio
     =text_area_tag(:bio, church.bio, placeholder: "A little about #{@church.name}", required: "required", maxlength: 500)
+
+  .optional Change your Church's page photo:
+
+  .file-block
+    .instructions
+      -if church.profile_picture?
+        Leave this field blank to keep your current photo, or check the box below to remove it completely. Photos should be at least 600px, square, and in one of the following formats: jpg, jpeg, png, or gif.
+      -else
+        Leave this field blank to keep your current photo. Photos should be at least 600px, square, and in one of the following formats: jpg, jpeg, png, or gif.
+    
+    =f.file_field :profile_picture
+    
+    -if church.profile_picture?
+      .remove
+        =f.check_box :remove_profile_picture
+        =f.label :remove_profile_picture, "Remove Picture"
 
   .optional Optional:
 

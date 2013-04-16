@@ -33,4 +33,9 @@ $(document).ready(function() {
       'vip[phone]': "phoneUS",
     },
   });
+
+  $('#vip-setup-form').submit(function(){
+    $('input[type=submit]', this).attr('disabled', 'disabled');
+    $('input[type=reset]', this).attr('disabled', 'disabled');
+  });
 });

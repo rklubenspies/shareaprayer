@@ -11,6 +11,10 @@ class VipSignup < ActiveRecord::Base
     event :sign_up_complete do
       transition :pending => :complete
     end
+
+    event :user_cancelled do
+      transition all - [:user_cancelled] => :user_cancelled
+    end
   end
 
   # Create a VIP signup
@@ -65,7 +69,11 @@ class VipSignup < ActiveRecord::Base
   def setup_church(data = {}, payment = {}, user_id)
     vip_signup = self
 
-    create_opts = { vip_signup_id: vip_signup.id }
+    create_opts = {
+      profile_picture:  data[:profile_picture],
+      vip_signup_id:    vip_signup.id,
+    }
+    
     possible_alterations = {
       name:       data[:name],
       subdomain:  data[:subdomain],
@@ -74,6 +82,7 @@ class VipSignup < ActiveRecord::Base
       phone:      data[:phone],
       website:    data[:website],
     }
+    
     possible_alterations.each do |key, opt|
       if vip_signup[key] != possible_alterations[key] && !possible_alterations[key].blank?
         create_opts[key] = possible_alterations[key]
@@ -89,26 +98,13 @@ class VipSignup < ActiveRecord::Base
       
       if customer_id
         Subscription.setup(church.id, vip_signup.plan_id, customer_id)
-        vip_signup.complete!(church.id)
+        vip_signup.sign_up_complete!
       else
         raise "CouldNotCompleteSignup"
       end
     end
 
     church
-  end
-
-  # Mark a signup as completed. In the future, we'd track any
-  # sales numbers, etc here.
-  # 
-  # @since 1.0.0
-  # @author Robert Klubenspies
-  # @params [Integer] church_id the id of the Church we just
-  #   created
-  # @return [Boolean] whether the signup was completed
-  #   successfully
-  def complete!(church_id)
-    self.sign_up_complete!
   end
 
   # Generate a unique, random VIP signup code

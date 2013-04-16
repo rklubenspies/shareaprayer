@@ -6,11 +6,14 @@ class Church < ActiveRecord::Base
   include PgSearch
   extend FriendlyId
 
-  friendly_id :subdomain
-  
-  mount_uploader :profile_picture, ChurchProfilePictureUploader
+  attr_accessible :name, :subdomain, :profile, :subscription, :vip_signup_id,
+                  :profile_picture, :remove_profile_picture
 
-  attr_accessible :name, :subdomain, :profile, :subscription, :vip_signup_id
+  before_destroy :cancel_subscription!
+  before_destroy :mark_vip_user_canceled!
+
+  friendly_id :subdomain
+  mount_uploader :profile_picture, ChurchProfilePictureUploader
 
   has_one :profile, dependent: :destroy, class_name: "ChurchProfile"
   has_one :subscription, dependent: :destroy
@@ -19,7 +22,7 @@ class Church < ActiveRecord::Base
   has_many :church_managerships, dependent: :destroy
   has_many :managers, through: :church_managerships, source: :user, class_name: "User"
   has_many :requests
-  belongs_to :vip_signup, dependent: :destroy
+  belongs_to :vip_signup
 
   validates :name, presence: true
   validates :subdomain, presence: true
@@ -82,6 +85,10 @@ class Church < ActiveRecord::Base
   # @param [Hash] opts the options to register a church with
   # @option opts [String] :name the name of the church
   # @option opts [String] :subdomain the church's subdomain
+  # @option opts [String] :profile_picture the church's profile picture
+  #   upload form content
+  # @option opts [Integer] :vip_signup_id the church's associated VIP
+  #   object
   # @option opts [String] :bio the church's bio
   # @option opts [String] :address the church's address
   # @option opts [String] :phone the church's phone number
@@ -99,9 +106,10 @@ class Church < ActiveRecord::Base
     raise "UserNotSignedUp" if !user.has_role?("site_user")
 
     church = Church.create({
-      name:           opts[:name],
-      subdomain:      opts[:subdomain],
-      vip_signup_id:  opts[:vip_signup_id],
+      name:             opts[:name],
+      subdomain:        opts[:subdomain],
+      profile_picture:  opts[:profile_picture],
+      vip_signup_id:    opts[:vip_signup_id],
     })
 
     church_profile_opts = {
@@ -129,22 +137,35 @@ class Church < ActiveRecord::Base
   # @option opts [String] :name the name of the church
   # @option opts [String] :bio the church's bio
   # @option opts [String] :address the church's address
+  # @option opts [String] :profile_picture the upload form data for
+  #   a profile picture
+  # @option opts [Boolean] :remove_profile_picture remove a profile
+  #   picture
   # @option opts [String] :phone the church's phone number
-  # @option opts [String] :email the church's email address
   # @option opts [String] :website the church's website
   # @return [Boolean] success of transaction
   def update_data!(opts)
     church = self
-    update_opts = { profile: {}, church: {} }
+    profile = self.profile
+    church_opts = {}
+    profile_opts = {}
 
-    # @comment add a key to update_opts for each key that was changed
-    opts.each do |key, opt|
-      update_opts[:church][key] = opts[key] if church[key] && church[key] != opts[key]
-      update_opts[:profile][key] = opts[key] if church.profile[key] && church.profile[key] != opts[key]
+    church_opts["name"] = opts["name"]
+
+    if !opts["profile_picture"].blank?
+      church_opts["profile_picture"] = opts["profile_picture"]
     end
 
-    # @comment return true or false
-    church.update_attributes(update_opts[:church]) && church.profile.update_attributes(update_opts[:profile])
+    if opts["remove_profile_picture"] == "1"
+      church_opts["remove_profile_picture"] = true
+    end
+
+    profile_opts["bio"] = opts["bio"]
+    profile_opts["address"] = opts["address"]
+    profile_opts["phone"] = opts["phone"]
+    profile_opts["website"] = opts["website"]
+
+    church.update_attributes(church_opts) && profile.update_attributes(profile_opts)
   end
 
   # Creates a customer at Braintree from user and payment data
@@ -186,5 +207,30 @@ class Church < ActiveRecord::Base
       puts result.errors
       raise "CouldNotCreateBraintreeCustomer"
     end
+  end
+
+  # Cancels subscription and associated Braintree data
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @raise [CouldNotCancelBraintreeSubscription] if the Braintree
+  #   subscription could not be cancelled
+  # @return [Boolean]
+  def cancel_subscription!
+    subscription = self.subscription
+    if Braintree::Subscription.cancel(subscription.processor_subscription)
+      subscription.cancelled!
+    else
+      raise "CouldNotCancelBraintreeSubscription"
+    end
+  end
+
+  # Marks a subscription's associated VipSignup as cancled
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @return [Boolean]
+  def mark_vip_user_canceled!
+    self.vip_signup.user_cancelled!
   end
 end

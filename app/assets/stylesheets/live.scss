@@ -354,6 +354,26 @@ header.main {
         }
       }
 
+      .file-block {
+        margin-bottom: 15px;
+
+        .instructions {
+          font-size: 0.9em;
+          line-height: 1.2em;
+          font-weight: 400;
+          color: #4c443b;
+          padding-bottom: 15px;
+          font-style: italic;
+        }
+
+        .remove {
+          padding-top: 15px;
+          input, label {
+            display: inline-block;
+          }
+        }
+      }
+
       .submit-block {
         @include grid-row('collapse');
 
@@ -470,8 +490,9 @@ header.main {
         position: relative;
 
         h1 { 
+          background: rgba(0, 0, 0, 0.5);
           position: absolute;
-          bottom: 5px;
+          bottom: 1px;
           left: 0;
           padding-left: 10px;
           padding-right: 12px;
