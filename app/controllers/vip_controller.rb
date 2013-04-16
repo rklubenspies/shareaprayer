@@ -13,6 +13,10 @@ class VipController < ApplicationController
   end
 
   def show
+    if !current_user
+      session["user_return_to"] = vip_url(params[:code], subdomain: "www")
+    end
+
     @vip = VipSignup.where(code: params[:code], state: "pending").first
 
     if !@vip

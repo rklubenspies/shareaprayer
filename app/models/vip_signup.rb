@@ -3,6 +3,8 @@ class VipSignup < ActiveRecord::Base
                   :subdomain, :website, :plan_id, :sales_notes
 
   validates :code, presence: true, uniqueness: true
+  validates :name, presence: true
+  validates :subdomain, presence: true, uniqueness: true
 
   has_one :church
   belongs_to :plan
@@ -35,9 +37,10 @@ class VipSignup < ActiveRecord::Base
     opts[:rep_uid] = rep_uid
     opts[:sales_notes] = sales_notes
 
-    vip = VipSignup.create(opts)
-
-    vip
+    vip = VipSignup.new(opts)
+    if vip.save
+      vip
+    end
   end
 
   # Create a Church from a VIP signup
