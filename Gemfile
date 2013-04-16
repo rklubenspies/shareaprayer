@@ -20,7 +20,6 @@ gem 'state_machine', '~> 1.1.2'
 gem 'high_voltage', '~> 1.2.2'
 gem 'draper', '~> 1.1.0'
 gem 'StreetAddress', '~> 1.0.4', :require => "street_address"
-gem 'best_in_place', '~> 2.1.0'
 gem 'active_link_to', '~> 1.0.0'
 gem 'kaminari', '~> 0.14.1'
 gem 'friendly_id', '~> 4.0.9'

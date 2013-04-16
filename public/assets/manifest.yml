@@ -65,6 +65,10 @@ devise/application.js: devise/application-37a5752d3756be403fdfad71a8382119.js
 devise/application/index.js: devise/application-37a5752d3756be403fdfad71a8382119.js
 live/application.js: live/application-24b2a0abc0121511bb7f88eb3c559ecd.js
 live/application/index.js: live/application-24b2a0abc0121511bb7f88eb3c559ecd.js
+live/shared/manage.js: live/shared/manage-19b8b79763c27f6991fd4a0a3d50b46e.js
+live/shared/manage/index.js: live/shared/manage-19b8b79763c27f6991fd4a0a3d50b46e.js
+live/shared/pagination.js: live/shared/pagination-60ada565dcef1cf476dc30c84929ede1.js
+live/shared/pagination/index.js: live/shared/pagination-60ada565dcef1cf476dc30c84929ede1.js
 marketing/application.js: marketing/application-2158e399bb457500cf342fe0e7fa284a.js
 marketing/application/index.js: marketing/application-2158e399bb457500cf342fe0e7fa284a.js
 vip/application.js: vip/application-381191d3f73298376ca9ac4f5a9bb99d.js
