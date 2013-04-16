@@ -68,6 +68,7 @@ Shareaprayer::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  # Force SSL
-  config.force_ssl = false
+  # Force SSL enabled by creating the ENV['FORCE_SSL'] variable;
+  # disabled by destroying it.
+  config.force_ssl = !!ENV['FORCE_SSL']
 end

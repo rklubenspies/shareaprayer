@@ -4,6 +4,7 @@ gem 'rails', '3.2.13'
 gem 'pg'
 gem 'unicorn'
 gem 'newrelic_rpm'
+gem 'addressable', '~> 2.3.4', :require => "addressable/uri"
 gem 'braintree', '~> 2.22.0'
 gem 'mini_magick', '~> 3.5.0'
 gem 'carrierwave-aws', '~> 0.1.1'

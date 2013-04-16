@@ -24,6 +24,7 @@
   =csrf_meta_tags
 
 %body
+  =render "live/shared/flash_notices"
   =yield
 
   =javascript_include_tag "marketing/application"

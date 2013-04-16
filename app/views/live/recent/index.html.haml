@@ -4,10 +4,10 @@
 
 .recent.index
   %section.main
-    .call-to-action.take-tour
-      %h1 You look new here!
-      %h2 Why not take a tour of Share a Prayer?
-      =link_to "Take The Tour", "#"
+    / .call-to-action.take-tour
+    /   %h1 You look new here!
+    /   %h2 Why not take a tour of Share a Prayer?
+    /   =link_to "Take The Tour", "#"
 
     .requests{ data: { :"load-more-url" => root_path } }
       =render partial: 'live/shared/request', collection: @requests

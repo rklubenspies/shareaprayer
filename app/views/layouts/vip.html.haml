@@ -25,7 +25,7 @@
 
 %body{ data: { "client-encryption-key" => ENV['BRAINTREE_CLIENT_KEY'] } }
   %header
-    .logo=link_to image_tag("devise/logo-small.png"), root_path
+    .logo=link_to image_tag("devise/logo-small.png"), root_url(subdomain: "www")
   
   .content
     =render "live/shared/flash_notices"

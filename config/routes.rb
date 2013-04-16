@@ -1,12 +1,18 @@
 Shareaprayer::Application.routes.draw do
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  constraints(subdomain: "") do
+    get '*path' => redirect { |params, request|
+      Addressable::URI.escape(request.url.sub(request.host, "www.#{request.host}"))
+    }
+  end
 
-  get   '/vip' => 'vip#search',               as: :vip_search
-  post  '/vip' => 'vip#handle_search',        as: :vip_handle_search
-  get   '/vip/:code' => 'vip#show',           as: :vip
-  post  '/vip/:code/signup' => 'vip#signup',  as: :vip_signup
-  
   constraints(subdomain: /^(|www)$/) do
+    devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+
+    get   '/vip' => 'vip#search',               as: :vip_search
+    post  '/vip' => 'vip#handle_search',        as: :vip_handle_search
+    get   '/vip/:code' => 'vip#show',           as: :vip
+    post  '/vip/:code/signup' => 'vip#signup',  as: :vip_signup
+    
     root to: 'pages#show', id: 'home'
 
     get '/:id', to: 'pages#show', as: :static
@@ -48,11 +54,11 @@ Shareaprayer::Application.routes.draw do
 
       get '/:id' => 'church#show', as: "church"
     end
+  end
 
-    constraints(ChurchSubdomain) do
-      get '/' => redirect { |params, request|
-        "http://live.#{request.domain}/#{request.subdomain}"
-      }
-    end
+  constraints(ChurchSubdomain) do
+    get '/' => redirect { |params, request|
+      "http://live.#{request.domain}/#{request.subdomain}"
+    }
   end
 end
