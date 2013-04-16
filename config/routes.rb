@@ -23,9 +23,11 @@ Shareaprayer::Application.routes.draw do
     scope module: "live" do
       get '/' => 'recent#index', as: "recent"
 
-      resources :search, only: [:index] do
-        collection do
-          post 'query'
+      if !Rails.env.production?
+        resources :search, only: [:index] do
+          collection do
+            post 'query'
+          end
         end
       end
 

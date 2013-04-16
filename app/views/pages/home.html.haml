@@ -31,18 +31,21 @@
     %p Keep connected with your church’s community for free, share prayer requests, and support others through prayer. There’s never been a better time to get started!
 
   .buttons
-    .login
-      -if !Rails.env.production?
+    -if !Rails.env.production?
+      .login
         -if user_signed_in?
           =link_to "Go to Live", root_url(subdomain: "live")
         -else
           =link_to "Login", new_user_session_path
         or
-      -else
-        &nbsp;
+    -else
+      &nbsp;
 
     .find-church
-      =link_to "Find your church", "#", class: "btn", :"data-reveal-id" => "launchingSoonModal"
+      -if user_signed_in?
+        =link_to "Go to Live", root_url(subdomain: "live"), class: "btn"
+      -else
+        =link_to "Login to Live", new_user_session_path, class: "btn"
 
 %section.for-churches#features
   .float
