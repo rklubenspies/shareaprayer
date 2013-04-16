@@ -7,13 +7,11 @@
         %li=link_to "For churches", "#features"
         %li=link_to "Pricing", "#pricing"
         %li=link_to "Contact", "#contact"
-        -if !Rails.env.production?
-          %li=link_to "VIP", vip_search_path
-        -if !Rails.env.production?
-          -if user_signed_in?
-            %li=link_to "Logout", destroy_user_session_path, method: :delete
-          -else
-            %li=link_to "Login", new_user_session_path
+        %li=link_to "VIP", vip_search_path
+        -if user_signed_in?
+          %li=link_to "Logout", destroy_user_session_path, method: :delete
+        -else
+          %li=link_to "Login", new_user_session_path
 
   %section.hero
     .hero-title
