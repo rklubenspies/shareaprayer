@@ -1,0 +1,63 @@
+-if flash[:notice]
+  %strong SUCCESS! #{flash[:notice]}
+  %br
+  %br
+
+-if flash[:alert]
+  %strong ERROR! #{flash[:alert]}
+  %br
+  %br
+
+
+=form_for(:vip, :url => create_vip_path) do |f|
+
+  Your Rep UID (first name and last initial, i.e. "johnd")
+  %br
+  =f.text_field :rep_uid, placeholder: "johnd"
+  %br
+  %br
+
+  Plan
+  %br
+  =select(:vip, :plan, @plans, { include_blank: 'Select a plan' })
+  %br
+  %br
+
+  Name
+  %br
+  =f.text_field :name, value: params[:name], placeholder: "Name of church"
+  %br
+  %br
+
+  Subdomain (letters and numbers only! check availability first)
+  %br
+  =f.text_field :subdomain, value: params[:subdomain], placeholder: "subdomain"
+  %br
+  %br
+
+  Bio (optional)
+  %br
+  =f.text_field :bio, value: params[:bio], placeholder: "Some text here."
+  %br
+  %br
+
+  Address (optional)
+  %br
+  =f.text_field :address, value: params[:address], placeholder: "100 Main Street, Orlando, FL"
+  %br
+  %br
+
+  Phone (optional)
+  %br
+  =f.text_field :phone, value: params[:phone], placeholder: "(555) 555-5555"
+  %br
+  %br
+
+  Website (optional)
+  %br
+  =f.text_field :website, value: params[:website], placeholder: "example.org"
+  %br
+  %br
+
+  %input.reset{ type: "reset", value: "Reset" }
+  =f.submit "Create VIP Code"

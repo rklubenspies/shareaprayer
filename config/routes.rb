@@ -22,6 +22,8 @@ Shareaprayer::Application.routes.draw do
     scope module: "api" do
       get '/braintree/webhook', to: 'braintree#verify', as: :verify_braintree_webhook
       post '/braintree/webhook', to: 'braintree#webhook', as: :braintree_webhook
+      get '/vip/new', to: 'vip#new', as: :new_vip
+      post '/vip/create', to: 'vip#create', as: :create_vip
     end
   end
 
