@@ -206,6 +206,7 @@ header.main {
 
           .details {
             margin-top: 12px;
+            margin-bottom: 12px;
             font-size: emCalc(14px);
             line-height: emCalc(14px);
 
@@ -232,6 +233,39 @@ header.main {
 
               &.first-icon {
                 margin-left: 0;
+              }
+            }
+          }
+
+          .pray-for {
+            margin-top: 20px;
+            
+            a {
+              @include button-base;
+              @include button-size;
+              width: 100%;
+              background: #1f7f5c;
+              padding: 20px 40px;
+              margin: 0px;
+              border: none;
+              color: white;
+              font-family: 'Montserrat', sans-serif;
+              font-size: emCalc(12px);
+              font-weight: 400;
+              text-transform: uppercase;
+              letter-spacing: 1px;
+
+              &:visited {
+                color: white;
+              }
+
+              &:hover {
+                background: shade(#1f7f5c, 10);
+              }
+
+              &[disabled] {
+                background: shade(#1f7f5c, 20);
+                cursor: default;
               }
             }
           }
@@ -266,6 +300,90 @@ header.main {
         font-size: emCalc(20px);
         line-height: emCalc(14px);
         margin-bottom: 8px;
+      }
+    }
+
+    .edit-profile {
+      .optional {
+        font-size: 1.0em;
+        line-height: 1.4em;
+        font-weight: 600;
+        color: #4c443b;
+        padding-top: 5px;
+        padding-bottom: 10px;
+      }
+
+      .note-block {
+        font-size: 0.9em;
+        line-height: 1.2em;
+        font-weight: 400;
+        color: #4c443b;
+        padding-top: 5px;
+        padding-bottom: 10px;
+        font-style: italic;
+      }
+
+      .input-block {
+        @include grid-row('collapse');
+        font-size: 1.2em;
+
+        span {
+          @include prefix-postfix-base;
+          @include prefix;
+          @include grid-column(3, $float: left, $collapse: true);
+        }
+
+        input {
+          @include grid-column(9, $collapse: true);
+          padding-left: 1em;
+          padding-right: 1em;
+        }
+
+        textarea {
+          @include grid-column(9, $collapse: true);
+          padding-left: 1em;
+          padding-right: 1em;
+          height: 100px;
+        }
+
+        label.error {
+          @include grid-column(9, $push: 3, $collapse: true);
+          @include form-error-message;
+          padding: emCalc(5px);
+          line-height: emCalc(18px);
+        }
+      }
+
+      .file-block {
+        margin-bottom: 15px;
+
+        .instructions {
+          font-size: 0.9em;
+          line-height: 1.2em;
+          font-weight: 400;
+          color: #4c443b;
+          padding-bottom: 15px;
+          font-style: italic;
+        }
+
+        .remove {
+          padding-top: 15px;
+          input, label {
+            display: inline-block;
+          }
+        }
+      }
+
+      .submit-block {
+        @include grid-row('collapse');
+
+        .buttons {
+          @include grid-column(5, $collapse: true, $push: 7);
+
+          input[type="submit"] {
+            @include button($bg: #1f7f5c, $full-width: true, $padding: 1.1em);
+          }
+        }
       }
     }
   }
@@ -372,8 +490,9 @@ header.main {
         position: relative;
 
         h1 { 
+          background: rgba(0, 0, 0, 0.5);
           position: absolute;
-          bottom: 5px;
+          bottom: 1px;
           left: 0;
           padding-left: 10px;
           padding-right: 12px;

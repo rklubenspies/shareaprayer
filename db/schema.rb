@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130401173319) do
+ActiveRecord::Schema.define(:version => 20130415194819) do
 
   create_table "church_managerships", :force => true do |t|
     t.integer  "church_id"
@@ -39,13 +39,25 @@ ActiveRecord::Schema.define(:version => 20130401173319) do
   end
 
   create_table "churches", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
     t.string   "subdomain"
     t.string   "name"
+    t.integer  "vip_signup_id"
+    t.string   "profile_picture"
   end
 
   add_index "churches", ["subdomain"], :name => "index_churches_on_subdomain", :unique => true
+
+  create_table "plans", :force => true do |t|
+    t.string   "processor_uid"
+    t.integer  "member_limit"
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.string   "human_cost"
+  end
 
   create_table "prayers", :force => true do |t|
     t.integer  "user_id"
@@ -89,6 +101,17 @@ ActiveRecord::Schema.define(:version => 20130401173319) do
   add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], :name => "index_roles_on_name"
 
+  create_table "subscriptions", :force => true do |t|
+    t.integer  "plan_id"
+    t.integer  "church_id"
+    t.string   "processor_customer"
+    t.string   "processor_payment_token"
+    t.string   "processor_subscription"
+    t.string   "state"
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+  end
+
   create_table "users", :force => true do |t|
     t.string   "email",                     :default => "", :null => false
     t.string   "facebook_token"
@@ -125,12 +148,19 @@ ActiveRecord::Schema.define(:version => 20130401173319) do
     t.string   "rep_uid"
     t.string   "name"
     t.string   "subdomain"
-    t.string   "bio",        :limit => 10000
+    t.string   "bio",         :limit => 10000
     t.string   "address"
     t.string   "phone"
     t.string   "website"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
+    t.string   "state"
+    t.string   "sales_notes"
+    t.integer  "plan_id"
+    t.string   "human_cost"
   end
+
+  add_index "vip_signups", ["code"], :name => "index_vip_signups_on_code", :unique => true
+  add_index "vip_signups", ["subdomain"], :name => "index_vip_signups_on_subdomain", :unique => true
 
 end

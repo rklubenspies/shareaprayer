@@ -1,0 +1,13 @@
+-title "Find a Church"
+-content_for :page_specific do
+  &nbsp;
+
+.search.index
+  %section.main
+    .search-form
+      =form_tag(query_search_index_path, method: :post, remote: true ) do
+        =text_field(:q, "", placeholder: "Name of church")
+        =submit_tag "Find"
+
+    .results
+      Type the name of the church you're looking for above

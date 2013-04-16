@@ -45,6 +45,7 @@ module Shareaprayer
 
     # Auto load presenter
     config.autoload_paths += %W(
+      #{Rails.root}/app/uploaders
       #{Rails.root}/app/presenters 
       #{Rails.root}/lib
     )

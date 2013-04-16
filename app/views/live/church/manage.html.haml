@@ -1,0 +1,11 @@
+-title "Manage #{@church.name}"
+-content_for :page_specific do
+  =javascript_include_tag "live/shared/manage"
+
+.church.show
+  %section.main
+    .edit-profile
+      =render partial: "live/church/manage/update_form", locals: { church: @church }
+
+  %section.sidebar
+    =render partial: "live/church/manage/sidebar", locals: { church: @church }

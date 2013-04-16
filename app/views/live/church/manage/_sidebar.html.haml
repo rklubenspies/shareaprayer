@@ -1,0 +1,11 @@
+.profile
+  .image
+    =@church.picture_tag
+    %h1=@church.name
+  %p=@church.bio
+  .contact-info
+    .phone.first-icon=@church.formatted_phone
+    .address=@church.inline_address
+    .website=@church.raw_website
+
+.buttons

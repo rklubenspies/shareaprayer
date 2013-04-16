@@ -28,7 +28,7 @@
 
 %body
   %nav
-    .logo=image_tag "devise/logo-small.png"
+    .logo=link_to image_tag("devise/logo-small.png"), root_url(subdomain: "www")
   
   .content=yield
 

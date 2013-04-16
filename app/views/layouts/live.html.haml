@@ -40,5 +40,14 @@
       =render "live/shared/flash_notices"
       =yield
 
+  %footer
+    %nav
+      %p Copyright 2010-2013 &copy; Share a Prayer, Inc. All rights reserved.
+      %ul
+        %li=link_to "Home", root_path
+        %li=link_to "Terms of Service", page_path("terms")
+        %li=link_to "Privacy Policy", page_path("privacy")
+
+
   =javascript_include_tag "live/application"
   =content_for?(:page_specific) ? yield(:page_specific) : yield

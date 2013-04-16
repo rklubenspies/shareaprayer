@@ -57,4 +57,18 @@ class RequestDecorator < Draper::Decorator
   def long
     source.text
   end
+
+  # Returns appropriate pray for button
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @param [User] current_user Devise's current_user
+  # @return [String] the appropriate link_to tag
+  def pray_for_button(current_user)
+    if !current_user.has_prayed_for?(source.id)
+      h.link_to("Pray for this", h.pray_for_request_path(source.id), remote: true)
+    else
+      h.link_to("You already prayed for this", h.pray_for_request_path(source.id), remote: true, disabled: true)
+    end
+  end
 end

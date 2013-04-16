@@ -1,4 +1,4 @@
-%article.request
+%article.request{ id: "request-#{request.id}" }
   .profile-pic=request.profile_pic
   .ribbon-edge
   .text#short=request.short
@@ -8,3 +8,5 @@
       .author.first-icon=request.author
       .created_at=request.created_at
       .prayers=request.prayers
+    .pray-for
+      =request.pray_for_button(current_user)

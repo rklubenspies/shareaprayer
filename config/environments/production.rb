@@ -46,7 +46,7 @@ Shareaprayer::Application.configure do
   # config.action_controller.asset_host = "http://assets.shareaprayer.org/"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( legal.css devise.css devise.js live.css live.js marketing.css marketing.js )
+  config.assets.precompile += %w( legal.css devise.css devise.js live.css live.js marketing.css marketing.js vip.css vip.js )
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
@@ -68,6 +68,7 @@ Shareaprayer::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  # Force SSL
-  config.force_ssl = false
+  # Force SSL enabled by creating the ENV['FORCE_SSL'] variable;
+  # disabled by destroying it.
+  config.force_ssl = !!ENV['FORCE_SSL']
 end

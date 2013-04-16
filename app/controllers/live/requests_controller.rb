@@ -31,4 +31,20 @@ class Live::RequestsController < Live::ApplicationController
       end
     end
   end
+
+  # Pray for a request
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  def pray_for
+    @prayer = current_user.pray_for(params[:id], request.env['REMOTE_ADDR'])
+
+    respond_to do |format|
+      if @prayer
+        format.js { render template: "live/shared/pray_for/success" }
+      else
+        format.js { render template: "live/shared/pray_for/error"}
+      end
+    end
+  end
 end

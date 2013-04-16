@@ -8,7 +8,7 @@
         %li=link_to "Pricing", "#pricing"
         %li=link_to "Contact", "#contact"
         -if !Rails.env.production?
-          %li=link_to "VIP", "#", :"data-reveal-id" => "launchingSoonModal"
+          %li=link_to "VIP", vip_search_path
         -if !Rails.env.production?
           -if user_signed_in?
             %li=link_to "Logout", destroy_user_session_path, method: :delete
@@ -31,18 +31,21 @@
     %p Keep connected with your church’s community for free, share prayer requests, and support others through prayer. There’s never been a better time to get started!
 
   .buttons
-    .login
-      -if !Rails.env.production?
+    -if !Rails.env.production?
+      .login
         -if user_signed_in?
-          =link_to "Go to Live", "#"
+          =link_to "Go to Live", root_url(subdomain: "live")
         -else
           =link_to "Login", new_user_session_path
         or
-      -else
-        &nbsp;
+    -else
+      &nbsp;
 
     .find-church
-      =link_to "Find your church", "#", class: "btn", :"data-reveal-id" => "launchingSoonModal"
+      -if user_signed_in?
+        =link_to "Go to Live", root_url(subdomain: "live"), class: "btn"
+      -else
+        =link_to "Login to Live", new_user_session_path, class: "btn"
 
 %section.for-churches#features
   .float
@@ -69,7 +72,7 @@
       .simplicity.active
         %i
         %h2 Simplicity
-        %p An easy to use interface makes Share a Prayer easy for everyone to use. Mailchimp newsletter integration helps your church reach members outside the site, and for free.
+        %p An easy to use interface makes Share a Prayer easy for everyone to use. Mailchimp newsletter integration (coming soon) helps your church reach members outside the site, and for free.
 
 %section.contact#contact
   .wrap
@@ -153,7 +156,7 @@
         %li=link_to "Pricing", "#pricing"
         %li=link_to "Contact", "#contact"
         -if !Rails.env.production?
-          %li=link_to "VIP", "#", :"data-reveal-id" => "launchingSoonModal"
+          %li=link_to "VIP", vip_search_path
         %li=link_to "Terms of Service", page_path("terms"), target: "blank"
         %li=link_to "Privacy Policy", page_path("privacy"), target: "blank"
 

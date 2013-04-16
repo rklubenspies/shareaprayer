@@ -1,5 +1,15 @@
 class ChurchDecorator < Draper::Decorator
   delegate_all
+  
+  # Church's sidebar picture tag
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @return [String] an image tag containing photo
+  def picture_tag
+    # Fake it til you make it
+    h.image_tag(source.profile_picture.url)
+  end
 
   # Church's name
   # 
@@ -25,47 +35,47 @@ class ChurchDecorator < Draper::Decorator
   # @author Robert Klubenspies
   # @see http://stackoverflow.com/a/5913838/483418
   # @return [String] the church's phone number
-  def phone
-    digits = source.profile.phone.gsub(/\D/, '').split(//)
+  def formatted_phone
+    if source.profile.phone
+      digits = source.profile.phone.gsub(/\D/, '').split(//)
 
-    if (digits.length == 11 and digits[0] == '1')
-      # Strip leading 1
-      digits.shift
+      if (digits.length == 11 and digits[0] == '1')
+        # Strip leading 1
+        digits.shift
+      end
+
+      if (digits.length == 10)
+        digits = digits.join
+        return '(%s) %s-%s' % [ digits[0,3], digits[3,3], digits[6,4] ]
+      else
+        return digits
+      end
     end
+  end
 
-    if (digits.length == 10)
-      digits = digits.join
-      '(%s) %s-%s' % [ digits[0,3], digits[3,3], digits[6,4] ]
+  # Church's address as a hash
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @return [OpenStruct] the church's address, in it's component parts
+  def raw_address
+    if source.profile.address
+      address = StreetAddress::US.parse(source.profile.address)
+
+      OpenStruct.new(
+        street:   address.to_s(:line1),
+        city:     address.city,
+        state:    address.state,
+        zip:      address.postal_code
+      )
     end
   end
 
-  # Church's address
+  # Church's website in raw format (not linked)
   # 
   # @since 1.0.0
   # @author Robert Klubenspies
-  # @return [String] the church's address
-  def address
-    address = StreetAddress::US.parse(source.profile.address)
-    output = "#{address.to_s(:line1)}\n#{address.city}, #{address.state} #{address.postal_code}"
-    h.sanitize(output.gsub("\n", "<br>").html_safe, :tags => ["br"])
-  end
-
-  # Church's website
-  # 
-  # @since 1.0.0
-  # @author Robert Klubenspies
-  # @return [String] the church's website
-  def website
-    h.link_to(source.profile.website, source.profile.website)
-  end
-
-  # Church's sidebar pic
-  # 
-  # @since 1.0.0
-  # @author Robert Klubenspies
-  # @return [String] an image tag containing photo
-  def picture
-    # Fake it til you make it
-    h.image_tag("live/samples/church.jpg")
+  def raw_website
+    source.profile.website
   end
 end

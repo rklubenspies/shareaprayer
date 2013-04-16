@@ -1,0 +1,130 @@
+- title "VIP Signup"
+
+%header
+  .wrap
+    %h1 You're so close!
+    %h2 Finish setting up #{@vip.name}
+
+- if user_signed_in?
+  =form_for(:vip, :url => vip_signup_path(@vip.code), :html => { :id => "vip-setup-form", multipart: true }) do |f|
+    %section.your-info
+      %header
+        %h1 Step 1: Your Information
+      
+      .content
+        .wrap
+          .note
+            %p You'll be the first church manager!
+          .form
+            .profile-block
+              .image=image_tag current_user.profile_pic_url
+              .info
+                %h2=current_user.name
+                %p=current_user.email
+
+    %section.your-church
+      %header
+        %h1 Step 2: Your Church
+      
+      .content
+        .wrap
+          .note
+            %p We just want to check and make sure we got all your church's info right. Feel free to change anything.
+          
+          .form
+            .input-block
+              %span Name
+              =f.text_field :name, required: "required"
+            
+            .input-block
+              %span Bio
+              =f.text_field :bio, required: "required"
+
+            .optional Upload a photo for you Church's page:
+
+            .file-block
+              .instructions
+                Photos should be at least 600px, square, and in one of the following formats: jpg, jpeg, png, or gif. Leave this field blank to use our nondescript default photo.
+              
+              =f.file_field :profile_picture
+
+            .optional Optional:
+
+            .input-block
+              %span Phone
+              =f.phone_field :phone
+            
+            .input-block
+              %span Address
+              =f.text_field :address
+
+            .input-block
+              %span Website
+              =f.text_field :website
+
+    %section.payment-info
+      %header
+        %h1 Step 3: Payment Information
+      
+      .content
+        .wrap
+          .note
+            %p Your church doesn't need its own credit card to use Share a Prayer. Anyone with a credit card can pay for you church's plan!
+          
+          .form
+            .charge-notice
+              %span You're signing up for the "#{@vip.plan.name}" plan, and you'll be charged #{@vip.plan.human_cost}.
+
+            .input-block-stack
+              %span Name on Card
+              %input{ type: "text", autocomplete: "off", name: "name_on_card", required: "required"}
+
+            .credit-card
+              .number
+                .input-block-stack
+                  %span Card Number
+                  %input{ type: "text", autocomplete: "off", "data-encrypted-name" => "number", required: "required"}
+              
+              .cvv
+                .input-block-stack
+                  %span CVV
+                  %input{ type: "text", autocomplete: "off", "data-encrypted-name" => "cvv", required: "required"}
+            
+            .expiration
+              .month
+                .input-block-stack
+                  %span Exp. Month (MM)
+                  %input{ type: "text", "data-encrypted-name" => "month", required: "required"}
+            
+              .year
+                .input-block-stack
+                  %span Exp. Year (YYYY)
+                  %input{ type: "text", "data-encrypted-name" => "year", required: "required"}
+
+            .security-notice
+              %span <strong>Your information is safe!</strong> We won't store any credit card information on our servers. Braintree Payment Solutions is used to process your transaction on PCI-compliant servers. Read our #{link_to "Privacy Policy", page_path("privacy"), target: "blank"} for more information on how use your information.
+
+    %section.ready-to-go
+      %header
+        %h1 Ready to go!
+      
+      .content
+        .wrap
+          .terms
+            %p By clicking the button to the right, you're agreeing to our #{link_to "Terms of Service", page_path("terms"), target: "blank"} and #{link_to "Privacy Policy", page_path("privacy"), target: "blank"}.
+          .lets-go=f.submit "Let's go!"
+
+-else
+  %section.account-required
+    %header
+      %h1 Looks like you're not signed in!
+    
+    .text
+      %h2 You need to have a Share a Prayer account to continue
+      %p After you #{link_to "sign in", new_user_session_path} or #{link_to "sign up", new_user_registration_path}, we'll connect your account to this church and make you the first church manager!
+
+      .links
+        .link.sign-in
+          =link_to "Sign In", new_user_session_path
+        .link.sign-up
+          =link_to "Create an Account", new_user_registration_path

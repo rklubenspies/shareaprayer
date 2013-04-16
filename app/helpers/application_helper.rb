@@ -21,4 +21,14 @@ module ApplicationHelper
   def auth_redirect?
     !session[:previous_url].blank? ? true : false
   end
+
+  # Wrap pluralize's counts in spans
+  # 
+  # @since 1.0.0
+  # @author Robert Klubenspies
+  # @see http://stackoverflow.com/a/13749589/483418
+  def pluralize(count, singular, plural = nil)
+    count, counted = super.split(' ', 2)
+    [content_tag(:span, count, class: 'count'),content_tag(:span, counted, class: 'counted')].join(' ').html_safe
+  end
 end

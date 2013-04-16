@@ -21,7 +21,7 @@
   	});
 
   	$('.flash').slideDown('slow');
-  	$closeTimeout = setTimeout("$('.flash').slideUp('slow',function(){ $(this).remove();});","3000");
+  	$closeTimeout = setTimeout("$('.flash').slideUp('slow',function(){ $(this).remove();});","10000");
   };
 
   
