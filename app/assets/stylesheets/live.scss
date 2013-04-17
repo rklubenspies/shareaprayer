@@ -10,29 +10,23 @@
 // Import the rest of the mixins
 @import "foundation_and_overrides";
 
-// nav.sidebar {
-//   width: 200px;
-//   height: 100%;
-//   float: left;
-//   background: #e1e1e1;
-// }
-
-
 * {
   box-sizing: border-box;
 }
 
-html, body { min-height: 100%; }
+html, body {
+  min-height: 100%;
+}
 
 body {
   background-image: image-url("shared/body-bg.png") !important;
 }
 
 nav.sidebar {
-  position: fixed;
-  top: 0;
-  width: 0;
+  width: 300px;
   height: 100%;
+  position: fixed;
+  float: left;
   background: #232323;
   font-family: 'Montserrat', sans-serif;
   color: white;
@@ -124,30 +118,20 @@ nav.sidebar {
   }
 }
 
-header.main {
-  @include background(linear-gradient(#3F94BF, #246485));
-  padding: 5px;
-  text-align: center;
-  color: white;
-  text-shadow: #222 0px -1px 1px;
-  position: fixed;
-  z-index: 1000;
-  width: 100%;
-  left: 0;
-  transition: all 0.3s ease;
+.page-wrap {
+  padding: 20px;
+  margin-left: 300px;
+  float: left;
+  transition: margin-left 0.3s ease;
+}
 
-  a {
-    position: absolute;
-    left: 20px;
-    top: 15px;
-    color: white;
-    font-size: 20px;
+@media only screen and (min-width:"#{emCalc(1380px)}") {
+  nav.sidebar {
+    width: 400px; 
   }
 
-  h1 {
-    font-size: emCalc(20px);
-    line-height: emCalc(20px);
-    color: white;
+  .page-wrap {
+    margin-left: 400px;
   }
 }
 
@@ -650,60 +634,4 @@ header.main {
   &.error { background-color: #d42925; }
   &.alert{ background-color: #5a9aa8; }
   &.notice { background-color: #1f7f5c; }
-}
-
-
-// For navigation on desktops
-@media #{$medium} {
-  nav.sidebar {
-    width: 27%;
-  }
-
-  .page-wrap {
-    width: 73%;
-    float: right;
-    transition: width 0.3s ease;
-  }
-
-  .content {
-    padding: 20px;
-  }
-
-  header.main {
-    display: none;
-  }
-}
-
-// For navigation on tablets/phones
-@media only screen and (max-width:"#{$medium-screen}") {
-  .page-wrap {
-    width: 100%;
-    float: right;
-    transition: width 0.3s ease;
-  }
-
-  .content {
-    padding: 70px 20px 20px 20px;
-  }
-
-  .close-menu {
-    display: none;
-  }
-
-  #main-nav:target {
-    width: 73%;
-  }
-  #main-nav:target + .page-wrap {
-    width: 27%;
-    .open-menu {
-       display: none; 
-    }
-    .close-menu {
-       display: block;
-    }
-    header.main {
-      width: 27%;
-      left: 73%;
-    }
-  }
 }
